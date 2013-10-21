@@ -34,6 +34,7 @@ import org.dspace.app.util.MetadataExposure;
 import org.dspace.app.util.Util;
 import org.dspace.app.webui.util.StyleSelection;
 import org.dspace.app.webui.util.UIUtil;
+import org.dspace.authorize.AuthorizeManager;
 import org.dspace.browse.BrowseException;
 import org.dspace.content.Bitstream;
 import org.dspace.content.Bundle;
@@ -993,7 +994,29 @@ public class ItemTag extends TagSupport
                                                     .getLocalizedMessage(
                                                             pageContext,
                                                             "org.dspace.app.webui.jsptag.ItemTag.view")
-                                            + "</a></td></tr>");
+                                            + "</a>");
+            					
+								try {
+									if (!AuthorizeManager
+											.authorizeActionBoolean(UIUtil
+													.obtainContext(request),
+													bitstreams[k],
+													Constants.READ))
+										out.print("&nbsp;<a class=\"btn btn-success\" href=\""
+												+ request.getContextPath()
+												+ "/request-item?handle="
+												+ handle
+												+ "&bitstream-id="
+												+ bitstreams[k].getID()
+												+ "\">"
+												+ LocaleSupport
+														.getLocalizedMessage(
+																pageContext,
+																"org.dspace.app.webui.jsptag.ItemTag.restrict")
+												+ "</a>");
+								} catch (Exception e) {
+								}
+								out.print("</td></tr>");
             				}
             			}
             		}
