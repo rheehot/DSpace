@@ -80,6 +80,8 @@ DROP TABLE harvested_item;
 DROP TABLE Group2GroupCache;
 DROP TABLE Group2Group;
 DROP TABLE FileExtension;
+DROP TABLE requestitem;
+DROP TABLE webapp;
 -- Drop main object tables near end as many other tables have dependencies on them
 DROP TABLE versionitem;
 DROP TABLE versionhistory;
