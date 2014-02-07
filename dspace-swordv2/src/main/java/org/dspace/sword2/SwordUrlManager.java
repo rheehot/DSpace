@@ -186,7 +186,33 @@ public class SwordUrlManager
 	{
 		try
 		{
-			String baseUrl = this.getBaseCollectionUrl();
+
+           // BEGIN new code from Graham Triggs
+
+			URL baseUrl = new URL(this.getBaseCollectionUrl());
+            URL depositUrl = new URL(location);
+
+            String basePath = baseUrl.getPath(); 
+            String depositPath = depositUrl.getPath();
+
+            if (basePath.length() == depositPath.length()) 
+            { 
+            throw new SWORDErrorException(DSpaceSWORDErrorCodes.BAD_URL, "The deposit URL is incomplete"); 
+            } 
+            String handle = depositPath.substring(basePath.length()); 
+            if (handle.startsWith("/")) 
+            { 
+            handle = handle.substring(1); 
+            } 
+            if ("".equals(handle)) 
+            { 
+            throw new SWORDErrorException(DSpaceSWORDErrorCodes.BAD_URL, "The deposit URL is incomplete"); 
+            }
+
+            // END new code from Graham Triggs, need to figure out which parts need to be removed now...
+
+
+
 
 			// FIXME: see DS-598, it's legitimately possible for these values to differ, in the use case of a reverse proxy that changes the baseUrl
 			// so... what to do, what to do... surely there is another way to check for an incomplete deposit URL? OH, or we could first swap out the hostname in baseURL to ensure they both match, and *then* test?
