@@ -51,6 +51,11 @@
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
         </dependency>
+        <dependency> <!-- Keep jmockit before junit -->
+            <groupId>com.googlecode.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- SPECIAL CASE - need JUNIT at build time and testing time -->
         <dependency>
             <groupId>junit</groupId>
@@ -71,12 +76,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.dspace.dependencies.jmockit</groupId>
-            <artifactId>dspace-jmockit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
+           <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
         <dependency>
