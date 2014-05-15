@@ -208,7 +208,8 @@ public class Group extends DSpaceObject
         log.info(LogManager.getHeader(context, "create_group", "group_id="
                 + g.getID()));
 
-        context.addEvent(new Event(Event.CREATE, Constants.GROUP, g.getID(), null));
+        context.addEvent(new Event(Event.CREATE, Constants.GROUP, g.getID(),
+                null, g.lookupIdentifiers(context)));
 
         return g;
     }
@@ -264,7 +265,9 @@ public class Group extends DSpaceObject
         epeople.add(e);
         epeopleChanged = true;
 
-        myContext.addEvent(new Event(Event.ADD, Constants.GROUP, getID(), Constants.EPERSON, e.getID(), e.getEmail()));
+        myContext.addEvent(new Event(Event.ADD, Constants.GROUP, getID(), 
+                Constants.EPERSON, e.getID(), e.getEmail(), 
+                lookupIdentifiers(myContext)));
     }
 
     /**
@@ -286,7 +289,9 @@ public class Group extends DSpaceObject
         groups.add(g);
         groupsChanged = true;
 
-        myContext.addEvent(new Event(Event.ADD, Constants.GROUP, getID(), Constants.GROUP, g.getID(), g.getName()));
+        myContext.addEvent(new Event(Event.ADD, Constants.GROUP, getID(), 
+                Constants.GROUP, g.getID(), g.getName(), 
+                lookupIdentifiers(myContext)));
     }
 
     /**
@@ -302,7 +307,9 @@ public class Group extends DSpaceObject
         if (epeople.remove(e))
         {
             epeopleChanged = true;
-            myContext.addEvent(new Event(Event.REMOVE, Constants.GROUP, getID(), Constants.EPERSON, e.getID(), e.getEmail()));
+            myContext.addEvent(new Event(Event.REMOVE, Constants.GROUP, getID(), 
+                    Constants.EPERSON, e.getID(), e.getEmail(), 
+                    lookupIdentifiers(myContext)));
         }
     }
 
@@ -318,7 +325,9 @@ public class Group extends DSpaceObject
         if (groups.remove(g))
         {
             groupsChanged = true;
-            myContext.addEvent(new Event(Event.REMOVE, Constants.GROUP, getID(), Constants.GROUP, g.getID(), g.getName()));
+            myContext.addEvent(new Event(Event.REMOVE, Constants.GROUP, getID(), 
+                    Constants.GROUP, g.getID(), g.getName(),
+                    lookupIdentifiers(myContext)));
         }
     }
 
@@ -991,7 +1000,8 @@ public class Group extends DSpaceObject
     {
         // FIXME: authorizations
 
-        myContext.addEvent(new Event(Event.DELETE, Constants.GROUP, getID(), getName()));
+        myContext.addEvent(new Event(Event.DELETE, Constants.GROUP, getID(), 
+                getName(), lookupIdentifiers(myContext)));
 
         // Remove from cache
         myContext.removeCached(this, getID());
@@ -1099,7 +1109,8 @@ public class Group extends DSpaceObject
 
         if (modifiedMetadata)
         {
-            myContext.addEvent(new Event(Event.MODIFY_METADATA, Constants.GROUP, getID(), getDetails()));
+            myContext.addEvent(new Event(Event.MODIFY_METADATA, Constants.GROUP, 
+                    getID(), getDetails(), lookupIdentifiers(myContext)));
             modifiedMetadata = false;
             clearDetails();
         }

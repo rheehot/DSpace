@@ -232,12 +232,15 @@ public class Community extends DSpaceObject
         myPolicy.setGroup(anonymousGroup);
         myPolicy.update();
 
-        context.addEvent(new Event(Event.CREATE, Constants.COMMUNITY, c.getID(), c.handle));
+        context.addEvent(new Event(Event.CREATE, Constants.COMMUNITY, c.getID(), 
+                c.handle, c.lookupIdentifiers(context)));
 
         // if creating a top-level Community, simulate an ADD event at the Site.
         if (parent == null)
         {
-            context.addEvent(new Event(Event.ADD, Constants.SITE, Site.SITE_ID, Constants.COMMUNITY, c.getID(), c.handle));
+            context.addEvent(new Event(Event.ADD, Constants.SITE, Site.SITE_ID, 
+                    Constants.COMMUNITY, c.getID(), c.handle, 
+                    c.lookupIdentifiers(context)));
         }
 
         log.info(LogManager.getHeader(context, "create_community",
@@ -527,12 +530,15 @@ public class Community extends DSpaceObject
 
         if (modified)
         {
-            ourContext.addEvent(new Event(Event.MODIFY, Constants.COMMUNITY, getID(), null));
+            ourContext.addEvent(new Event(Event.MODIFY, Constants.COMMUNITY, 
+                    getID(), null, lookupIdentifiers(ourContext)));
             modified = false;
         }
         if (modifiedMetadata)
         {
-            ourContext.addEvent(new Event(Event.MODIFY_METADATA, Constants.COMMUNITY, getID(), getDetails()));
+            ourContext.addEvent(new Event(Event.MODIFY_METADATA, 
+                    Constants.COMMUNITY, getID(), getDetails(), 
+                    lookupIdentifiers(ourContext)));
             modifiedMetadata = false;
             clearDetails();
         }
@@ -903,7 +909,9 @@ public class Community extends DSpaceObject
                 mappingRow.setColumn("community_id", getID());
                 mappingRow.setColumn("collection_id", c.getID());
 
-                ourContext.addEvent(new Event(Event.ADD, Constants.COMMUNITY, getID(), Constants.COLLECTION, c.getID(), c.getHandle()));
+                ourContext.addEvent(new Event(Event.ADD, Constants.COMMUNITY, 
+                        getID(), Constants.COLLECTION, c.getID(), c.getHandle(),
+                        lookupIdentifiers(ourContext)));
 
                 DatabaseManager.insert(ourContext, mappingRow);
             }
@@ -978,7 +986,9 @@ public class Community extends DSpaceObject
                 mappingRow.setColumn("parent_comm_id", getID());
                 mappingRow.setColumn("child_comm_id", c.getID());
 
-                ourContext.addEvent(new Event(Event.ADD, Constants.COMMUNITY, getID(), Constants.COMMUNITY, c.getID(), c.getHandle()));
+                ourContext.addEvent(new Event(Event.ADD, Constants.COMMUNITY, 
+                        getID(), Constants.COMMUNITY, c.getID(), c.getHandle(),
+                        lookupIdentifiers(ourContext)));
 
                 DatabaseManager.insert(ourContext, mappingRow);
             }
@@ -1005,6 +1015,7 @@ public class Community extends DSpaceObject
         // Check authorisation
         AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
 
+<<<<<<< HEAD
         // will be the collection an orphan?
         TableRow trow = DatabaseManager.querySingle(ourContext,
                 "SELECT COUNT(DISTINCT community_id) AS num FROM community2collection WHERE collection_id= ? ",
@@ -1012,6 +1023,43 @@ public class Community extends DSpaceObject
         DatabaseManager.setConstraintDeferred(ourContext, "comm2coll_collection_fk");
         
         if (trow.getLongColumn("num") == 1)
+=======
+        // Do the removal in a try/catch, so that we can rollback on error
+        try
+        {
+            // Capture ID & Handle of Collection we are removing, so we can trigger events later
+            int removedId = c.getID();
+            String removedHandle = c.getHandle();
+            String[] removedIdentifiers = c.lookupIdentifiers(ourContext);
+
+            // How many parent(s) does this collection have?
+            TableRow trow = DatabaseManager.querySingle(ourContext,
+                    "SELECT COUNT(DISTINCT community_id) AS num FROM community2collection WHERE collection_id= ? ",
+                    c.getID());
+            long numParents = trow.getLongColumn("num");
+
+            // Remove the parent/child mapping with this collection
+            // We do this before deletion, so that the deletion doesn't throw database integrity violations
+            DatabaseManager.updateQuery(ourContext,
+                    "DELETE FROM community2collection WHERE community_id= ? "+
+                    "AND collection_id= ? ", getID(), c.getID());
+
+            // As long as this Collection only had one parent, delete it
+            // NOTE: if it had multiple parents, we will keep it around,
+            // and just remove that single parent/child mapping
+            if (numParents == 1)
+            {
+                c.delete();
+            }
+        
+            // log the removal & trigger any associated event(s)
+            log.info(LogManager.getHeader(ourContext, "remove_collection",
+                    "community_id=" + getID() + ",collection_id=" + removedId));
+        
+            ourContext.addEvent(new Event(Event.REMOVE, Constants.COMMUNITY, getID(), 
+                    Constants.COLLECTION, removedId, removedHandle, removedIdentifiers));
+        }
+        catch(SQLException|IOException e)
         {
             // Orphan; delete it            
             c.delete();
@@ -1042,13 +1090,41 @@ public class Community extends DSpaceObject
         // Check authorisation
         AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
 
-        // will be the subcommunity an orphan?
-        TableRow trow = DatabaseManager.querySingle(ourContext,
-                "SELECT COUNT(DISTINCT parent_comm_id) AS num FROM community2community WHERE child_comm_id= ? ",
-                c.getID());
+       // Do the removal in a try/catch, so that we can rollback on error
+        try
+        {
+            // Capture ID & Handle of Community we are removing, so we can trigger events later
+            int removedId = c.getID();
+            String removedHandle = c.getHandle();
+            String[] removedIdentifiers = c.lookupIdentifiers(ourContext);
+        
+            // How many parent(s) does this subcommunity have?
+            TableRow trow = DatabaseManager.querySingle(ourContext,
+                    "SELECT COUNT(DISTINCT parent_comm_id) AS num FROM community2community WHERE child_comm_id= ? ",
+                    c.getID());
+            long numParents = trow.getLongColumn("num");
 
-        DatabaseManager.setConstraintDeferred(ourContext, "com2com_child_fk");
-        if (trow.getLongColumn("num") == 1)
+            // Remove the parent/child mapping with this subcommunity
+            // We do this before deletion, so that the deletion doesn't throw database integrity violations
+            DatabaseManager.updateQuery(ourContext,
+                    "DELETE FROM community2community WHERE parent_comm_id= ? " +
+                    " AND child_comm_id= ? ", getID(),c.getID());
+
+            // As long as this Community only had one parent, delete it
+            // NOTE: if it had multiple parents, we will keep it around,
+            // and just remove that single parent/child mapping
+            if (numParents == 1)
+            {
+                c.rawDelete();
+            }
+
+            // log the removal & trigger any related event(s)
+            log.info(LogManager.getHeader(ourContext, "remove_subcommunity",
+                    "parent_comm_id=" + getID() + ",child_comm_id=" + removedId));
+
+            ourContext.addEvent(new Event(Event.REMOVE, Constants.COMMUNITY, getID(), Constants.COMMUNITY, removedId, removedHandle, removedIdentifiers));
+        }
+        catch(SQLException|IOException e)
         {
             // Orphan; delete it
             c.rawDelete();
@@ -1093,12 +1169,13 @@ public class Community extends DSpaceObject
 
         if (parent == null)
         {
-            // if removing a top level Community, simulate a REMOVE event at the Site.
-            if (getParentCommunity() == null)
-            {
-                ourContext.addEvent(new Event(Event.REMOVE, Constants.SITE, Site.SITE_ID, 
-                        Constants.COMMUNITY, getID(), getHandle()));
-            }
+            // Call rawDelete to clean up all sub-communities & collections
+            // under this Community, then delete the Community itself
+            rawDelete();
+
+            // Since this is a top level Community, simulate a REMOVE event at the Site.
+            ourContext.addEvent(new Event(Event.REMOVE, Constants.SITE, Site.SITE_ID,
+                    Constants.COMMUNITY, getID(), getHandle(), lookupIdentifiers(ourContext)));
         } else {
             // remove the subcommunities first
             Community[] subcommunities = getSubcommunities();
@@ -1123,7 +1200,10 @@ public class Community extends DSpaceObject
         log.info(LogManager.getHeader(ourContext, "delete_community",
                 "community_id=" + getID()));
 
-        ourContext.addEvent(new Event(Event.DELETE, Constants.COMMUNITY, getID(), getHandle()));
+        // Capture ID & Handle of object we are removing, so we can trigger events later
+        int deletedId = getID();
+        String deletedHandle = getHandle();
+        String[] deletedIdentifiers = lookupIdentifiers(ourContext);
 
         // Remove from cache
         ourContext.removeCached(this, getID());
@@ -1176,6 +1256,8 @@ public class Community extends DSpaceObject
         {
             g.delete();
         }
+        // If everything above worked, then trigger any associated events
+        ourContext.addEvent(new Event(Event.DELETE, Constants.COMMUNITY, deletedId, deletedHandle, deletedIdentifiers));
     }
 
     /**
@@ -1342,6 +1424,7 @@ public class Community extends DSpaceObject
     public void updateLastModified()
     {
         //Also fire a modified event since the community HAS been modified
-        ourContext.addEvent(new Event(Event.MODIFY, Constants.COMMUNITY, getID(), null));
+        ourContext.addEvent(new Event(Event.MODIFY, Constants.COMMUNITY, 
+                getID(), null, lookupIdentifiers(ourContext)));
     }
 }
