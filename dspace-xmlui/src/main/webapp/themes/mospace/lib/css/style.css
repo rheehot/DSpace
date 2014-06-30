@@ -15,8 +15,12 @@
 h1 {
     font-size: 182%;
     color: #1F3F5E;
+<<<<<<< HEAD
     text-align: left;
     font-family: Georgia, Times, "Times New Roman", serif;
+=======
+    text-align: justify;
+>>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
 }
 
 h2{
@@ -603,7 +607,11 @@ span.field-help {
     font-size: 93%;
     margin-top: 3px;
     width: 506px;
+<<<<<<< HEAD
     text-align: left;
+=======
+    text-align: justify;
+>>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
 }
 
 .ds-checkbox-field input,
@@ -790,7 +798,11 @@ span.field-help {
 }
 
 .artifact-abstract {
+<<<<<<< HEAD
     text-align: left;
+=======
+    text-align: justify;
+>>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
 }
 
 ul.alphabet {
@@ -950,7 +962,11 @@ table.detailtable tr.even {
 #aspect_submission_Submissions_table_completed-submissions td,
 table.detailtable td {
     padding: 5px 10px;
+<<<<<<< HEAD
     text-align: left;
+=======
+    text-align: justify;
+>>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
     border: 1px solid #ebebeb;
     vertical-align: top;
 }
@@ -977,7 +993,11 @@ div.item-summary-view-metadata h2 {
 }
 
 div.item-summary-view-metadata {
+<<<<<<< HEAD
     text-align: left;
+=======
+    text-align: justify;
+>>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
     line-height: 161.6%;
     margin-bottom: 30px;
 }
@@ -988,11 +1008,19 @@ div.simple-item-view-authors {
     border-bottom:1px solid #D8E8EB;
     padding-bottom: 2px;
     margin-bottom: 20px;
+<<<<<<< HEAD
     text-align: left;
 }
 
 div.simple-item-view-authors span{
     text-align: left;
+=======
+    text-align: justify;
+}
+
+div.simple-item-view-authors span{
+    text-align: justify;
+>>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
 }
 
 #aspect_artifactbrowser_ItemViewer_div_item-view h2,
