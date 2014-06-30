@@ -13,9 +13,12 @@
 
     <xsl:import href="../Mirage/Mirage.xsl"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <xsl:import href="lib/xsl/aspect/artifactbrowser/item-view.xsl"/>
     <xsl:import href="lib/xsl/aspect/artifactbrowser/item-list.xsl"/>
 =======
 >>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+>>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
 
 </xsl:stylesheet>

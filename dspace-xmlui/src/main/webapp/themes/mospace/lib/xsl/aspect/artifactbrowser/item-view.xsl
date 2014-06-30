@@ -404,6 +404,7 @@
                             </img>
                         </xsl:when>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                         <xsl:when test="@MIMETYPE = 'application/pdf'">
                             <img alt="[PDF]" src="{concat($theme-path, '/images/mimes/pdf.png')}" style="height: 48px;" width="48" height="48" title="PDF file"/>
@@ -461,6 +462,11 @@
                             <img alt="Icon" src="{concat($theme-path, '/images/mime.png')}" style="height: {$thumbnail.maxheight}px;"/>
                         </xsl:otherwise>
 >>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+                        <xsl:otherwise>
+                            <img alt="Icon" src="{concat($theme-path, '/images/mime.png')}" style="height: {$thumbnail.maxheight}px;"/>
+                        </xsl:otherwise>
+>>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
                     </xsl:choose>
                     <xsl:if test="contains(mets:FLocat[@LOCTYPE='URL']/@xlink:href,'isAllowed=n')">
                         <img>
