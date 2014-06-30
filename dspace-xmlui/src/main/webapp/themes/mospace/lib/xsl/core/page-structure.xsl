@@ -568,7 +568,7 @@
                 <div id="ds-footer-left">
                 </div>
                 <div id="ds-footer-right">
-                </div>
+               </div>
                 <div id="ds-footer-links">
                     <a>
                         <xsl:attribute name="href">
