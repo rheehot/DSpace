@@ -2,11 +2,11 @@
 <document xmlns="http://di.tamu.edu/DRI/1.0/" xmlns:i18n="http://apache.org/cocoon/i18n/2.1" version="1.1">
 <body>
 <div id="file.news.div.news" n="news" rend="primary">
-<head>MOspace Repository</head>
+<head>MOspace Repository - UMKC Data Pilot Project</head>
 <p>MOspace is an online repository for scholarly work and resources
-created by faculty, staff and students at the University of Missouri. MOspace makes created knowledge and research
-products from UM available to the wider community of researchers and students and assures preservation of these
-materials for the future. [<xref target="/xmlui/pages/about">read more</xref>]</p>
+created by faculty, staff and students at the University of Missouri.
+This pilot project repository serves as a proving ground for future archival, in MOspace, of data objects created at UMKC.
+</p>
 </div>
 </body>
 <options/>
