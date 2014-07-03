@@ -17,6 +17,7 @@ h1 {
     color: #1F3F5E;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     text-align: left;
     font-family: Georgia, Times, "Times New Roman", serif;
 =======
@@ -25,6 +26,9 @@ h1 {
 =======
     text-align: justify;
 >>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+    text-align: left;
+>>>>>>> 17d6c31... dropping all the text justification from the main style.css document in the MOspace theme... justification looks weird
 }
 
 h2{
@@ -613,6 +617,7 @@ span.field-help {
     width: 506px;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     text-align: left;
 =======
     text-align: justify;
@@ -620,6 +625,9 @@ span.field-help {
 =======
     text-align: justify;
 >>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+    text-align: left;
+>>>>>>> 17d6c31... dropping all the text justification from the main style.css document in the MOspace theme... justification looks weird
 }
 
 .ds-checkbox-field input,
@@ -808,6 +816,7 @@ span.field-help {
 .artifact-abstract {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     text-align: left;
 =======
     text-align: justify;
@@ -815,6 +824,9 @@ span.field-help {
 =======
     text-align: justify;
 >>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+    text-align: left;
+>>>>>>> 17d6c31... dropping all the text justification from the main style.css document in the MOspace theme... justification looks weird
 }
 
 ul.alphabet {
@@ -976,6 +988,7 @@ table.detailtable td {
     padding: 5px 10px;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     text-align: left;
 =======
     text-align: justify;
@@ -983,6 +996,9 @@ table.detailtable td {
 =======
     text-align: justify;
 >>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+    text-align: left;
+>>>>>>> 17d6c31... dropping all the text justification from the main style.css document in the MOspace theme... justification looks weird
     border: 1px solid #ebebeb;
     vertical-align: top;
 }
@@ -1011,6 +1027,7 @@ div.item-summary-view-metadata h2 {
 div.item-summary-view-metadata {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     text-align: left;
 =======
     text-align: justify;
@@ -1018,6 +1035,9 @@ div.item-summary-view-metadata {
 =======
     text-align: justify;
 >>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+    text-align: left;
+>>>>>>> 17d6c31... dropping all the text justification from the main style.css document in the MOspace theme... justification looks weird
     line-height: 161.6%;
     margin-bottom: 30px;
 }
@@ -1030,6 +1050,7 @@ div.simple-item-view-authors {
     margin-bottom: 20px;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     text-align: left;
 }
 
@@ -1047,6 +1068,13 @@ div.simple-item-view-authors span{
 >>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
 =======
 >>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+    text-align: left;
+}
+
+div.simple-item-view-authors span{
+    text-align: left;
+>>>>>>> 17d6c31... dropping all the text justification from the main style.css document in the MOspace theme... justification looks weird
 }
 
 #aspect_artifactbrowser_ItemViewer_div_item-view h2,
