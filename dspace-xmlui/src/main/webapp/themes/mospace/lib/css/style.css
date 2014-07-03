@@ -15,7 +15,7 @@
 h1 {
     font-size: 182%;
     color: #1F3F5E;
-    text-align: justify;
+    text-align: left;
 }
 
 h2{
@@ -602,7 +602,7 @@ span.field-help {
     font-size: 93%;
     margin-top: 3px;
     width: 506px;
-    text-align: justify;
+    text-align: left;
 }
 
 .ds-checkbox-field input,
@@ -789,7 +789,7 @@ span.field-help {
 }
 
 .artifact-abstract {
-    text-align: justify;
+    text-align: left;
 }
 
 ul.alphabet {
@@ -949,7 +949,7 @@ table.detailtable tr.even {
 #aspect_submission_Submissions_table_completed-submissions td,
 table.detailtable td {
     padding: 5px 10px;
-    text-align: justify;
+    text-align: left;
     border: 1px solid #ebebeb;
     vertical-align: top;
 }
@@ -976,7 +976,7 @@ div.item-summary-view-metadata h2 {
 }
 
 div.item-summary-view-metadata {
-    text-align: justify;
+    text-align: left;
     line-height: 161.6%;
     margin-bottom: 30px;
 }
@@ -987,11 +987,11 @@ div.simple-item-view-authors {
     border-bottom:1px solid #D8E8EB;
     padding-bottom: 2px;
     margin-bottom: 20px;
-    text-align: justify;
+    text-align: left;
 }
 
 div.simple-item-view-authors span{
-    text-align: justify;
+    text-align: left;
 }
 
 #aspect_artifactbrowser_ItemViewer_div_item-view h2,
