@@ -20,6 +20,7 @@ h1 {
 <<<<<<< HEAD
     text-align: left;
     font-family: Georgia, Times, "Times New Roman", serif;
+<<<<<<< HEAD
 =======
     text-align: justify;
 >>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
@@ -29,6 +30,8 @@ h1 {
 =======
     text-align: left;
 >>>>>>> 17d6c31... dropping all the text justification from the main style.css document in the MOspace theme... justification looks weird
+=======
+>>>>>>> aaeeefd... tweaking styles a bit
 }
 
 h2{
