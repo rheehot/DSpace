@@ -74,11 +74,11 @@ There are three custom edits:
  * make the line-height relative and unit-less
  * remove the pre, code styles
 */
-body { font:13px sans-serif; *font-size:small; *font:x-small; line-height:1.22; }
+body { font:16px Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; *font-size:small; *font:x-small; line-height:1.22; }
 
 table { font-size:inherit; font:100%; }
 
-select, input, textarea { font:99% sans-serif; }
+select, input, textarea { font:99% font-family: Verdana, Geneva, sans-serif; }
 
 
 /* normalize monospace sizing
