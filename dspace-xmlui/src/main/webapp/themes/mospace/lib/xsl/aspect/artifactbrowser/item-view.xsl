@@ -405,6 +405,9 @@
                         </xsl:when>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c22352a... re LSO#1218 added mime type code to item-view and item-list templates, also added mime type icons borrowed from LCONZ
 
                         <xsl:when test="@MIMETYPE = 'application/pdf'">
                             <img alt="[PDF]" src="{concat($theme-path, '/images/mimes/pdf.png')}" style="height: 48px;" width="48" height="48" title="PDF file"/>
@@ -457,6 +460,7 @@
 
 
 
+<<<<<<< HEAD
 =======
                         <xsl:otherwise>
                             <img alt="Icon" src="{concat($theme-path, '/images/mime.png')}" style="height: {$thumbnail.maxheight}px;"/>
@@ -467,6 +471,8 @@
                             <img alt="Icon" src="{concat($theme-path, '/images/mime.png')}" style="height: {$thumbnail.maxheight}px;"/>
                         </xsl:otherwise>
 >>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
+=======
+>>>>>>> c22352a... re LSO#1218 added mime type code to item-view and item-list templates, also added mime type icons borrowed from LCONZ
                     </xsl:choose>
                     <xsl:if test="contains(mets:FLocat[@LOCTYPE='URL']/@xlink:href,'isAllowed=n')">
                         <img>
