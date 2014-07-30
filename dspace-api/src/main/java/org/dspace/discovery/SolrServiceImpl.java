@@ -89,6 +89,8 @@ import org.dspace.handle.HandleManager;
 import org.dspace.utils.DSpace;
 import org.springframework.stereotype.Service;
 
+import com.joestelmach.natty.*;
+
 /**
  * SolrIndexer contains the methods that index Items and their metadata,
  * collections, communities, etc. It is meant to either be invoked from the
@@ -1464,6 +1466,16 @@ public class SolrServiceImpl implements SearchService, IndexingService {
      */
     public static Date toDate(String t)
     {
+
+     // this should return a date object, based on the string t, use Natty's date parser to handle this
+     
+    Parser parser = new Parser();
+    Date result = parser.parse(t).get(0).getDates().get(0);
+    return result;
+    //TODO: make this even sturdier by catching exceptions, so the index keeps going (don't break the index!)
+ 
+
+/*
         SimpleDateFormat[] dfArr;
 
         // Choose the likely date formats based on string length
@@ -1519,8 +1531,8 @@ public class SolrServiceImpl implements SearchService, IndexingService {
                 log.error("Unable to parse date format", pe);
             }
         }
-
         return null;
+*/
     }
 
     public static String locationToName(Context context, String field, String value) throws SQLException {
