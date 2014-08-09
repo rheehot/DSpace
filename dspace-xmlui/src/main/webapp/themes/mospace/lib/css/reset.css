@@ -74,48 +74,14 @@ There are three custom edits:
  * make the line-height relative and unit-less
  * remove the pre, code styles
 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 body { font:16px Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; *font-size:small; *font:x-small; line-height:1.22; }
 
 table { font-size:inherit; font:100%; }
 
 select, input, textarea { font:99% font-family: Verdana, Geneva, sans-serif; }
-=======
-=======
->>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
-body { font:13px sans-serif; *font-size:small; *font:x-small; line-height:1.22; }
-
-table { font-size:inherit; font:100%; }
-
-select, input, textarea { font:99% sans-serif; }
-<<<<<<< HEAD
->>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
-=======
->>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
-=======
-body { font:16px Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; *font-size:small; *font:x-small; line-height:1.22; }
-
-table { font-size:inherit; font:100%; }
-
-select, input, textarea { font:99% font-family: Verdana, Geneva, sans-serif; }
->>>>>>> aaeeefd... tweaking styles a bit
 
 
 /* normalize monospace sizing
  * en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 pre, code, kbd, samp { font-family: monospace, sans-serif; }
-=======
-pre, code, kbd, samp { font-family: monospace, sans-serif; }
->>>>>>> 50975a8... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
-=======
-pre, code, kbd, samp { font-family: monospace, sans-serif; }
->>>>>>> b503192... adding new MOspace theme based on Mirage; removed @mire branding from Mirage
-=======
-pre, code, kbd, samp { font-family: monospace, sans-serif; }
->>>>>>> aaeeefd... tweaking styles a bit
