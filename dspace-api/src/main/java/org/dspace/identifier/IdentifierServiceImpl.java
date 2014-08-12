@@ -82,6 +82,7 @@ public class IdentifierServiceImpl implements IdentifierService {
         {
             service.register(context, dso);
         }
+        dso.resetIdentifiersCache();
         //Update our item
         dso.update();
     }
@@ -105,6 +106,7 @@ public class IdentifierServiceImpl implements IdentifierService {
             throw new IdentifierException("Cannot register identifier: Didn't "
                 + "find a provider that supports this identifier.");
         }
+        object.resetIdentifiersCache();
         //Update our item
         object.update();
     }
@@ -150,6 +152,13 @@ public class IdentifierServiceImpl implements IdentifierService {
                     
                     identifiers.add(result);
                 }
+            }
+            catch (IdentifierNotFoundException ex)
+            {
+                log.info(service.getClass().getName() + " doesn't find an "
+                        + "Identifier for " + dso.getTypeText() + ", " 
+                        + Integer.toString(dso.getID()) + ".");
+                log.debug(ex.getMessage(), ex);
             }
             catch (IdentifierException ex)
             {
@@ -218,6 +227,7 @@ public class IdentifierServiceImpl implements IdentifierService {
                 log.error(e.getMessage(),e);
             }
         }
+       dso.resetIdentifiersCache();
     }
 
     @Override
@@ -234,5 +244,6 @@ public class IdentifierServiceImpl implements IdentifierService {
                 log.error(e.getMessage(),e);
             }
         }
+        dso.resetIdentifiersCache();
     }
 }
