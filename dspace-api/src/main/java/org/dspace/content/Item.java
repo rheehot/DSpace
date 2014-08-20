@@ -16,6 +16,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
+
 import org.apache.log4j.Logger;
 import org.dspace.app.util.AuthorizeUtil;
 import org.dspace.authorize.AuthorizeConfiguration;
@@ -24,6 +27,9 @@ import org.dspace.authorize.AuthorizeManager;
 import org.dspace.authorize.ResourcePolicy;
 import org.dspace.browse.BrowseException;
 import org.dspace.browse.IndexBrowse;
+import org.dspace.content.authority.ChoiceAuthorityManager;
+import org.dspace.content.authority.Choices;
+import org.dspace.content.authority.MetadataAuthorityManager;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
@@ -32,6 +38,7 @@ import org.dspace.content.authority.ChoiceAuthorityManager;
 import org.dspace.event.Event;
 import org.dspace.eperson.EPerson;
 import org.dspace.eperson.Group;
+import org.dspace.event.Event;
 import org.dspace.handle.HandleManager;
 import org.dspace.identifier.IdentifierException;
 import org.dspace.identifier.IdentifierService;
@@ -40,6 +47,12 @@ import org.dspace.storage.rdbms.TableRow;
 import org.dspace.storage.rdbms.TableRowIterator;
 import org.dspace.utils.DSpace;
 import org.dspace.versioning.VersioningService;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Class representing an item in DSpace.
@@ -400,6 +413,675 @@ public class Item extends DSpaceObject
     private int getOwningCollectionID()
     {
         return itemRow.getIntColumn("owning_collection");
+    }
+
+    /**
+     * Get Dublin Core metadata for the item.
+     * Passing in a <code>null</code> value for <code>qualifier</code>
+     * or <code>lang</code> only matches Dublin Core fields where that
+     * qualifier or languages is actually <code>null</code>.
+     * Passing in <code>Item.ANY</code>
+     * retrieves all metadata fields with any value for the qualifier or
+     * language, including <code>null</code>
+     * <P>
+     * Examples:
+     * <P>
+     * Return values of the unqualified "title" field, in any language.
+     * Qualified title fields (e.g. "title.uniform") are NOT returned:
+     * <P>
+     * <code>item.getDC( "title", null, Item.ANY );</code>
+     * <P>
+     * Return all US English values of the "title" element, with any qualifier
+     * (including unqualified):
+     * <P>
+     * <code>item.getDC( "title", Item.ANY, "en_US" );</code>
+     * <P>
+     * The ordering of values of a particular element/qualifier/language
+     * combination is significant. When retrieving with wildcards, values of a
+     * particular element/qualifier/language combinations will be adjacent, but
+     * the overall ordering of the combinations is indeterminate.
+     *
+     * @param element
+     *            the Dublin Core element. <code>Item.ANY</code> matches any
+     *            element. <code>null</code> doesn't really make sense as all
+     *            DC must have an element.
+     * @param qualifier
+     *            the qualifier. <code>null</code> means unqualified, and
+     *            <code>Item.ANY</code> means any qualifier (including
+     *            unqualified.)
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means only
+     *            values with no language are returned, and
+     *            <code>Item.ANY</code> means values with any country code or
+     *            no country code are returned.
+     * @return Dublin Core fields that match the parameters
+     */
+    @Deprecated
+    public DCValue[] getDC(String element, String qualifier, String lang)
+    {
+        return getMetadata(MetadataSchema.DC_SCHEMA, element, qualifier, lang);
+    }
+
+    /**
+     * Get metadata for the item in a chosen schema.
+     * See <code>MetadataSchema</code> for more information about schemas.
+     * Passing in a <code>null</code> value for <code>qualifier</code>
+     * or <code>lang</code> only matches metadata fields where that
+     * qualifier or languages is actually <code>null</code>.
+     * Passing in <code>Item.ANY</code>
+     * retrieves all metadata fields with any value for the qualifier or
+     * language, including <code>null</code>
+     * <P>
+     * Examples:
+     * <P>
+     * Return values of the unqualified "title" field, in any language.
+     * Qualified title fields (e.g. "title.uniform") are NOT returned:
+     * <P>
+     * <code>item.getMetadata("dc", "title", null, Item.ANY );</code>
+     * <P>
+     * Return all US English values of the "title" element, with any qualifier
+     * (including unqualified):
+     * <P>
+     * <code>item.getMetadata("dc, "title", Item.ANY, "en_US" );</code>
+     * <P>
+     * The ordering of values of a particular element/qualifier/language
+     * combination is significant. When retrieving with wildcards, values of a
+     * particular element/qualifier/language combinations will be adjacent, but
+     * the overall ordering of the combinations is indeterminate.
+     *
+     * @param schema
+     *            the schema for the metadata field. <em>Must</em> match
+     *            the <code>name</code> of an existing metadata schema.
+     * @param element
+     *            the element name. <code>Item.ANY</code> matches any
+     *            element. <code>null</code> doesn't really make sense as all
+     *            metadata must have an element.
+     * @param qualifier
+     *            the qualifier. <code>null</code> means unqualified, and
+     *            <code>Item.ANY</code> means any qualifier (including
+     *            unqualified.)
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means only
+     *            values with no language are returned, and
+     *            <code>Item.ANY</code> means values with any country code or
+     *            no country code are returned.
+     * @return metadata fields that match the parameters
+     */
+    public DCValue[] getMetadata(String schema, String element, String qualifier,
+            String lang)
+    {
+        // Build up list of matching values
+        List<DCValue> values = new ArrayList<DCValue>();
+        for (DCValue dcv : getMetadata())
+        {
+            if (match(schema, element, qualifier, lang, dcv))
+            {
+                // We will return a copy of the object in case it is altered
+                DCValue copy = new DCValue();
+                copy.element = dcv.element;
+                copy.qualifier = dcv.qualifier;
+                copy.value = dcv.value;
+                copy.language = dcv.language;
+                copy.schema = dcv.schema;
+                copy.authority = dcv.authority;
+                copy.confidence = dcv.confidence;
+                values.add(copy);
+            }
+        }
+
+        // Create an array of matching values
+        DCValue[] valueArray = new DCValue[values.size()];
+        valueArray = (DCValue[]) values.toArray(valueArray);
+
+        return valueArray;
+    }
+    
+    /**
+     * Retrieve metadata field values from a given metadata string
+     * of the form <schema prefix>.<element>[.<qualifier>|.*]
+     *
+     * @param mdString
+     *            The metadata string of the form
+     *            <schema prefix>.<element>[.<qualifier>|.*]
+     */
+    public DCValue[] getMetadata(String mdString)
+    {
+        StringTokenizer dcf = new StringTokenizer(mdString, ".");
+        
+        String[] tokens = { "", "", "" };
+        int i = 0;
+        while(dcf.hasMoreTokens())
+        {
+            tokens[i] = dcf.nextToken().trim();
+            i++;
+        }
+        String schema = tokens[0];
+        String element = tokens[1];
+        String qualifier = tokens[2];
+        
+        DCValue[] values;
+        if ("*".equals(qualifier))
+        {
+            values = getMetadata(schema, element, Item.ANY, Item.ANY);
+        }
+        else if ("".equals(qualifier))
+        {
+            values = getMetadata(schema, element, null, Item.ANY);
+        }
+        else
+        {
+            values = getMetadata(schema, element, qualifier, Item.ANY);
+        }
+        
+        return values;
+    }
+
+    public List<DCValue> getMetadata(String mdString, String authority) {
+        String[] elements = getElements(mdString);
+        return getMetadata(elements[0], elements[1], elements[2], elements[3], authority);
+    }
+
+    public List<DCValue> getMetadata(String schema, String element, String qualifier, String lang, String authority) {
+        DCValue[] metadata = getMetadata(schema, element, qualifier, lang);
+        List<DCValue> dcValues = Arrays.asList(metadata);
+        if (!authority.equals(Item.ANY)) {
+            Iterator<DCValue> iterator = dcValues.iterator();
+            while (iterator.hasNext()) {
+                DCValue dcValue = iterator.next();
+                if (!authority.equals(dcValue.authority)) {
+                    iterator.remove();
+                }
+            }
+        }
+        return dcValues;
+    }
+
+    /**
+     * Splits "schema.element.qualifier.language" into an array.
+     * <p/>
+     * The returned array will always have length >= 4
+     * <p/>
+     * Values in the returned array can be empty or null.
+     */
+    public static String[] getElements(String fieldName) {
+        String[] tokens = StringUtils.split(fieldName, ".");
+
+        int add = 4 - tokens.length;
+        if (add > 0) {
+            tokens = (String[]) ArrayUtils.addAll(tokens, new String[add]);
+        }
+
+        return tokens;
+    }
+
+    /**
+     * Splits "schema.element.qualifier.language" into an array.
+     * <p/>
+     * The returned array will always have length >= 4
+     * <p/>
+     * When @param fill is true, elements that would be empty or null are replaced by Item.ANY
+     */
+    public static String[] getElementsFilled(String fieldName) {
+        String[] elements = getElements(fieldName);
+        for (int i = 0; i < elements.length; i++) {
+            if (StringUtils.isBlank(elements[i])) {
+                elements[i] = Item.ANY;
+            }
+        }
+        return elements;
+    }
+
+    public void replaceMetadataValue(DCValue oldValue, DCValue newValue) {
+        // check both dcvalues are for the same field
+        if (oldValue.hasSameFieldAs(newValue)) {
+
+            String schema = oldValue.schema;
+            String element = oldValue.element;
+            String qualifier = oldValue.qualifier;
+
+            // Save all metadata for this field
+            DCValue[] dcvalues = getMetadata(schema, element, qualifier, Item.ANY);
+            clearMetadata(schema, element, qualifier, Item.ANY);
+
+            for (DCValue dcvalue : dcvalues) {
+                if (dcvalue.equals(oldValue)) {
+                    addMetadata(schema, element, qualifier, newValue.language, newValue.value, newValue.authority, newValue.confidence);
+                } else {
+                    addMetadata(schema, element, qualifier, dcvalue.language, dcvalue.value, dcvalue.authority, dcvalue.confidence);
+                }
+            }
+        }
+    }
+
+    public static ItemIterator findByMetadataFieldAuthority(Context context, String mdString, String authority) throws SQLException, AuthorizeException, IOException {
+        String[] elements = getElementsFilled(mdString);
+        String schema = elements[0], element = elements[1], qualifier = elements[2];
+        MetadataSchema mds = MetadataSchema.find(context, schema);
+        if (mds == null) {
+            throw new IllegalArgumentException("No such metadata schema: " + schema);
+        }
+        MetadataField mdf = MetadataField.findByElement(context, mds.getSchemaID(), element, qualifier);
+        if (mdf == null) {
+            throw new IllegalArgumentException(
+                    "No such metadata field: schema=" + schema + ", element=" + element + ", qualifier=" + qualifier);
+        }
+
+        String query = "SELECT item.* FROM metadatavalue,item WHERE item.in_archive='1' " +
+                "AND item.item_id = metadatavalue.item_id AND metadata_field_id = ?";
+        TableRowIterator rows = null;
+        if (Item.ANY.equals(authority)) {
+            rows = DatabaseManager.queryTable(context, "item", query, mdf.getFieldID());
+        } else {
+            query += " AND metadatavalue.authority = ?";
+            rows = DatabaseManager.queryTable(context, "item", query, mdf.getFieldID(), authority);
+        }
+        return new ItemIterator(context, rows);
+    }
+
+    /**
+     * Add Dublin Core metadata fields. These are appended to existing values.
+     * Use <code>clearDC</code> to remove values. The ordering of values
+     * passed in is maintained.
+     *
+     * @param element
+     *            the Dublin Core element
+     * @param qualifier
+     *            the Dublin Core qualifier, or <code>null</code> for
+     *            unqualified
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means the
+     *            value has no language (for example, a date).
+     * @param values
+     *            the values to add.
+     */
+    @Deprecated
+    public void addDC(String element, String qualifier, String lang,
+            String[] values)
+    {
+        addMetadata(MetadataSchema.DC_SCHEMA, element, qualifier, lang, values);
+    }
+
+    /**
+     * Add a single Dublin Core metadata field. This is appended to existing
+     * values. Use <code>clearDC</code> to remove values.
+     *
+     * @param element
+     *            the Dublin Core element
+     * @param qualifier
+     *            the Dublin Core qualifier, or <code>null</code> for
+     *            unqualified
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means the
+     *            value has no language (for example, a date).
+     * @param value
+     *            the value to add.
+     */
+    @Deprecated
+    public void addDC(String element, String qualifier, String lang,
+            String value)
+    {
+        addMetadata(MetadataSchema.DC_SCHEMA, element, qualifier, lang, value);
+    }
+    
+    /**
+     * Add metadata fields. These are appended to existing values.
+     * Use <code>clearDC</code> to remove values. The ordering of values
+     * passed in is maintained.
+     * <p>
+     * If metadata authority control is available, try to get authority
+     * values.  The authority confidence depends on whether authority is
+     * <em>required</em> or not.
+     * @param schema
+     *            the schema for the metadata field. <em>Must</em> match
+     *            the <code>name</code> of an existing metadata schema.
+     * @param element
+     *            the metadata element name
+     * @param qualifier
+     *            the metadata qualifier name, or <code>null</code> for
+     *            unqualified
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means the
+     *            value has no language (for example, a date).
+     * @param values
+     *            the values to add.
+     */
+    public void addMetadata(String schema, String element, String qualifier, String lang,
+            String[] values)
+    {
+        MetadataAuthorityManager mam = MetadataAuthorityManager.getManager();
+        String fieldKey = MetadataAuthorityManager.makeFieldKey(schema, element, qualifier);
+        if (mam.isAuthorityControlled(fieldKey))
+        {
+            String authorities[] = new String[values.length];
+            int confidences[] = new int[values.length];
+            for (int i = 0; i < values.length; ++i)
+            {
+                Choices c = ChoiceAuthorityManager.getManager().getBestMatch(fieldKey, values[i], getOwningCollectionID(), null);
+                authorities[i] = c.values.length > 0 ? c.values[0].authority : null;
+                confidences[i] = c.confidence;
+            }
+            addMetadata(schema, element, qualifier, lang, values, authorities, confidences);
+        }
+        else
+        {
+            addMetadata(schema, element, qualifier, lang, values, null, null);
+        }
+    }
+
+    /**
+     * Add metadata fields. These are appended to existing values.
+     * Use <code>clearDC</code> to remove values. The ordering of values
+     * passed in is maintained.
+     * @param schema
+     *            the schema for the metadata field. <em>Must</em> match
+     *            the <code>name</code> of an existing metadata schema.
+     * @param element
+     *            the metadata element name
+     * @param qualifier
+     *            the metadata qualifier name, or <code>null</code> for
+     *            unqualified
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means the
+     *            value has no language (for example, a date).
+     * @param values
+     *            the values to add.
+     * @param authorities
+     *            the external authority key for this value (or null)
+     * @param confidences
+     *            the authority confidence (default 0)
+     */
+    public void addMetadata(String schema, String element, String qualifier, String lang,
+            String[] values, String authorities[], int confidences[])
+    {
+        List<DCValue> dublinCore = getMetadata();
+        MetadataAuthorityManager mam = MetadataAuthorityManager.getManager();        
+        boolean authorityControlled = mam.isAuthorityControlled(schema, element, qualifier);
+        boolean authorityRequired = mam.isAuthorityRequired(schema, element, qualifier);
+        String fieldName = schema+"."+element+((qualifier==null)? "": "."+qualifier);
+
+        // We will not verify that they are valid entries in the registry
+        // until update() is called.
+        for (int i = 0; i < values.length; i++)
+        {
+            DCValue dcv = new DCValue();
+            dcv.schema = schema;
+            dcv.element = element;
+            dcv.qualifier = qualifier;
+            dcv.language = (lang == null ? null : lang.trim());
+
+            // Logic to set Authority and Confidence:
+            //  - normalize an empty string for authority to NULL.
+            //  - if authority key is present, use given confidence or NOVALUE if not given
+            //  - otherwise, preserve confidence if meaningful value was given since it may document a failed authority lookup
+            //  - CF_UNSET signifies no authority nor meaningful confidence.
+            //  - it's possible to have empty authority & CF_ACCEPTED if e.g. user deletes authority key
+            if (authorityControlled)
+            {
+                if (authorities != null && authorities[i] != null && authorities[i].length() > 0)
+                {
+                    dcv.authority = authorities[i];
+                    dcv.confidence = confidences == null ? Choices.CF_NOVALUE : confidences[i];
+                }
+                else
+                {
+                    dcv.authority = null;
+                    dcv.confidence = confidences == null ? Choices.CF_UNSET : confidences[i];
+                }
+                // authority sanity check: if authority is required, was it supplied?
+                // XXX FIXME? can't throw a "real" exception here without changing all the callers to expect it, so use a runtime exception
+                if (authorityRequired && (dcv.authority == null || dcv.authority.length() == 0))
+                {
+                    throw new IllegalArgumentException("The metadata field \"" + fieldName + "\" requires an authority key but none was provided. Vaue=\"" + dcv.value + "\"");
+                }
+            }
+            if (values[i] != null)
+            {
+                // remove control unicode char
+                String temp = values[i].trim();
+                char[] dcvalue = temp.toCharArray();
+                for (int charPos = 0; charPos < dcvalue.length; charPos++)
+                {
+                    if (Character.isISOControl(dcvalue[charPos]) &&
+                        !String.valueOf(dcvalue[charPos]).equals("\u0009") &&
+                        !String.valueOf(dcvalue[charPos]).equals("\n") &&
+                        !String.valueOf(dcvalue[charPos]).equals("\r"))
+                    {
+                        dcvalue[charPos] = ' ';
+                    }
+                }
+                dcv.value = String.valueOf(dcvalue);
+            }
+            else
+            {
+                dcv.value = null;
+            }
+            dublinCore.add(dcv);
+            addDetails(fieldName);
+        }
+
+        if (values.length > 0)
+        {
+            dublinCoreChanged = true;
+        }
+    }
+
+    /**
+     * Add a single metadata field. This is appended to existing
+     * values. Use <code>clearDC</code> to remove values.
+     *
+     * @param schema
+     *            the schema for the metadata field. <em>Must</em> match
+     *            the <code>name</code> of an existing metadata schema.
+     * @param element
+     *            the metadata element name
+     * @param qualifier
+     *            the metadata qualifier, or <code>null</code> for
+     *            unqualified
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means the
+     *            value has no language (for example, a date).
+     * @param value
+     *            the value to add.
+     */
+    public void addMetadata(String schema, String element, String qualifier,
+            String lang, String value)
+    {
+        String[] valArray = new String[1];
+        valArray[0] = value;
+
+        addMetadata(schema, element, qualifier, lang, valArray);
+    }
+
+    /**
+     * Add a single metadata field. This is appended to existing
+     * values. Use <code>clearDC</code> to remove values.
+     *
+     * @param schema
+     *            the schema for the metadata field. <em>Must</em> match
+     *            the <code>name</code> of an existing metadata schema.
+     * @param element
+     *            the metadata element name
+     * @param qualifier
+     *            the metadata qualifier, or <code>null</code> for
+     *            unqualified
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means the
+     *            value has no language (for example, a date).
+     * @param value
+     *            the value to add.
+     * @param authority
+     *            the external authority key for this value (or null)
+     * @param confidence
+     *            the authority confidence (default 0)
+     */
+    public void addMetadata(String schema, String element, String qualifier,
+            String lang, String value, String authority, int confidence)
+    {
+        String[] valArray = new String[1];
+        String[] authArray = new String[1];
+        int[] confArray = new int[1];
+        valArray[0] = value;
+        authArray[0] = authority;
+        confArray[0] = confidence;
+
+        addMetadata(schema, element, qualifier, lang, valArray, authArray, confArray);
+    }
+
+    /**
+     * Clear Dublin Core metadata values. As with <code>getDC</code> above,
+     * passing in <code>null</code> only matches fields where the qualifier or
+     * language is actually <code>null</code>.<code>Item.ANY</code> will
+     * match any element, qualifier or language, including <code>null</code>.
+     * Thus, <code>item.clearDC(Item.ANY, Item.ANY, Item.ANY)</code> will
+     * remove all Dublin Core metadata associated with an item.
+     *
+     * @param element
+     *            the Dublin Core element to remove, or <code>Item.ANY</code>
+     * @param qualifier
+     *            the qualifier. <code>null</code> means unqualified, and
+     *            <code>Item.ANY</code> means any qualifier (including
+     *            unqualified.)
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means only
+     *            values with no language are removed, and <code>Item.ANY</code>
+     *            means values with any country code or no country code are
+     *            removed.
+     */
+    @Deprecated
+    public void clearDC(String element, String qualifier, String lang)
+    {
+        clearMetadata(MetadataSchema.DC_SCHEMA, element, qualifier, lang);
+    }
+
+    /**
+     * Clear metadata values. As with <code>getDC</code> above,
+     * passing in <code>null</code> only matches fields where the qualifier or
+     * language is actually <code>null</code>.<code>Item.ANY</code> will
+     * match any element, qualifier or language, including <code>null</code>.
+     * Thus, <code>item.clearDC(Item.ANY, Item.ANY, Item.ANY)</code> will
+     * remove all Dublin Core metadata associated with an item.
+     *
+     * @param schema
+     *            the schema for the metadata field. <em>Must</em> match
+     *            the <code>name</code> of an existing metadata schema.
+     * @param element
+     *            the Dublin Core element to remove, or <code>Item.ANY</code>
+     * @param qualifier
+     *            the qualifier. <code>null</code> means unqualified, and
+     *            <code>Item.ANY</code> means any qualifier (including
+     *            unqualified.)
+     * @param lang
+     *            the ISO639 language code, optionally followed by an underscore
+     *            and the ISO3166 country code. <code>null</code> means only
+     *            values with no language are removed, and <code>Item.ANY</code>
+     *            means values with any country code or no country code are
+     *            removed.
+     */
+    public void clearMetadata(String schema, String element, String qualifier,
+            String lang)
+    {
+        // We will build a list of values NOT matching the values to clear
+        List<DCValue> values = new ArrayList<DCValue>();
+        for (DCValue dcv : getMetadata())
+        {
+            if (!match(schema, element, qualifier, lang, dcv))
+            {
+                values.add(dcv);
+            }
+        }
+
+        // Now swap the old list of values for the new, unremoved values
+        setMetadata(values);
+        dublinCoreChanged = true;
+    }
+
+    /**
+     * Utility method for pattern-matching metadata elements.  This
+     * method will return <code>true</code> if the given schema,
+     * element, qualifier and language match the schema, element,
+     * qualifier and language of the <code>DCValue</code> object passed
+     * in.  Any or all of the element, qualifier and language passed
+     * in can be the <code>Item.ANY</code> wildcard.
+     *
+     * @param schema
+     *            the schema for the metadata field. <em>Must</em> match
+     *            the <code>name</code> of an existing metadata schema.
+     * @param element
+     *            the element to match, or <code>Item.ANY</code>
+     * @param qualifier
+     *            the qualifier to match, or <code>Item.ANY</code>
+     * @param language
+     *            the language to match, or <code>Item.ANY</code>
+     * @param dcv
+     *            the Dublin Core value
+     * @return <code>true</code> if there is a match
+     */
+    private boolean match(String schema, String element, String qualifier,
+            String language, DCValue dcv)
+    {
+        // We will attempt to disprove a match - if we can't we have a match
+        if (!element.equals(Item.ANY) && !element.equals(dcv.element))
+        {
+            // Elements do not match, no wildcard
+            return false;
+        }
+
+        if (qualifier == null)
+        {
+            // Value must be unqualified
+            if (dcv.qualifier != null)
+            {
+                // Value is qualified, so no match
+                return false;
+            }
+        }
+        else if (!qualifier.equals(Item.ANY))
+        {
+            // Not a wildcard, so qualifier must match exactly
+            if (!qualifier.equals(dcv.qualifier))
+            {
+                return false;
+            }
+        }
+
+        if (language == null)
+        {
+            // Value must be null language to match
+            if (dcv.language != null)
+            {
+                // Value is qualified, so no match
+                return false;
+            }
+        }
+        else if (!language.equals(Item.ANY))
+        {
+            // Not a wildcard, so language must match exactly
+            if (!language.equals(dcv.language))
+            {
+                return false;
+            }
+        }
+
+        if (!schema.equals(Item.ANY))
+        {
+            if (dcv.schema != null && !dcv.schema.equals(schema))
+            {
+                // The namespace doesn't match
+                return false;
+            }
+        }
+
+        // If we get this far, we have a match
+        return true;
     }
 
     /**
