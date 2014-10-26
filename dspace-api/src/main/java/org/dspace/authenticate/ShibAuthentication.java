@@ -336,7 +336,7 @@ public class ShibAuthentication implements AuthenticationMethod
 			} // if affiliations
 
 
-//			log.info("Added current EPerson to special groups: "+groups);
+			log.info("Added current EPerson to special groups: "+groups);
 
 			// Convert from a Java Set to primitive int array
 			int groupIds[] = new int[groups.size()];
@@ -357,7 +357,7 @@ public class ShibAuthentication implements AuthenticationMethod
 	}
 
     /**
-     * Checks the affiliation agains all possible rule sets and returns a comma separated string with the
+     * Checks the affiliation against all possible rule sets and returns a comma separated string with the
      * matching groups.
      * 
      * @param affiliation
