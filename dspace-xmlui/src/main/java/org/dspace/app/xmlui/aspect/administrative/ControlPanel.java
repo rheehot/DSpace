@@ -8,6 +8,7 @@
 package org.dspace.app.xmlui.aspect.administrative;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -15,6 +16,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Properties;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -94,6 +96,8 @@ public class ControlPanel extends AbstractDSpaceTransformer implements Serviceab
     private static final Message T_DSPACE_HOST_NAME             = message("xmlui.administrative.ControlPanel.dspace_hostname");
     private static final Message T_DSPACE_NAME 			= message("xmlui.administrative.ControlPanel.dspace_name");
     private static final Message T_DSPACE_VERSION               = message("xmlui.administrative.ControlPanel.dspace_version");
+    private static final Message T_SCM_REVISION               = message("xmlui.administrative.ControlPanel.scm_revision");
+    private static final Message T_SCM_BRANCH               = message("xmlui.administrative.ControlPanel.scm_branch");
     private static final Message T_DB_NAME 			= message("xmlui.administrative.ControlPanel.db_name");
     private static final Message T_DB_URL 			= message("xmlui.administrative.ControlPanel.db_url");
     private static final Message T_DB_DRIVER 			= message("xmlui.administrative.ControlPanel.db_driver");
@@ -155,6 +159,8 @@ public class ControlPanel extends AbstractDSpaceTransformer implements Serviceab
     private static final Message T_harvest_label_oai_source 		= message("xmlui.administrative.ControlPanel.harvest_label_oai_source");
     private static final Message T_harvest_head_harvester_settings 	= message("xmlui.administrative.ControlPanel.harvest_head_harvester_settings");
 
+    InputStream propStream;
+    Properties sys = System.getProperties();
 
     /** 
      * The service manager allows us to access the continuation's 
@@ -497,6 +503,20 @@ public class ControlPanel extends AbstractDSpaceTransformer implements Serviceab
         dspace.addLabel(T_DSPACE_VERSION);
         dspace.addItem(Util.getSourceVersion());
 
+        // SCM revision
+        Properties scm = new Properties();
+        propStream = ControlPanel.class.getResourceAsStream("/scm.properties");
+        if (null != propStream)
+        {
+            scm.load(propStream);
+        }
+
+		dspace.addLabel(T_SCM_REVISION);
+		dspace.addItem(notnull(scm.get("revision")));
+
+ 		dspace.addLabel(T_SCM_BRANCH);
+		dspace.addItem(notnull(scm.get("branch")));
+       
         dspace.addLabel(T_DSPACE_DIR);
         dspace.addItem(notnull(ConfigurationManager.getProperty("dspace.dir")));
 
