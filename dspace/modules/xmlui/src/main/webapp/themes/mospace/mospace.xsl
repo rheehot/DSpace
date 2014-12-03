@@ -11,7 +11,11 @@
         xmlns="http://www.w3.org/1999/xhtml"
         exclude-result-prefixes="i18n dri mets xlink xsl dim xhtml mods dc">
 
+    <!-- first, import Mirage -->
     <xsl:import href="../Mirage/Mirage.xsl"/>
+
+	<!-- and now manually override anything we want to change from the default Mirage, yes, it's not magic -->
+    <xsl:import href="lib/xsl/core/page-structure.xsl"/>
     <xsl:import href="lib/xsl/aspect/artifactbrowser/item-view.xsl"/>
     <xsl:import href="lib/xsl/aspect/artifactbrowser/item-list.xsl"/>
 
