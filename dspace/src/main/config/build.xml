@@ -1054,6 +1054,9 @@ You may manually install this file by following these steps:
             <arg value="${version}" />
         </java>
 
+
+	<!-- TODO: make this MUCH sturdier, it needs to leave empty indexes ALONE -->
+
         <!-- Fail if the previous command returns a non-zero result, as this
              means we couldn't determine the Solr index version.
              We need this special error handling, since we are capturing the

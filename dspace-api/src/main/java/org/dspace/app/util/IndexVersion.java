@@ -64,7 +64,10 @@ public class IndexVersion
         // If indexVersion comes back as null, then this is likely not a valid directory
         if(indexVersion==null)
         {
-            System.out.println("\nRequired Solr/Lucene index directory is invalid.");
+
+            // TODO: this should be sturdier, add an exception for empty indexes, they're not invalid, they are empty
+
+	    System.out.println("\nRequired Solr/Lucene index directory is invalid.");
             System.out.println("The following path does NOT seem to be a valid index directory:");
             System.out.println(argv[0]);
             System.out.println("Please pass in the full path of the Solr/Lucene Index directory to analyze");
@@ -108,6 +111,13 @@ public class IndexVersion
         if(dir.exists() && dir.isDirectory())
         {
             Directory indexDir = FSDirectory.open(dir);
+
+
+	    // TODO: if the directory is empty, don't even bother trying
+            if(isDirEmpty(indexDirPath))
+            {
+	        return 0;
+	    }
 
             // Get info on the Lucene segment file(s) in Solr index directory
             SegmentInfos sis = new SegmentInfos();
@@ -268,4 +278,12 @@ public class IndexVersion
         // The current version of lucene is in the "LATEST" constant
         return org.apache.lucene.util.Version.LATEST.toString();
     }
+
+
+    private static boolean isDirEmpty(final Path directory) throws IOException {
+        try(DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
+	    return !dirStream.iterator().hasNext();
+	}
+    }
+
 }
