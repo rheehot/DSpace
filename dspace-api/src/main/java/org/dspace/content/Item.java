@@ -300,7 +300,7 @@ public class Item extends DSpaceObject
 
         TableRowIterator rows;
 
-        if(limit != null && limit > 0) {
+        if(limit != null && limit > 0 && !DatabaseManager.isOracle()) {
             querySorted += " limit ? ;";
             rows = DatabaseManager.query(context, querySorted, Constants.ITEM, eperson.getID(), limit);
         } else {
