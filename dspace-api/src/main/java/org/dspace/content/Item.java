@@ -293,10 +293,16 @@ public class Item extends DSpaceObject
                 "  metadatavalue.resource_type_id = ? AND " +
                 "  metadatafieldregistry.element = 'date' AND " +
                 "  metadatafieldregistry.qualifier = 'accessioned' AND " +
-                "  item.submitter_id = ? AND \n" +
-                "  item.in_archive = true\n" +
-                "ORDER BY\n" +
-                "  metadatavalue.text_value desc";
+                "  item.submitter_id = ? AND ";
+				if (!DatabaseManager.isOracle()) {
+
+					querySorted += "  item.in_archive = true ";
+
+				} else {
+					querySorted += " item.in_archive=1 ";
+				}
+
+                querySorted += "ORDER BY metadatavalue.text_value desc";
 
         TableRowIterator rows;
 
