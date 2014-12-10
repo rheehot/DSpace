@@ -294,15 +294,16 @@ public class Item extends DSpaceObject
                 "  metadatafieldregistry.element = 'date' AND " +
                 "  metadatafieldregistry.qualifier = 'accessioned' AND " +
                 "  item.submitter_id = ? AND ";
+				/* For PostgreSQL we do it this way */
 				if (!DatabaseManager.isOracle()) {
-
 					querySorted += "  item.in_archive = true ";
-
+                	querySorted += "ORDER BY metadatavalue.text_value desc";
+				/* and for Oracle we do it this way, you can't order by clobs */
 				} else {
 					querySorted += " item.in_archive=1 ";
+                	querySorted += "ORDER BY cast(substr(metadatavalue.text_value,1,100) as varchar2(100)) desc";
 				}
 
-                querySorted += "ORDER BY metadatavalue.text_value desc";
 
         TableRowIterator rows;
 
