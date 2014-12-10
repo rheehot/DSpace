@@ -302,6 +302,7 @@ public class Item extends DSpaceObject
 				} else {
 					querySorted += " item.in_archive=1 ";
                 	querySorted += "ORDER BY cast(substr(metadatavalue.text_value,1,100) as varchar2(100)) desc";
+					querySorted = querySorted.toUpperCase();
 				}
 
 
@@ -311,7 +312,7 @@ public class Item extends DSpaceObject
             querySorted += " limit ? ;";
             rows = DatabaseManager.query(context, querySorted, Constants.ITEM, eperson.getID(), limit);
         } else {
-            querySorted += ";";
+            //querySorted += ";";
             rows = DatabaseManager.query(context, querySorted, Constants.ITEM, eperson.getID());
         }
 
