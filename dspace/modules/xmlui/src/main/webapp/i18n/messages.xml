@@ -136,6 +136,7 @@
    <!--  some common other possibilities for Advanced Search Fields -->
    <message key="xmlui.ArtifactBrowser.AdvancedSearch.type_contributor">Contributor</message>
    <message key="xmlui.ArtifactBrowser.AdvancedSearch.type_creator">Creator</message>
+   <message key="xmlui.ArtifactBrowser.AdvancedSearch.type_subject">Subject</message>
    <message key="xmlui.ArtifactBrowser.AdvancedSearch.type_description">Description</message>
    <message key="xmlui.ArtifactBrowser.AdvancedSearch.type_relation">Relation</message>
    <message key="xmlui.ArtifactBrowser.AdvancedSearch.type_mime">Mime-Type</message>
@@ -177,8 +178,12 @@
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.order.asc">ascending</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.order.desc">descending</message>
 
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.column_heading">Title</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.author.column_heading">Authors Name</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.subject.column_heading">Subject</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.discipline.column_heading">Theses Department</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.semester.column_heading">Theses Semester</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.advisor.column_heading">Theses Advisor</message>
 
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.author">Browsing {0} by Author {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.author">Browsing {0} by Author</message>
@@ -189,12 +194,23 @@
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.title">Browsing {0} by Title {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.title">Browsing {0} by Title</message>
 
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.title">Browsing {0} by Title {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.title">Browsing {0} by Title</message>
+
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.dateissued">Browsing {0} by Issue Date {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.dateissued">Browsing {0} by Issue Date</message>
 
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.item.dateaccessioned">Browsing {0} by Submit Date {1}</message>
 	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.item.dateaccessioned">Browsing {0} by Submit Date</message>
 
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.discipline">Browsing {0} by Theses Department {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.discipline">Browsing {0} by Theses Department</message>
+
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.semester">Browsing {0} by Theses Semester {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.semester">Browsing {0} by Theses Semester</message>
+
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.title.metadata.advisor">Browsing {0} by Theses Advisor {1}</message>
+	<message key="xmlui.ArtifactBrowser.ConfigurableBrowse.trail.metadata.advisor">Browsing {0} by Theses Advisor</message>
 
 	<!-- org.dspace.app.xmlui.artifactbrowser.CollectionViewer.java -->
 	<message key="xmlui.ArtifactBrowser.CollectionViewer.search_scope">Search Scope</message>
@@ -252,11 +268,15 @@
 	<message key="xmlui.ArtifactBrowser.FeedbackSent.head">Feedback sent</message>
 	<message key="xmlui.ArtifactBrowser.FeedbackSent.para1">Your comments have been received.</message>
 
+	<!-- org.dspace.app.xmlui.artifactbrowser.FrontPageSearch.java -->
+	<message key="xmlui.ArtifactBrowser.FrontPageSearch.head">Search MOspace</message>
+	<message key="xmlui.ArtifactBrowser.FrontPageSearch.para1">Enter some text in the box below to search MOspace.</message>
+
 	<!-- org.dspace.app.xmlui.artifactbrowser.ItemViewer.java -->
 	<message key="xmlui.ArtifactBrowser.ItemViewer.trail">View Item</message>
 	<message key="xmlui.ArtifactBrowser.ItemViewer.head_parent_collections">This item appears in the following Collection(s)</message>
-	<message key="xmlui.ArtifactBrowser.ItemViewer.show_simple">Show simple item record</message>
-	<message key="xmlui.ArtifactBrowser.ItemViewer.show_full">Show full item record</message>
+	<message key="xmlui.ArtifactBrowser.ItemViewer.show_simple">[-] show simple item record</message>
+	<message key="xmlui.ArtifactBrowser.ItemViewer.show_full">[+] show full item record</message>
 
         <message key="xmlui.ArtifactBrowser.ItemViewer.withdrawn">This item has been withdrawn and is no longer available.</message>
 
@@ -269,6 +289,9 @@
 	<message key="xmlui.ArtifactBrowser.Navigation.browse_subject">Subjects</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.browse_dateissued">By Issue Date</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.browse_dateaccessioned">By Submit Date</message>
+	<message key="xmlui.ArtifactBrowser.Navigation.browse_discipline">Theses Department</message>
+	<message key="xmlui.ArtifactBrowser.Navigation.browse_semester">Theses Semester</message>
+	<message key="xmlui.ArtifactBrowser.Navigation.browse_advisor">Theses Advisor</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.head_this_collection">This Collection</message>
 	<message key="xmlui.ArtifactBrowser.Navigation.head_this_community">This Community</message>
 
@@ -451,10 +474,10 @@
 	<message key="xmlui.EPerson.trail_forgot_password">Forgot Password</message>
 
 	<!-- org.dspace.app.xmlui.eperson.CannotRegister.java -->
-	<message key="xmlui.EPerson.CannotRegister.title">Registration unavailable</message>
-	<message key="xmlui.EPerson.CannotRegister.head">Registration unavailable</message>
-	<message key="xmlui.EPerson.CannotRegister.para1">The configuration of this MOspace repository does not allow registration in this context. Please contact the <a href="../contact">site administrator</a> with questions or comments.</message>
-
+	<message key="xmlui.EPerson.CannotRegister.title">Self-Registration unavailable to UM e-mail domains</message>
+	<message key="xmlui.EPerson.CannotRegister.head">Self-Registration unavailable to UM e-mail domains</message>
+	<message key="xmlui.EPerson.CannotRegister.para1">Self-registration is not available to users with e-mail addresses in a University of Missouri domain (for example: @umsystem.edu, @missouri.edu, @umkc.edu, etc.). If you have a valid UM e-mail address, you may use the <a href="shibboleth-login">UM Single Sign On (Shibboleth)</a> to log in to MOspace. Please contact the <a href="../contact">site administrator</a> with questions or comments.</message>
+	
 	<!-- org.dspace.app.xmlui.eperson.EditProfile.java -->
 	<message key="xmlui.EPerson.EditProfile.title_update">Update Profile</message>
 	<message key="xmlui.EPerson.EditProfile.title_create">Create Profile</message>
@@ -514,19 +537,21 @@
 	<message key="xmlui.EPerson.PasswordLogin.title">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.trail">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.head1">Sign in to MOspace</message>
+	<message key="xmlui.EPerson.PasswordLogin.title">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.email_address">E-Mail Address</message>
 	<message key="xmlui.EPerson.PasswordLogin.error_bad_login">The email address and/or password supplied were not valid.</message>
 	<message key="xmlui.EPerson.PasswordLogin.password">Password</message>
 	<message key="xmlui.EPerson.PasswordLogin.forgot_link"> Forgot your password?</message>
 	<message key="xmlui.EPerson.PasswordLogin.submit">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.head2">Register new user (non-UM only)</message>
-	<message key="xmlui.EPerson.PasswordLogin.para1"></message>
-	<message key="xmlui.EPerson.PasswordLogin.register_link">Register an account to subscribe to collections for email updates. Registration is only required if you are NOT a student of, or employed by, the University of Missouri. If your e-mail address is in a University of Missouri domain (for example: @umsystem.edu, @missouri.edu, @umkc.edu, etc.), you may sign in using the <a href="shibboleth-login">UM Single Sign-on (Shibboleth)</a>.</message>
+	<message key="xmlui.EPerson.PasswordLogin.para1">Register an account to subscribe to collections for email updates. Registration is only required if you are NOT a student of, or employed by, the University of Missouri. If your e-mail address is in a University of Missouri domain (for example: @umsystem.edu, @missouri.edu, @umkc.edu, etc.), you may sign in using the <a href="shibboleth-login">UM Single Sign-on (Shibboleth)</a>.</message>
+	<message key="xmlui.EPerson.PasswordLogin.register_link">Click here to register.</message>
 
 	<!-- org.dspace.app.xmlui.eperson.LDAPLogin.java -->
 	<message key="xmlui.EPerson.LDAPLogin.title">Sign in</message>
 	<message key="xmlui.EPerson.LDAPLogin.trail">Sign in</message>
 	<message key="xmlui.EPerson.LDAPLogin.head1">Sign in to MOspace</message>
+	<message key="xmlui.EPerson.LDAPLogin.title">Sign in</message>
 	<message key="xmlui.EPerson.LDAPLogin.username">User Name</message>
 	<message key="xmlui.EPerson.LDAPLogin.error_bad_login">The user name and/or password supplied were not valid.</message>
 	<message key="xmlui.EPerson.LDAPLogin.password">Password</message>
@@ -650,7 +675,7 @@
 	<!-- org.dspace.app.xmlui.Submission.submissions -->
 	<message key="xmlui.Submission.Submissions.title">Submissions &amp; Workflow</message>
 	<message key="xmlui.Submission.Submissions.trail">Submissions</message>
-	<message key="xmlui.Submission.Submissions.head">Submissions &amp; Workflow tasks</message>
+	<message key="xmlui.Submission.Submissions.head">Submissions &amp; workflow tasks</message>
 	<message key="xmlui.Submission.Submissions.untitled"><i>Untitled</i></message>
 	<message key="xmlui.Submission.Submissions.email">email: </message>
 	<!-- Same transformer, workflow section -->
@@ -2115,6 +2140,7 @@
     <message key="xmlui.statistics.display.table.workflow.step.default.editstep.editaction">Accept/Reject/Edit Metadata Step</message>
     <message key="xmlui.statistics.display.table.workflow.step.default.finaleditstep.claimaction">Edit Metadata Step Pool</message>
     <message key="xmlui.statistics.display.table.workflow.step.default.finaleditstep.finaleditaction">Edit Metadata Step</message>
+    <message key="xmlui.statistics.display.table.workflow.step.default.finaleditstep.finaleditaction">Edit Metadata Step</message>
     <message key="xmlui.statistics.display.table.workflow.step.scoreReview.scoreReviewStep.claimaction">Score Review Pool</message>
     <message key="xmlui.statistics.display.table.workflow.step.scoreReview.scoreReviewStep.scorereviewaction">Score Review</message>
     <message key="xmlui.statistics.display.table.workflow.step.scoreReview.evaluationStep.evaluationaction">Score Review Evaluation</message>
@@ -2159,7 +2185,7 @@
 			<span id="ds-footer-logo">&#160;</span>
 		</a>
 		<p>
-			This website is using Manakin, a new front end for MOspace created by Texas A&amp;M University
+			This website is using Manakin, a new front end for DSpace created by Texas A&amp;M University
 			Libraries. The interface can be extensively modified through Manakin Aspects and XSL based Themes.
 			For more information visit
 			<a href="http://di.tamu.edu">http://di.tamu.edu</a> and
@@ -2195,7 +2221,7 @@
 	<message key="xmlui.dri2xhtml.METS-1.0.no-title">Untitled</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.no-author">Unknown author</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.non-conformant">
-		This is not a MOspace object conformant to the METS 1.0 profile and as such cannot be
+		This is not a DSpace object conformant to the METS 1.0 profile and as such cannot be
         rendered effectively. You can override either the template that handles the general
         case in dri2xhtml to perform the needed function, or create your template to match
         whatever profile you use.
