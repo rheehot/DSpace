@@ -1,6 +1,6 @@
 # Configure authority control for Unit Testing
 # (This overrides default, commented out settings in dspace.cfg)
-plugin.selfnamed.org.dspace.content.authority.ChoiceAuthority = \
+plugin.named.org.dspace.content.authority.ChoiceAuthority = \
 	org.dspace.content.authority.DCInputAuthority, \
     org.dspace.content.authority.DSpaceControlledVocabulary
 
