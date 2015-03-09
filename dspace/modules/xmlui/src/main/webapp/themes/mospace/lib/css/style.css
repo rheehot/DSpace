@@ -1403,7 +1403,7 @@ table.discovery-filters th.new-filter-header
 
 div#ms-navigation {
         position: absolute;
-        top: 0;
+        top: 100px;
         left: 50%;
         margin: 0;
         width: 466px;
