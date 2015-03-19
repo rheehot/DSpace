@@ -447,12 +447,11 @@
     </fieldType>
 
     <fieldType name="keywordFilterLowerCase" class="solr.TextField" sortMissingLast="true" omitNorms="true">
-        <analyzer>
-            <!--Treats the entire field as a single token, regardless of its content-->
-            <tokenizer class="solr.KeywordTokenizerFactory"/>
-
-            <filter class="solr.LowerCaseFilterFactory" />
+		<analyzer>
+	        <tokenizer class="solr.KeywordTokenizerFactory"/>
             <filter class="solr.TrimFilterFactory" />
+            <filter class="solr.EnglishMinimalStemFilterFactory" />
+            <filter class="solr.LowerCaseFilterFactory" />
         </analyzer>
     </fieldType>
 
@@ -573,15 +572,16 @@
     <dynamicField name="*_ac" type="keywordFilter" indexed="true" stored="true" omitNorms="true" multiValued="true"/>
 	<dynamicField name="*_acid" type="keywordFilter" indexed="true" stored="true" omitNorms="true" multiValued="true"/>
 	
+
      <!--Dynamic field used for sidebar filters & SOLR browse by value -->
      <dynamicField name="*_filter" type="keywordFilter" indexed="true" stored="true" multiValued="true" omitNorms="true" />
      <dynamicField name="*_authority" type="keywordFilter" indexed="true" stored="true" multiValued="true" omitNorms="true" />
      <dynamicField name="*_keyword" type="keywordFilter" indexed="true" stored="true" multiValued="true" omitNorms="true" />
 
-	<!-- Static config for subject index, to ensure it is case-insensitive -->
-	<field name="subject_keyword" type="keywordFilterLowerCase" indexed="true" stored="true" omitNorms="true" multiValued="true" />
+   	 <!-- Static config for subject index, to ensure it is case-insensitive -->
+	 <field name="subject_keyword" type="keywordFilterLowerCase" indexed="true" stored="true" omitNorms="true" multiValued="true" />
 
-	<!--Dynamic field used for SOLR browse by partial value -->
+	 <!--Dynamic field used for SOLR browse by partial value -->
      <dynamicField name="*_partial" type="text" indexed="true" stored="true" multiValued="true" omitNorms="true" />
      
      <!--Dynamic field used for hit highlighting-->
