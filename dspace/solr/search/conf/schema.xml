@@ -579,7 +579,7 @@
      <dynamicField name="*_keyword" type="keywordFilter" indexed="true" stored="true" multiValued="true" omitNorms="true" />
 
    	 <!-- Static config for subject index, to ensure it is case-insensitive -->
-	 <field name="subject_keyword" type="keywordFilterLowerCase" indexed="true" stored="true" omitNorms="true" multiValued="true" />
+	 <field name="subject_keyword" type="lowercase" indexed="true" stored="true" omitNorms="true" multiValued="true" />
 
 	 <!--Dynamic field used for SOLR browse by partial value -->
      <dynamicField name="*_partial" type="text" indexed="true" stored="true" multiValued="true" omitNorms="true" />
