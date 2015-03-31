@@ -15,5 +15,6 @@
     <xsl:import href="lib/xsl/core/page-structure.xsl"/>
     <xsl:import href="lib/xsl/aspect/artifactbrowser/item-view.xsl"/>
     <xsl:import href="lib/xsl/aspect/artifactbrowser/item-list.xsl"/>
+    <xsl:import href="lib/xsl/aspect/artifactbrowser/DIM-Handler.xsl"/>
 
 </xsl:stylesheet>
