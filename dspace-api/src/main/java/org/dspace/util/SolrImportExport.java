@@ -60,7 +60,7 @@ public class SolrImportExport
 	private static final String KEEP_OPTION = "k";
 	private static final String LAST_OPTION = "l";
 
-	public static final int ROWS_PER_FILE = 1_000;
+	public static final int ROWS_PER_FILE = 10_000;
 
 	private static final Logger log = Logger.getLogger(SolrImportExport.class);
 
