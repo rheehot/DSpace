@@ -132,6 +132,11 @@ public class SolrImportExport
 				{
 					try {
 						boolean keepExport = line.hasOption(KEEP_OPTION);
+						// assume keep option if directory option is specified
+						if (line.hasOption(DIRECTORY_OPTION))
+						{
+							keepExport == true;
+						}
 						reindex(indexName, exportDir, keepExport);
 					} catch (IOException | SolrServerException | SolrImportExportException e) {
 						e.printStackTrace();
