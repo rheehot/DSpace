@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.dspace.core.ConfigurationManager;
