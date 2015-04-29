@@ -61,6 +61,8 @@ public class CurateCommunityForm extends AbstractDSpaceTransformer   {
 	private static final Message T_curation_mode_perform_help = message("xmlui.administrative.CurateForm.curation_mode_perform_help");
 	private static final Message T_curation_mode_queue_help = message("xmlui.administrative.CurateForm.curation_mode_queue_help");
 
+    protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
+
     public void setup(SourceResolver resolver, Map objectModel, String src,
     		          Parameters parameters) throws ProcessingException, SAXException, IOException
     {
