@@ -222,7 +222,7 @@ public class ShibAuthentication implements AuthenticationMethod
 
 			// Step 4: Log the user in.
 			context.setCurrentUser(eperson);
-			request.getSession().setAttribute("shib.authenticated", true);
+			request.getSession(false).setAttribute("shib.authenticated", true);
 			AuthenticationManager.initEPerson(context, request, eperson);
 
 			log.info(eperson.getEmail()+" has been authenticated via shibboleth.");

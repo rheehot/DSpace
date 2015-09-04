@@ -19,6 +19,10 @@
         customizations to DSpace's interface.
     </description>
 
+	<session-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+
     <!-- Context Configuration ========================================== -->
 
     <!--+
