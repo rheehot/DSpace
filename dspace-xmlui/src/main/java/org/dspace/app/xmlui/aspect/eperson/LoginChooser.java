@@ -208,6 +208,16 @@ public class LoginChooser extends AbstractDSpaceTransformer implements
                                             : ("?" + request.getQueryString()));
                     loginURL = location.toString();
                 }
+				
+				// if this is an interrupted request, sneak in the dsRedirectURL to the login link so we don't have to rely on the session
+				// to maintain this information
+				if (AuthenticationUtil.isInterupptedRequest(objectModel))
+            	{
+					String redirectURL = AuthenticationUtil.resumeInterruptedRequest(objectModel);
+					loginURL += "?dsRedirectURL=" + redirectURL;
+				}
+
+				
 
                 final Item item = list.addItem();
                 item.addXref(loginURL, message(authTitle));

@@ -73,21 +73,16 @@ public class ShibbolethAction extends AbstractAction
             {
                 Request request = ObjectModelHelper.getRequest(objectModel);
             	// The user has successfully logged in
-            	String redirectURL = request.getContextPath();
+            	//String redirectURL = request.getContextPath();
+            	String redirectURL = request.getHeader("dsRedirectURL");
             	
-            	if (AuthenticationUtil.isInterupptedRequest(objectModel))
-            	{
-            		// Resume the request and set the redirect target URL to
-            		// that of the originally interrupted request.
-            		redirectURL += AuthenticationUtil.resumeInterruptedRequest(objectModel);
-            	}
-            	else
-            	{
-            		// Otherwise direct the user to the specified 'loginredirect' page (or homepage by default)
+/*            	if ( redirectURL == null )
+				{
+           		// Otherwise direct the user to the specified 'loginredirect' page (or homepage by default)
             		String loginRedirect = ConfigurationManager.getProperty("xmlui.user.loginredirect");
             		redirectURL += (loginRedirect != null) ? loginRedirect.trim() : "/";	
             	}
-            	
+  */          	
                 // Authentication successful - send a redirect.
                 final HttpServletResponse httpResponse = (HttpServletResponse) objectModel.get(HttpEnvironment.HTTP_RESPONSE_OBJECT);
                 
