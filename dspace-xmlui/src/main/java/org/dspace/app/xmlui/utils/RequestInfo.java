@@ -15,6 +15,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import java.io.Serializable;
+
 /**
  * Stores information about an HTTP request. This is used so that the request
  * can be replicated during a later request, once authentication has
@@ -28,7 +30,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * @author Scott Phillips
  * @version $Revision$
  */
-public class RequestInfo
+public class RequestInfo implements Serializable
 {
 	
 	/** Request characteristics that are stored for later resumption */
