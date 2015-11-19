@@ -45,7 +45,10 @@
 
                <!--Use site to override the default configuration for the home page & default discovery page-->
                <entry key="site" value-ref="homepageConfiguration" />
-               <!--<entry key="123456789/7621" value-ref="defaultConfiguration"/>-->
+               <entry key="10355/506" value-ref="defaultConfiguration"/> <!-- 506 = UM System top level community -->
+               <entry key="10355/1" value-ref="defaultConfiguration"/> <!-- 1 = MU top level community -->
+               <entry key="10355/3513" value-ref="defaultConfiguration"/> <!-- 3513 = UMKC top level community -->
+               <entry key="10355/9857" value-ref="defaultConfiguration"/> <!-- 9857 = UMSL top level community -->
             </map>
         </property>
         <property name="toIgnoreMetadataFields">
@@ -221,16 +224,7 @@
         <!--Which sidebar facets are to be displayed (same as defaultConfiguration above)-->
         <property name="sidebarFacets">
             <list>
-                <ref bean="searchFilterContentType" />
-                <ref bean="searchFilterSubject" />
-                <ref bean="searchFilterIssued" />
-                <ref bean="searchFilterAuthorContributor" />
-                <ref bean="searchFilterSubjectTimePeriod" />
-                <ref bean="searchFilterSubjectPlace" />
-                <ref bean="searchFilterAdvisor" />
-                <ref bean="searchFilterDiscipline" />
-                <ref bean="searchFilterThesisSemester" />
-                <ref bean="searchFilterLanguage" />
+
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
