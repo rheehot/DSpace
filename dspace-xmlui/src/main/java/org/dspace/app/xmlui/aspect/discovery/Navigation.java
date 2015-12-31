@@ -121,11 +121,11 @@ public class Navigation extends AbstractDSpaceTransformer implements CacheablePr
     */
 
         /* regulate the ordering */
-        options.addList("discovery");
         options.addList("browse");
         options.addList("account");
         options.addList("context");
         options.addList("administrative");
+        options.addList("discovery");
 
     }
 
