@@ -435,6 +435,9 @@ public abstract class AbstractSearch extends AbstractDSpaceTransformer implement
     protected void renderItem(org.dspace.app.xmlui.wing.element.List dspaceObjectsList, Item item, DiscoverResult.DSpaceObjectHighlightResult highlightedResults) throws WingException, SQLException {
         org.dspace.app.xmlui.wing.element.List itemList = dspaceObjectsList.addList(item.getHandle() + ":item");
 
+
+
+
         MetadataField[] metadataFields = MetadataField.findAll(context);
         for (MetadataField metadataField : metadataFields)
         {
@@ -467,6 +470,8 @@ public abstract class AbstractSearch extends AbstractDSpaceTransformer implement
                 }
             }
         }
+
+        // QQQ re #1536 sneak in the collection membership here
 
         //Check our highlighted results, we may need to add non-metadata (like our full text)
         if(highlightedResults != null)
