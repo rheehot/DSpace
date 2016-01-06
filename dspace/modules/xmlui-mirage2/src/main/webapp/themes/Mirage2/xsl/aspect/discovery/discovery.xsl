@@ -244,6 +244,7 @@
                             <xsl:text>)</xsl:text>
                             </small></span>
                     </xsl:if>
+                    <!-- QQQ TODO: #1536 add collection here -->
                     <xsl:choose>
                         <xsl:when test="dri:list[@n=(concat($handle, ':dc.description.abstract'))]/dri:item/dri:hi">
                             <div class="abstract">
