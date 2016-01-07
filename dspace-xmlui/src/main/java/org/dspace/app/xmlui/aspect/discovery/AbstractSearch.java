@@ -471,7 +471,15 @@ public abstract class AbstractSearch extends AbstractDSpaceTransformer implement
             }
         }
 
-        // QQQ re #1536 sneak in the collection membership here
+        // re #1536 add the collection membership to the metadataFieldList as if it were "metadata"
+        for (Collection collection : item.getCollections())
+        {
+            StringBuilder itemName = new StringBuilder();
+            itemName.append(item.getHandle()).append(":collection");
+            org.dspace.app.xmlui.wing.element.List metadataFieldList = itemList.addList(itemName.toString());
+            addMetadataField(null, "collection", metadataFieldList, collection.getName());
+            //QQQ this will come in handy for linking: "http://hdl.handle.net/" + collection.getHandle();
+        }
 
         //Check our highlighted results, we may need to add non-metadata (like our full text)
         if(highlightedResults != null)
