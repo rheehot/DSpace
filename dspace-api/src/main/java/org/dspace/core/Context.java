@@ -50,6 +50,9 @@ public class Context
     /** Current user - null means anonymous access */
     private EPerson currentUser;
 
+    /** flag to keep track of whether the current user is an admin **/
+    private boolean isAdmin;
+
     /** Current Locale */
     private Locale currentLocale;
 
@@ -122,6 +125,7 @@ public class Context
         connection.setAutoCommit(false);
 
         currentUser = null;
+        isAdmin = false;
         currentLocale = I18nUtil.DEFAULTLOCALE;
         extraLogInfo = "";
         ignoreAuth = false;
@@ -165,6 +169,40 @@ public class Context
     public EPerson getCurrentUser()
     {
         return currentUser;
+    }
+
+    /**
+     * Set the isAdmin flagr. AuthZ must have been performed by the
+     * caller - this call does not attempt any authentication or authorization verification.
+     * 
+     * @param Admin
+     *            boolean value reflecting whether the user is an admin
+     */
+    public void setisAdmin(boolean Admin)
+    {
+        isAdmin = Admin;
+    }
+
+    /**
+     * Get the current (authenticated) user
+     * 
+     * @return the current user, or <code>null</code> if no user is
+     *         authenticated
+     */
+    public EPerson getCurrentUser()
+    {
+        return currentUser;
+    }
+
+    /**
+     * Get the isAdmin flag of the current (authenticated) user
+     * 
+     * @return the isAdmin flag for the current user, or <code>null</code> if no user is
+     *         authenticated
+     */
+    public boolean getisAdmin()
+    {
+        return isAdmin;
     }
 
     /**
