@@ -16,6 +16,7 @@ import org.dspace.content.Bundle;
 import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
+import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.curate.AbstractCurationTask;
 import org.dspace.curate.Curator;
@@ -49,6 +50,19 @@ public class InheritPoliciesFromOwningCollection extends AbstractCurationTask
     }
 
     @Override
+    protected void performObject(DSpaceObject dso) throws SQLException, IOException
+    {
+        if(dso.getType()==Constants.ITEM)
+        {
+            performItem((Item)dso);
+        } else
+        {
+            results.add(dso.getHandle() + " (processing contained items...)");
+        }
+    }
+
+
+    @Override
     protected void performItem(Item item) throws SQLException, IOException
     {
 
@@ -67,6 +81,8 @@ public class InheritPoliciesFromOwningCollection extends AbstractCurationTask
 			return;
     	}
 	}
+
+    
 
 		private void addResult(Item item, String status, String message) {
 			results.add(item.getHandle() + " (" + status + ") " + message);
