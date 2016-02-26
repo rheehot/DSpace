@@ -58,6 +58,7 @@
                         <exclude>**/detectmobile*</exclude>
                         <exclude>**/sc-mobile*</exclude>
                         <exclude>**/handlebars/**</exclude>
+                        <exclude>**/resumable.js</exclude>
                     </excludes>
                 </configuration>
             </plugin>
