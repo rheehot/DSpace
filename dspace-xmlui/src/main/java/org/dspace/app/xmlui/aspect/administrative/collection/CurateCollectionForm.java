@@ -62,7 +62,6 @@ public class CurateCollectionForm extends AbstractDSpaceTransformer {
         private static final Message T_curation_mode_queue_help = message("xmlui.administrative.CurateForm.curation_mode_queue_help");
 
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
->>>>>>> aadf768... DS-2557 Help also for community/collection/item curate pages
 
 	private static final Message T_curation_mode_help = message("xmlui.administrative.CurateForm.curation_mode_help");
 	private static final Message T_curation_mode_perform_help = message("xmlui.administrative.CurateForm.curation_mode_perform_help");
