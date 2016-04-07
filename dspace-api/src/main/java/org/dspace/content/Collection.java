@@ -1447,6 +1447,33 @@ public class Collection extends DSpaceObject
 
         return communityArray;
     }
+    
+    /**
+     * Return all direct parents of a community.
+     * In contrast to getCommunities() this method returns just the direct
+     * parents and not all communities till the top level. In contrast to
+     * getParent() this returns all communities a collection may be mapped to.
+     *
+     */
+    public static List<Community> getParentCommunities(Context ctx, Collection child)
+            throws SQLException {
+        List<Community> parents = new ArrayList<Community>();
+        String query = "SELECT community_id FROM community2collection WHERE collection_id = ?";
+        TableRowIterator tri = null;
+        try {
+            tri = DatabaseManager.query(ctx, query, child.getID());
+            while (tri.hasNext()) {
+                TableRow row = tri.next();
+                parents.add(Community.find(ctx, row.getIntColumn("community_id")));
+            }
+        } finally {
+            if (tri != null) {
+                tri.close();
+            }
+        }
+        return parents;
+    }
+
 
     /**
      * Return <code>true</code> if <code>other</code> is the same Collection

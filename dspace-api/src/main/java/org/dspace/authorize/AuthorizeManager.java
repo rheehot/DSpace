@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import org.dspace.content.*;
 import org.dspace.core.Constants;
@@ -20,6 +22,7 @@ import org.dspace.eperson.Group;
 import org.dspace.storage.rdbms.DatabaseManager;
 import org.dspace.storage.rdbms.TableRow;
 import org.dspace.storage.rdbms.TableRowIterator;
+import org.dspace.utils.DSpace;
 import org.dspace.workflow.WorkflowItem;
 
 /**
@@ -39,6 +42,7 @@ import org.dspace.workflow.WorkflowItem;
  */
 public class AuthorizeManager
 {
+    private static Logger log = Logger.getLogger(AuthorizeManager.class);
     /**
      * Utility method, checks that the current user of the given context can
      * perform all of the specified actions on the given object. An
@@ -268,6 +272,21 @@ public class AuthorizeManager
     private static boolean authorize(Context c, DSpaceObject o, int action,
                                      EPerson e, boolean useInheritance) throws SQLException
     {
+        String dbg = "AuthorizeManager.authorize(...) called " + o.getTypeText() + "/" + o.getID() + ", " + Constants.actionText[action] + ", ";
+        if (e == null) 
+        {
+            dbg += "null";
+        } else {
+            dbg += e.getEmail();
+        }
+        if (useInheritance)
+        {
+            dbg += ", use inheritance.";
+        } else {
+            dbg += ", ignore inheritance.";
+        }
+        log.debug(dbg);
+        
         // return FALSE if there is no DSpaceObject
         if (o == null)
         {
@@ -296,12 +315,15 @@ public class AuthorizeManager
             }
         }
 
-        // In case the dso is an bundle or bitstream we must ignore custom 
+        // In case the dso is a bundle or bitstream we must ignore custom 
         // policies if it does not belong to at least one installed item (see 
         // DS-2614).
         // In case the dso is an item and a corresponding workspace or workflow
         // item exist, we have to ignore custom policies (see DS-2614).
         boolean ignoreCustomPolicies = false;
+        
+        log.debug("Beginning new policy checks...");
+        
         if (o instanceof Bitstream)
         {
             Bitstream b = (Bitstream) o;
@@ -312,20 +334,144 @@ public class AuthorizeManager
             {
                 ignoreCustomPolicies = !isAnyItemInstalled(c, b.getBundles());
             }
-        }
-        if (o instanceof Bundle)
-        {
+            
+            // DS-3097 describes the problem that a bitstream is accessible even
+            // after its item was withdrawn or embargoed. Acutally this is a more
+            // general problem: most user will think that access/read policies of
+            // higher layers override access/read policies of lower ones.
+            // To solve this we have to check parents policies. Items, collections
+            // and communities can belong to multiple parents. As soon as we found
+            // one valid path for the current user from any top-level community to
+            // thre actual DSpaceObject, we can process its policies.
+
+            if (action == Constants.READ)
+            {
+                // get *all* *direct* parents
+                Bundle[] bundles = b.getBundles();
+                for (Bundle bundle : bundles)
+                {
+                    // check parent read policies
+                    if (checkParentSpecialAccessRights(c, bundle))
+                    {
+                        // only if the parent (bundle in this case) has the 
+                        // appropriate rights, we have to make the recursive call
+                        if (authorize(c, bundle, action, e, useInheritance))
+                        {
+                            log.debug("passing by, parent is fine.");
+                            // if the recursive call ends positive, we have at
+                            // least one path to a top level community and just
+                            // need to check the policies of the requested item
+                            return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+                        }
+                    }
+                }
+                log.debug("no path found.");
+                // no path found
+                return false;
+            } else {
+                log.debug("action doesn't require new checks.");
+                return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+            }
+        } else if (o instanceof Bundle) {
             ignoreCustomPolicies = !isAnyItemInstalled(c, new Bundle[] {(Bundle) o});
-        }
-        if (o instanceof Item)
-        {
+            
+            if (action == Constants.READ)
+            {
+                Item[] items = ((Bundle) o).getItems();
+                for (Item item : items)
+                {
+                    if (checkParentSpecialAccessRights(c, item) 
+                            && authorize(c, item, action, e, useInheritance))
+                    {
+                        log.debug("passing by, parent is fine.");
+                        return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+                    }
+                }
+                log.debug("no path found.");
+                return false;
+            } else {
+                log.debug("action doesn't require new checks.");
+                return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+            }
+        } else if (o instanceof Item) {
             if (WorkspaceItem.findByItem(c, (Item) o) != null ||
                     WorkflowItem.findByItem(c, (Item) o) != null)
             {
                 ignoreCustomPolicies = true;
             }
+            
+            if (action == Constants.READ)
+            {
+                Collection[] collections = ((Item) o).getCollections();
+                for (Collection collection : collections)
+                {
+                    if (checkParentSpecialAccessRights(c, collection)
+                            && authorize(c, collection, action, e, useInheritance))
+                    {
+                        log.debug("passing by, parent is fine.");
+                        return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+                    }
+                }
+                log.debug("no path found.");
+                return false;
+            } else {
+                log.debug("action doesn't require new checks.");
+                return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+            }
+        } else if (o instanceof Collection) {
+            if (action == Constants.READ) {
+                List<Community> communities = 
+                        Collection.getParentCommunities(c, (Collection) o);
+                for (Community community : communities)
+                {
+                    if (checkParentSpecialAccessRights(c, community)
+                            && authorize(c, community, action, e, useInheritance))
+                    {
+                        log.debug("passing by, parent is fine.");
+                        return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+                    }
+                }
+                log.debug("no path found.");
+                return false;
+            } else {
+                log.debug("action doesn't require new checks.");
+                return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+            }
+        } else if (o instanceof Community) {
+            if (action == Constants.READ) {
+                List<Community> communities = 
+                        Community.getAllDirectCommunityParents(c, (Community) o);
+                if (communities.isEmpty())
+                {
+                    // top-level community
+                    log.debug("top level community reached.");
+                    return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+                }
+                for (Community community : communities)
+                {
+                    if (checkParentSpecialAccessRights(c, community)
+                            && authorize(c, community, action, e, useInheritance))
+                    {
+                        log.debug("passing by, parent is fine.");
+                        return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+                    }
+                }
+                log.debug("no path found.");
+                return false;
+            } else {
+                log.debug("action doesn't require new checks.");
+                return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
+            }
+        } else {
+            log.debug("object doesn't require new checks.");
+            return checkObjectPolicies(c, o, action, userid, ignoreCustomPolicies);
         }
-        
+    }
+    
+    private static boolean checkObjectPolicies(Context c, DSpaceObject o, 
+            int action, int userid, boolean ignoreCustomPolicies)
+            throws SQLException
+    {
         for (ResourcePolicy rp : getPoliciesActionFilter(c, o, action))
         {
             if (ignoreCustomPolicies 
@@ -346,14 +492,63 @@ public class AuthorizeManager
                 {
                     // group was set, and eperson is a member
                     // of that group
+                    log.debug("policies of " + o.getTypeText() + "/"  + o.getID() + " grants access.");
                     return true;
                 }
             }
         }
-
+        
+        log.debug("policies of " + o.getTypeText() + "/"  + o.getID() + " denies access.");
         // default authorization is denial
         return false;
     }
+    
+    private static boolean checkParentSpecialAccessRights(Context c, DSpaceObject parent) throws SQLException
+    {
+        if (isAdmin(c, parent))
+        {
+            return true;
+        }
+        
+        if (parent instanceof Item)
+        {
+            Item item = (Item) parent;
+            // for items we do have to check if they are withdrawn
+            if (item.isWithdrawn())
+            {
+                log.debug("checkParentSpecialAccessRights found withdrawn item: blocking.");
+                return false;
+            }
+            
+            // we have to check old embargo states as they are placed in 
+            // metadata and not in policies
+            String liftField = (new DSpace()).getConfigurationService().getProperty("embargo.field.lift");
+            if (StringUtils.isNotBlank(liftField))
+            {
+                liftField = liftField.trim();
+                // org.dspace.embargo.EmbargoManager.processOneItem() checks
+                // first metadata field only. Doing the same here instead of
+                // checking all lift dates in case of multiple used lift 
+                // metadata fields.
+                String liftDateValue = item.getMetadata(liftField);
+                if (StringUtils.isNotBlank(liftDateValue))
+                {
+                    
+                    DCDate liftDate = new DCDate(liftDateValue);
+                    // is the embargo still valid?
+                    if (liftDate.toDate().after(new Date()))
+                    {
+                        log.debug("checkParentSpecialAccessRights found pre DSpace 3 embargo: blocking access.");
+                        return false;
+                    }
+                }
+            }
+        }
+        log.debug("checkParentSpecialAccessRights returns true.");
+        return true;
+    }
+    
+    
     
     // check whether any bundle belongs to any item that passed submission 
     // and workflow process

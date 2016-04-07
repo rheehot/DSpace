@@ -44,7 +44,7 @@ public class Community extends DSpaceObject
     /** log4j category */
     private static final Logger log = Logger.getLogger(Community.class);
 
-    /** The table row corresponding to this item */
+        /** The table row corresponding to this item */
     private final TableRow communityRow;
 
     /** The logo bitstream */
@@ -918,6 +918,30 @@ public class Community extends DSpaceObject
         communityArray = (Community[]) parentList.toArray(communityArray);
 
         return communityArray;
+    }
+    
+    /**
+     * Return a list of all direct parent communities. In contrast to
+     * getAllParents this method returns only all direct parents. getAllParents
+     * return all communities till the top level. In contrast to
+     * getParent() this returns all communities a collection may be mapped to.
+     */
+    public static List<Community> getAllDirectCommunityParents(Context ctx, Community child) throws SQLException {
+        List<Community> parents = new ArrayList<Community>();
+        String query = "SELECT parent_comm_id FROM community2community WHERE child_comm_id = ?";
+        TableRowIterator tri = null;
+        try {
+            tri = DatabaseManager.query(ctx, query, child.getID());
+            while (tri.hasNext()) {
+                TableRow row = tri.next();
+                parents.add(Community.find(ctx, row.getIntColumn("parent_comm_id")));
+            }
+        } finally {
+            if (tri != null) {
+                tri.close();
+            }
+        }
+        return parents;
     }
 
     /**
