@@ -12,7 +12,7 @@
  */
 
 //example mixin to set the text-selection style
-@mixin selection {
+/*@mixin selection {
     ::-moz-selection { @content; }
     ::selection { @content; }
 }
@@ -21,6 +21,147 @@
     color: white;
     background: hotpink;
 }
+*/
+
+// override DSpace default styling
+
+// links should be underlined all the time
+a {
+	text-decoration: underline;
+}
+
+.Z3988 {
+	font-weight: bold;
+}
+
+// do NOT underline the active heading, it's confusing
+a.list-group-item.active {
+	text-decoration: none;
+}
+
+.navbar {
+    height: 90px;
+}
+
+header .navbar-brand img {
+    height: 60px;
+}
+
+.simple-item-view-description {
+    text-align: left;
+}
+
+// let's use this font family for everything
+* {
+	font-family: 'Proxima Nova',Gotham,Helvetica,Arial,sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6,h7,h8,h9, .community-browser-row a  {
+    font-family: 'Proxima Nova',Gotham,Helvetica,Arial,sans-serif;
+    font-weight: bold;
+}
+
+.community-browser-row a {
+	font-size: 1em;
+}
+
+.item-page-field-wrapper.table div a {
+     word-wrap: break-word;
+}
+
+.form-control {
+	height: auto;
+}
+
+// yeah, we're not so hot on the whole authority confidence display, let's hide it until it does something meaningful for our users
+img.ds-authority-confidence { display: none;}
+
+// make pagination larger
+
+.pagination {
+	font-size: larger;
+}
+
+// the radio buttons on the search form fall off of small screens, let's bump up the left padding a bit
+.radio label, .checkbox label {
+    padding-left: 35px;
+}
+
+
+// let's add an inline form control utility class
+// suggestion from: http://stackoverflow.com/questions/18539711/input-widths-on-bootstrap-3
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}
+
+// hmm... form-control-inline doesn't seem to work, let's override the DSpace style instead
+.ds-select-field {
+    min-width: 0;
+    max-width: 200px;
+    width: auto;
+    display: inline;
+}
+
+// add in specific MOspace styles
+div#ms-tagline {
+    margin: 58px 0px 0px -88px;
+    font-size: 12px;
+    text-align: left;
+    color: #AAB8C6;
+}
+div#ms-navigation {
+    position: relative;
+    top: -20px;
+    text-align: right;
+    width: 100%;
+}
+ul#ms-navigation-list li.ms-navigation-link {
+    list-style: none;
+    display: inline;
+    margin-left:0px;
+    color: #fff;
+}
+ul#ms-navigation-list li.ms-navigation-link a:link, ul#ms-navigation-list li.ms-navigation-link a:visited {
+    color: #fff;
+    /*text-decoration: none;*/
+}
+ul#ms-navigation-list li.ms-navigation-link a:hover, ul#ms-navigation-list li.ms-navigation-link a:active {
+    text-decoration: underline;
+    color: #8097A5;
+}
+
+.thumbnail img, .thumbnail a img {
+    margin-left:auto;
+    margin-right:10px;
+}
+
+dt, td.label-cell, .detailtable .label-cell {
+    font-weight: normal;
+}
+
+// let's make the search results a little easier to read with a bit of added white space
+.artifact-title {
+	font-size: 17px;
+	padding-top: 1em;
+}
+
+// don't set margin: 0 on section headings for the side navigation, it looks ugly on mobile phones
+#ds-options h2,h6 {
+	text-align: center;
+}
+
+// fix styling for facets, too
+h3.ds-head, h3.ds-option-set-head {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+h4.ds-head {
+	padding-top: 1em;
+}
+
 
 .publication-records-modal, .publication-records-modal ul {
   list-style-type: none;

@@ -299,7 +299,7 @@
                 <script type="text/x-mathjax-config">
                     MathJax.Hub.Config({
                       tex2jax: {
-                        inlineMath: [['$','$'], ['\\(','\\)']],
+                        inlineMath: [['$$','$$'], ['\\(','\\)']],
                         ignoreClass: "detail-field-data|detailtable|exception"
                       },
                       TeX: {
@@ -336,8 +336,13 @@
                         </button>
 
                         <a href="{$context-path}/" class="navbar-brand">
-                            <img src="{$theme-path}/images/DSpace-logo-line.svg" />
+                            <img src="{$theme-path}/images/mospace_mirage.gif" />
                         </a>
+
+                        <div id="ms-tagline" class="navbar-header pull-left hidden-sm hidden-xs hidden-md">
+                             Shared more. Cited more. Safe forever.
+                         </div>
+
 
 
                         <div class="navbar-header pull-right visible-xs hidden-sm hidden-md hidden-lg">
@@ -410,12 +415,34 @@
                             </xsl:choose>
                         </ul>
                               </div>
+
+
                     </div>
 
                     <div class="navbar-header pull-right hidden-xs">
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
                         </ul>
+
+                            <!-- MOspace navigation bar -->
+
+                        <ul class="nav navbar-nav  pull-left">
+                            <li role="presentation"><a href="{$app_path}/discover?advancedMode">advanced search</a></li>
+                        </ul>
+                       <ul class="nav navbar-nav  pull-left">
+                            <li role="presentation"><a href="{$app_path}/pages/add">submit works</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav  pull-left">
+                            <li role="presentation"><a href="{$app_path}/pages/about">about</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav  pull-left">
+                            <li role="presentation"><a href="{$app_path}/pages/help">help</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav  pull-left">
+                            <li role="presentation"><a href="{$app_path}/pages/contact">contact us</a></li>
+                        </ul>
+
+
                         <ul class="nav navbar-nav pull-left">
                             <xsl:choose>
                                 <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
@@ -518,6 +545,8 @@
                                 </ul>
                             </xsl:otherwise>
                         </xsl:choose>
+     
+                    
                     </div>
                 </div>
             </div>
@@ -690,23 +719,13 @@
 
     <!-- Like the header, the footer contains various miscellaneous text, links, and image placeholders -->
     <xsl:template name="buildFooter">
+
+       
         <footer>
                 <div class="row">
                     <hr/>
                     <div class="col-xs-7 col-sm-8">
-                        <div>
-                            <a href="http://www.dspace.org/" target="_blank">DSpace software</a> copyright&#160;&#169;&#160;2002-2015&#160; <a href="http://www.duraspace.org/" target="_blank">DuraSpace</a>
-                        </div>
-                        <div class="hidden-print">
-                            <a>
-                                <xsl:attribute name="href">
-                                    <xsl:value-of
-                                            select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
-                                    <xsl:text>/contact</xsl:text>
-                                </xsl:attribute>
-                                <i18n:text>xmlui.dri2xhtml.structural.contact-link</i18n:text>
-                            </a>
-                            <xsl:text> | </xsl:text>
+                       <div class="hidden-print">
                             <a>
                                 <xsl:attribute name="href">
                                     <xsl:value-of
@@ -717,13 +736,9 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-xs-5 col-sm-4 hidden-print">
+                    <div class="col-xs-4 col-sm-4 hidden-print">
                         <div class="pull-right">
-                            <span class="theme-by">Theme by&#160;</span>
-                            <br/>
-                            <a title="@mire NV" target="_blank" href="http://atmire.com">
-                                <img alt="@mire NV" src="{concat($theme-path, '/images/@mirelogo-small.png')}"/>
-                            </a>
+                            hosted by <a href="http://lso.umsystem.edu/">University of Missouri Library Systems</a>
                         </div>
 
                     </div>
