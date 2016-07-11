@@ -163,19 +163,19 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>3.0.4</version>
+                    <version>3.0.1</version>
                     <configuration>
-                        <effort>Max</effort>
+                        <effort>Low</effort>
                         <threshold>Low</threshold>
                         <xmlOutput>true</xmlOutput>
                         <failOnError>false</failOnError>
-                        <includeFilterFile>${session.executionRootDirectory}/findbugs-security-include.xml</includeFilterFile>
-                        <excludeFilterFile>${session.executionRootDirectory}/findbugs-security-exclude.xml</excludeFilterFile>
+                        <includeFilterFile>${root.basedir}/dspace/config/findbugs-security-include.xml</includeFilterFile>
+                        <excludeFilterFile>${root.basedir}/dspace/config/findbugs-security-exclude.xml</excludeFilterFile>
                         <plugins>
                             <plugin>
                                 <groupId>com.h3xstream.findsecbugs</groupId>
                                 <artifactId>findsecbugs-plugin</artifactId>
-                                <version>LATEST</version> <!-- Auto-update to the latest stable -->
+                                <version>1.4.6</version>
                             </plugin>
                         </plugins>
                     </configuration>
