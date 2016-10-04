@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- docs: https://wiki.duraspace.org/display/DSDOC5x/Importing+Community+and+Collection+Hierarchy -->
+
+<import_structure>
+        <community>
+                <name>Data Science</name>
+                <description>The Data Science Community is the primary community for the Data Den, the parent for many data science collections.</description>
+                <intro>Introductory text</intro>
+                <copyright>Special copyright notice</copyright>
+                <sidebar>Sidebar text</sidebar>
+         </community>
+        <community>
+                <name>Xymurgy</name>
+                <description>The Xymurgy Community contains collections of concern to brewmeisters and the science of making beer.</description>
+                <intro>Introductory text</intro>
+                <copyright>Special copyright notice</copyright>
+                <sidebar>Sidebar text</sidebar>
+         </community>
+        <community>
+                <name>Library</name>
+                <description>The Library Community contains collections of material held and or curated by the UCLA Library.</description>
+                <intro>Introductory text</intro>
+                <copyright>Special copyright notice</copyright>
+                <sidebar>Sidebar text</sidebar>
+         </community>
+</import_structure>
