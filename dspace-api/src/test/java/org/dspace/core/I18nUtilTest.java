@@ -156,8 +156,8 @@ public class I18nUtilTest extends AbstractDSpaceTest
         String key, expResult, result;
 
         // Test for a stock key
-        key = "jsp.general.home";
-        expResult = "DSpace Home";
+        key = "jsp.general.id";
+        expResult = "ID";
         result = I18nUtil.getMessage(key);
         assertEquals("Returns the translation of the key if it is defined",
                 expResult, result);
@@ -179,8 +179,8 @@ public class I18nUtilTest extends AbstractDSpaceTest
         Locale locale = Locale.US;
 
         // Test for a stock key
-        key = "jsp.general.home";
-        expResult = "DSpace Home";
+        key = "jsp.general.id";
+        expResult = "ID";
         result = I18nUtil.getMessage(key, locale);
         assertEquals("Returns the translation of the key if it is defined",
                 expResult, result);
@@ -205,8 +205,8 @@ public class I18nUtilTest extends AbstractDSpaceTest
         c.setCurrentLocale(Locale.US);
 
         // Test for a stock key
-        key = "jsp.general.home";
-        expResult = "DSpace Home";
+        key = "jsp.general.id";
+        expResult = "ID";
         result = I18nUtil.getMessage(key, c);
         assertEquals("Returns the translation of the key if it is defined",
                 expResult, result);
