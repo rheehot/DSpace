@@ -146,8 +146,8 @@ public class I18nUtilTest
         MockConfigurationManager.setProperty("default.locale", "en_US.UTF-8");
 
         // Test for a stock key
-        key = "jsp.general.home";
-        expResult = "DSpace Home";
+        key = "jsp.general.id";
+        expResult = "ID";
         result = I18nUtil.getMessage(key);
         assertEquals("Returns the translation of the key if it is defined",
                 expResult, result);
@@ -169,8 +169,8 @@ public class I18nUtilTest
         Locale locale = Locale.US;
 
         // Test for a stock key
-        key = "jsp.general.home";
-        expResult = "DSpace Home";
+        key = "jsp.general.id";
+        expResult = "ID";
         result = I18nUtil.getMessage(key, locale);
         assertEquals("Returns the translation of the key if it is defined",
                 expResult, result);
@@ -195,8 +195,8 @@ public class I18nUtilTest
         c.setCurrentLocale(Locale.US);
 
         // Test for a stock key
-        key = "jsp.general.home";
-        expResult = "DSpace Home";
+        key = "jsp.general.id";
+        expResult = "ID";
         result = I18nUtil.getMessage(key, c);
         assertEquals("Returns the translation of the key if it is defined",
                 expResult, result);
