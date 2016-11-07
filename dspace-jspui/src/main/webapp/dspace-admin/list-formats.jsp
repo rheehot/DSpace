@@ -119,7 +119,7 @@
                               </select>
                      </div>
                      <div class="form-group">     
-                              <input class="form-control" type="checkbox" name="internal" value="true"<%= formats[i].isInternal() ? " checked=\"checked\"" : "" %>/>
+                              <input type="checkbox" name="internal" value="true"<%= formats[i].isInternal() ? " checked=\"checked\"" : "" %>/>
                           </div>
                           <div class="form-group">
                           	  <label class="sr-only" for="extensions"><fmt:message key="jsp.dspace-admin.list-formats.extensions"/></label>
