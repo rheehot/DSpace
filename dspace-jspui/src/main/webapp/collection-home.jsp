@@ -121,14 +121,19 @@
 <%  if (logo != null) { %>
         <div class="col-md-4">
         	<img class="img-responsive pull-right" alt="Logo" src="<%= request.getContextPath() %>/retrieve/<%= logo.getID() %>" />
+    <%
+        if (StringUtils.isNotBlank(intro)) { %>
+        <%= intro %>
+    <% 	} %>
+     
         </div>
-<% 	} %>
+        <% 	} else { %>
+        if (StringUtils.isNotBlank(intro)) { %>
+        <%= intro %>
+    <% 	} %>
+    <% } %>
 	</div>
-<%
-	if (StringUtils.isNotBlank(intro)) { %>
-	<%= intro %>
-<% 	} %>
-  </div>
+ </div>
   <p class="copyrightText"><%= copyright %></p>
   
   <%-- Browse --%>
