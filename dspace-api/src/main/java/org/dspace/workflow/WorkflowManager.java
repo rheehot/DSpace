@@ -914,7 +914,8 @@ public class WorkflowManager
             String title = getItemTitle(wi);
 
             // Get the submitter's name
-            String submitter = getSubmitterName(wi);
+           // String submitter = getSubmitterName(wi);
+           String submitter = " redacted ";
 
             // Get the collection
             Collection coll = wi.getCollection();
