@@ -724,14 +724,79 @@
 	  <extension>sdm</extension>
 	</bitstream-type>
 
-    <bitstream-type>
-      <mimetype>application/rdf+xml; charset=utf-8</mimetype>
-      <short_description>RDF XML</short_description>
-      <description>RDF serialized in XML</description>
-      <support_level>1</support_level>
-      <internal>false</internal>
-      <extension>rdf</extension>
-    </bitstream-type>
+  <bitstream-type>
+    <mimetype>application/rdf+xml; charset=utf-8</mimetype>
+    <short_description>RDF XML</short_description>
+    <description>RDF serialized in XML</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>rdf</extension>
+  </bitstream-type>
+  
+  <bitstream-type>
+    <mimetype>audio/mpeg</mimetype>
+    <short_description>MP3 audio</short_description>
+    <description>MP3 audio</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>mp3</extension>
+  </bitstream-type>
 
+  <!-- Additional standard types for UCLA VSim project -->
+  <bitstream-type>
+    <mimetype>audio/x-midi</mimetype>
+    <short_description>MIDI</short_description>
+    <description>Musical Instrument Digital Interface</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>mid</extension>
+    <extension>midi</extension>
+  </bitstream-type>
+
+  <bitstream-type>
+    <mimetype>video/avi</mimetype>
+    <short_description>AVI</short_description>
+    <description>Microsoft AVI format</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>avi</extension>
+  </bitstream-type>
+
+  <bitstream-type>
+    <mimetype>application/x-zip-compressed</mimetype>
+    <short_description>ZIP</short_description>
+    <description>Compressed ZIP archive</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>zip</extension>
+  </bitstream-type>
+
+  <!-- Custom types for UCLA VSim project -->
+  <bitstream-type>
+    <mimetype>application/vnd.ucla.idre.vsim-model</mimetype>
+    <short_description>VSim model</short_description>
+    <description>VSim 3D model</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>vsim</extension>
+  </bitstream-type>
+  
+  <bitstream-type>
+    <mimetype>application/vnd.ucla.idre.vsim-archive</mimetype>
+    <short_description>VSim resources</short_description>
+    <description>VSim resource archive</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>ere</extension>
+  </bitstream-type>
+  
+  <bitstream-type>
+    <mimetype>application/vnd.ucla.idre.vsim-narrative</mimetype>
+    <short_description>VSim narrative</short_description>
+    <description>VSim 3D narrative</description>
+    <support_level>1</support_level>
+    <internal>false</internal>
+    <extension>nar</extension>
+  </bitstream-type>
 
 </dspace-bitstream-types>
