@@ -34,6 +34,7 @@ branches:
     only:
         - master
         - ucla-dr-5_x
+        - ucla-dr-6_x
 
 
 # Skip install stage, as we'll do it below
