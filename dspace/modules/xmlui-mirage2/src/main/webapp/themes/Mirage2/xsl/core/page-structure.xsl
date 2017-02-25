@@ -103,16 +103,7 @@
                                 <div class="row row-offcanvas row-offcanvas-right">
                                     <div class="horizontal-slider clearfix">
                                         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                                            <div class="word-break hidden-print visible-xs hidden-sm hidden-md hidden-lg">
-                                            <div class="list-group">
-                                                <a class="list-group-item ds-option" href="{$app_path}/discover">advanced search</a>
-                                                <a class="list-group-item ds-option" href="{$app_path}/pages/add">submit works</a>
-                                                <a class="list-group-item ds-option" href="{$app_path}/pages/about">about</a>
-                                                <a class="list-group-item ds-option" href="{$app_path}/pages/help">help</a>
-                                                <a class="list-group-item ds-option" href="{$app_path}/pages/contact">contact us</a>
-                                            </div>
-                                            </div>
-                                            <xsl:apply-templates select="dri:options"/>
+                                           <xsl:apply-templates select="dri:options"/>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-9 main-content">
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
@@ -355,7 +346,6 @@
                             <img src="{$theme-path}images/vsim.png" />
                         </a>
 
-
                         <div class="navbar-header pull-right visible-xs hidden-sm hidden-md hidden-lg">
                         <ul class="nav nav-pills pull-left ">
 
@@ -389,6 +379,7 @@
                                     </ul>
                                 </li>
                             </xsl:if>
+
 
                             <xsl:choose>
                                 <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
@@ -424,6 +415,12 @@
                                     </li>
                                 </xsl:otherwise>
                             </xsl:choose>
+
+                            <li><a class="btn btn-default" role="button" href="/pages/add">add</a></li>
+                            <li><a class="btn btn-default" role="button" href="/pages/about">about</a></li>
+                            <li><a class="btn btn-default" role="button" href="/pages/contact">contact</a></li>
+                            <li><a class="btn btn-default" role="button" href="/pages/help">help</a></li>
+
                         </ul>
                               </div>
                     </div>
@@ -431,8 +428,8 @@
                     <div class="navbar-header pull-right hidden-xs">
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
-                        </ul>
-                        <ul class="nav navbar-nav pull-left">
+                          </ul>
+                          <ul class="nav navbar-nav pull-left">
                             <xsl:choose>
                                 <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
                                     <li class="dropdown">
@@ -477,6 +474,14 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </ul>
+                              <span class="nav navbar-text pull-right">
+                                    | <a class="navbar-link" href="{$app_path}/discover">Advanced Search</a> |
+                                    <a class="navbar-link" href="{$app_path}/pages/add">Submit Works</a> |
+                                    <a class="navbar-link" href="{$app_path}/pages/about">About</a> |
+                                    <a class="navbar-link" href="{$app_path}/pages/help">Help</a> |
+                                    <a class="navbar-link" href="{$app_path}/pages/contact">Contact Us</a>
+                              </span>
+
 
                         <button data-toggle="offcanvas" class="navbar-toggle visible-sm" type="button">
                             <span class="sr-only"><i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text></span>
