@@ -73,6 +73,43 @@
          </exclusions>
       </dependency>
 
+    <!-- Adding this dependency will install the Replication Task Suite Addon -->
+    <dependency>
+        <groupId>org.dspace</groupId>
+        <artifactId>dspace-replicate</artifactId>
+        <version>6.0</version>
+	   <exclusions>
+		  <exclusion>
+			 <groupId>org.apache.commons</groupId>
+			 <artifactId>commons-lang3</artifactId>
+		  </exclusion>
+		  <exclusion>
+			 <groupId>com.amazonaws</groupId>
+			 <artifactId>aws-java-sdk-core</artifactId>
+		  </exclusion>
+		  <exclusion>
+			 <groupId>org.apache.httpcomponents</groupId>
+			 <artifactId>httpmime</artifactId>
+		  </exclusion>
+		  <exclusion>
+			 <groupId>org.springframework</groupId>
+			 <artifactId>spring-expression</artifactId>
+		  </exclusion>
+		  <exclusion>
+			 <groupId>org.springframework.security</groupId>
+			 <artifactId>spring-security-core</artifactId>
+		  </exclusion>
+		  <exclusion>
+			 <groupId>org.codehaus.jackson</groupId>
+			 <artifactId>jackson-mapper-asl</artifactId>
+		  </exclusion>
+		  <exclusion>
+			 <groupId>org.codehaus.jackson</groupId>
+			 <artifactId>jackson-core-asl</artifactId>
+		  </exclusion>
+	   </exclusions>
+    </dependency>
+
    </dependencies>
 
 </project>
