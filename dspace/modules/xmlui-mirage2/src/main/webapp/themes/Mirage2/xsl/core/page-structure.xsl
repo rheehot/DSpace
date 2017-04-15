@@ -458,7 +458,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{/dri:document/dri:meta/dri:userMeta/
+                                                <a class="btn btn-default btn-sm" href="{/dri:document/dri:meta/dri:userMeta/
                             dri:metadata[@element='identifier' and @qualifier='logoutURL']}">
                                                     <i18n:text>xmlui.dri2xhtml.structural.logout</i18n:text>
                                                 </a>
@@ -468,9 +468,10 @@
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <li>
-                                        <a href="{/dri:document/dri:meta/dri:userMeta/
+                                        <a class="btn btn-default btn-sm" href="{/dri:document/dri:meta/dri:userMeta/
                             dri:metadata[@element='identifier' and @qualifier='loginURL']}">
-                                            <span class="hidden-xs">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                        <span class="hidden-xs">
                                                 <i18n:text>xmlui.dri2xhtml.structural.login</i18n:text>
                                             </span>
                                         </a>
@@ -480,19 +481,19 @@
                         </ul>
                               <span class="nav navbar-text pull-right">
 
-									<a class="btn btn-sm" href="{$app_path}/discover">
+									<a class="btn btn-default btn-sm" href="{$app_path}/discover">
 									  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Discover
 									</a>
-                                    <a class="btn btn-sm" href="{$app_path}/pages/add">
+                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/add">
 									  <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Submit Works
 									</a>
-                                    <a class="btn btn-sm" href="{$app_path}/pages/about">
+                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/about">
 									  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About
 									</a>
-                                    <a class="btn btn-sm" href="{$app_path}/pages/tour">
+                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/tour">
 									  <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Tour
 									</a>
-                                    <a class="btn btn-sm" href="{$app_path}/pages/faq">
+                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/faq">
 									  <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> FAQ
 									</a>
                                     <a class="btn btn-success btn-sm" href="{$app_path}/pages/download">
