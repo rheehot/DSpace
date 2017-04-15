@@ -418,10 +418,12 @@
                                 </xsl:otherwise>
                             </xsl:choose>
 
-                            <li><a class="btn btn-default" role="button" href="/pages/add">add</a></li>
-                            <li><a class="btn btn-default" role="button" href="/pages/about">about</a></li>
-                            <li><a class="btn btn-default" role="button" href="/pages/contact">contact</a></li>
-                            <li><a class="btn btn-default" role="button" href="/pages/help">help</a></li>
+                            <li><a class="btn btn-default" role="button" href="{$app_path}/discover">discover</a></li>
+                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/add">add</a></li>
+                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/about">about</a></li>
+                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/download">download</a></li>
+                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/tour">tour</a></li>
+                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/faq">FAQ</a></li>
 
                         </ul>
                               </div>
@@ -477,12 +479,27 @@
                             </xsl:choose>
                         </ul>
                               <span class="nav navbar-text pull-right">
-                                    | <a class="navbar-link" href="{$app_path}/discover">Advanced Search</a> |
-                                    <a class="navbar-link" href="{$app_path}/pages/add">Submit Works</a> |
-                                    <a class="navbar-link" href="{$app_path}/pages/about">About</a> |
-                                    <a class="navbar-link" href="{$app_path}/pages/help">Help</a> |
-                                    <a class="navbar-link" href="{$app_path}/pages/contact">Contact Us</a>
-                              </span>
+
+									<a class="btn btn-sm" href="{$app_path}/discover">
+									  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Discover
+									</a>
+                                    <a class="btn btn-sm" href="{$app_path}/pages/add">
+									  <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Submit Works
+									</a>
+                                    <a class="btn btn-sm" href="{$app_path}/pages/about">
+									  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About
+									</a>
+                                    <a class="btn btn-sm" href="{$app_path}/pages/tour">
+									  <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Tour
+									</a>
+                                    <a class="btn btn-sm" href="{$app_path}/pages/faq">
+									  <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> FAQ
+									</a>
+                                    <a class="btn btn-success btn-sm" href="{$app_path}/pages/download">
+									  <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download
+									</a>
+
+                                </span>
 
 
                         <button data-toggle="offcanvas" class="navbar-toggle visible-sm" type="button">
