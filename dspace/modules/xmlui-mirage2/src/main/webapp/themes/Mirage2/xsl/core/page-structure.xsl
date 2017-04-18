@@ -105,7 +105,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-9 main-content">
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
-                                            <div class="visible-xs visible-sm">
+                                            <div class="visible-xs visible-sm visible-md">
                                                 <xsl:call-template name="buildFooter"/>
                                             </div>
                                         </div>
@@ -348,14 +348,14 @@
                             <img src="{$theme-path}images/vsim.png" />
                         </a>
 
-                        <div class="navbar-header pull-right visible-xs hidden-sm hidden-md hidden-lg">
+                        <div class="navbar-header pull-right hidden-lg">
                         <ul class="nav nav-pills pull-left ">
 
                             <xsl:if test="count(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='page'][@qualifier='supportedLocale']) &gt; 1">
                                 <li id="ds-language-selection-xs" class="dropdown">
                                     <xsl:variable name="active-locale" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='page'][@qualifier='currentLocale']"/>
                                     <button id="language-dropdown-toggle-xs" href="#" role="button" class="dropdown-toggle navbar-toggle navbar-link" data-toggle="dropdown">
-                                        <b class="visible-xs glyphicon glyphicon-globe" aria-hidden="true"/>
+                                        <b class="visible-xs visible-sm glyphicon glyphicon-globe" aria-hidden="true"/>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="language-dropdown-toggle-xs" data-no-collapse="true">
                                         <xsl:for-each
@@ -387,7 +387,7 @@
                                 <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
                                     <li class="dropdown">
                                         <button class="dropdown-toggle navbar-toggle navbar-link" id="user-dropdown-toggle-xs" href="#" role="button"  data-toggle="dropdown">
-                                            <b class="visible-xs glyphicon glyphicon-user" aria-hidden="true"/>
+                                            <b class="hidden-lg glyphicon glyphicon-user" aria-hidden="true"/>
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu"
                                             aria-labelledby="user-dropdown-toggle-xs" data-no-collapse="true">
@@ -411,25 +411,26 @@
                                         <form style="display: inline" action="{/dri:document/dri:meta/dri:userMeta/
                             dri:metadata[@element='identifier' and @qualifier='loginURL']}" method="get">
                                             <button class="navbar-toggle navbar-link">
-                                            <b class="visible-xs glyphicon glyphicon-user" aria-hidden="true"/>
+                                            <b class="hidden-lg glyphicon glyphicon-user" aria-hidden="true"/>
                                             </button>
                                         </form>
                                     </li>
                                 </xsl:otherwise>
                             </xsl:choose>
 
-                            <li><a class="btn btn-default" role="button" href="{$app_path}/discover">discover</a></li>
-                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/add">add</a></li>
-                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/about">about</a></li>
-                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/download">download</a></li>
-                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/tour">tour</a></li>
-                            <li><a class="btn btn-default" role="button" href="{$app_path}/pages/faq">FAQ</a></li>
+                            <!-- small navigation buttons for sm and xs screens, keep scrolling down for the full-sized buttons -->
+                            <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/discover">discover</a></li>
+                            <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/add">add</a></li>
+                            <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/about">about</a></li>
+                            <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/tour">tour</a></li>
+                            <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/faq">FAQ</a></li>
+                            <li><a class="btn btn-sm btn-success" role="button" href="{$app_path}/pages/download">download</a></li>
 
                         </ul>
                               </div>
                     </div>
 
-                    <div class="navbar-header pull-right hidden-xs">
+                    <div class="navbar-header pull-right hidden-xs hidden-sm hidden-md">
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
                           </ul>
@@ -458,7 +459,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="btn btn-default btn-sm" href="{/dri:document/dri:meta/dri:userMeta/
+                                                <a class="btn btn-info btn-sm" href="{/dri:document/dri:meta/dri:userMeta/
                             dri:metadata[@element='identifier' and @qualifier='logoutURL']}">
                                                     <i18n:text>xmlui.dri2xhtml.structural.logout</i18n:text>
                                                 </a>
@@ -468,42 +469,49 @@
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <li>
-                                        <a class="btn btn-default btn-sm" href="{/dri:document/dri:meta/dri:userMeta/
+                                        <a class="btn btn-info btn-sm" href="{/dri:document/dri:meta/dri:userMeta/
                             dri:metadata[@element='identifier' and @qualifier='loginURL']}">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                        <span class="hidden-xs">
-                                                <i18n:text>xmlui.dri2xhtml.structural.login</i18n:text>
-                                            </span>
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <i18n:text>xmlui.dri2xhtml.structural.login</i18n:text>
                                         </a>
                                     </li>
                                 </xsl:otherwise>
                             </xsl:choose>
+
+                                    <li>
+                                        <a class="btn btn-info btn-sm" href="{$app_path}/discover">
+                                          <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Discover
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-info btn-sm" href="{$app_path}/pages/add">
+                                          <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Submit Works
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-info btn-sm" href="{$app_path}/pages/about">
+                                          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-info btn-sm" href="{$app_path}/pages/tour">
+                                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Tour
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-info btn-sm" href="{$app_path}/pages/faq">
+                                          <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> FAQ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-success btn-sm" href="{$app_path}/pages/download">
+                                          <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download
+                                        </a>
+                                    </li>
+
                         </ul>
-                              <span class="nav navbar-text pull-right">
-
-									<a class="btn btn-default btn-sm" href="{$app_path}/discover">
-									  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Discover
-									</a>
-                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/add">
-									  <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Submit Works
-									</a>
-                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/about">
-									  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About
-									</a>
-                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/tour">
-									  <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Tour
-									</a>
-                                    <a class="btn btn-default btn-sm" href="{$app_path}/pages/faq">
-									  <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> FAQ
-									</a>
-                                    <a class="btn btn-success btn-sm" href="{$app_path}/pages/download">
-									  <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download
-									</a>
-
-                                </span>
 
 
-                        <button data-toggle="offcanvas" class="navbar-toggle visible-sm" type="button">
+                        <button data-toggle="offcanvas" class="navbar-toggle visible-xs visible-sm visible-md hidden-lg" type="button">
                             <span class="sr-only"><i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -528,7 +536,7 @@
                     <div class="col-xs-12">
                         <xsl:choose>
                             <xsl:when test="count(/dri:document/dri:meta/dri:pageMeta/dri:trail) > 1">
-                                <div class="breadcrumb dropdown visible-xs">
+                                <div class="breadcrumb dropdown hidden-lg">
                                     <a id="trail-dropdown-toggle" href="#" role="button" class="dropdown-toggle"
                                        data-toggle="dropdown">
                                         <xsl:variable name="last-node"
