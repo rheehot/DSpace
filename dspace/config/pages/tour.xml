@@ -2,10 +2,10 @@
     version="1.1">
 
     <body>
-        <div id="file.about.div.download" n="about" rend="primary">
-            <head>Download VSim</head>
+        <div id="file.about.div.tour" n="tour" rend="primary">
+            <head>VSim Tour</head>
 
-            <p>This will eventually contain information on how to download VSim.</p>
+            <p>This will eventually contain a slideshow about VSim. It will be amazing.</p>
 
             <hi rend="bold">We can have bold type in this document!</hi>
 
@@ -23,7 +23,7 @@
 
     <meta>
         <pageMeta>
-            <metadata element="title">Download VSim</metadata>
+            <metadata element="title">VSim Tour</metadata>
             <trail target="../">VSim Home</trail>
         </pageMeta>
     </meta>

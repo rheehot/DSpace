@@ -420,7 +420,7 @@
 
                             <!-- small navigation buttons for sm and xs screens, keep scrolling down for the full-sized buttons -->
                             <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/discover">discover</a></li>
-                            <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/add">add</a></li>
+                            <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/add">submit works</a></li>
                             <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/about">about</a></li>
                             <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/tour">tour</a></li>
                             <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/faq">FAQ</a></li>
