@@ -744,7 +744,7 @@
                     <hr/>
                     <div class="col-xs-7 col-sm-8">
                         <div>
-                            Insert VSim branding here.
+                            VSim: Explore. Interact. Understand.
                         </div>
                         <div class="hidden-print">
                             <a>
@@ -768,7 +768,7 @@
                     </div>
                     <div class="col-xs-5 col-sm-4 hidden-print">
                         <div class="pull-right">
-                            add some footer text here
+                            <!-- additional footer text can be put here -->
                         </div>
 
                     </div>
