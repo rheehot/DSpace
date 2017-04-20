@@ -16,8 +16,8 @@
                     <item>very important things</item></list>
 
                 <p> And we can also have hyperlinks, because they are
-                    <xref target="http://www.library.ucla.edu/">the best thing ever</xref>.</p>
-               </div>
+                    <xref target="http://www.library.ucla.edu/">the best thing ever</xref>.</p>>
+            </div>
     </body>
 
 

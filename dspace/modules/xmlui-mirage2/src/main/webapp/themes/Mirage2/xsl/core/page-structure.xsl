@@ -105,6 +105,8 @@
                                         <div class="col-xs-12 col-sm-12 col-md-9 main-content">
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
+                                            <script type="text/javascript">DSpace.getTemplate(vsim-carousel);</script>
+
                                             <div class="visible-xs visible-sm visible-md">
                                                 <xsl:call-template name="buildFooter"/>
                                             </div>
