@@ -107,7 +107,7 @@
 
                                             <script type="text/javascript">DSpace.getTemplate(vsim-carousel);</script>
 
-                                            <div class="visible-xs visible-sm visible-md">
+                                            <div class="hidden-lg">
                                                 <xsl:call-template name="buildFooter"/>
                                             </div>
                                         </div>
@@ -121,7 +121,7 @@
                                 <!--
                             The footer div, dropping whatever extra information is needed on the page. It will
                             most likely be something similar in structure to the currently given example. -->
-                            <div class="hidden-xs hidden-sm">
+                            <div class="hidden-xs">
                             <xsl:call-template name="buildFooter"/>
                              </div>
                          </div>
@@ -350,7 +350,7 @@
                             <img src="{$theme-path}images/vsim.png" />
                         </a>
 
-                        <div class="navbar-header pull-right hidden-lg">
+                        <div class="navbar-header pull-right hidden-lg hidden-md hidden-sm">
                         <ul class="nav nav-pills pull-left ">
 
                             <xsl:if test="count(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='page'][@qualifier='supportedLocale']) &gt; 1">
@@ -388,11 +388,11 @@
                             <xsl:choose>
                                 <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
                                     <li class="dropdown">
-                                        <button class="dropdown-toggle navbar-toggle navbar-link" id="user-dropdown-toggle-xs" href="#" role="button"  data-toggle="dropdown">
+                                        <button class="dropdown-toggle navbar-toggle navbar-link" id="user-dropdown-toggle-sm" href="#" role="button"  data-toggle="dropdown">
                                             <b class="hidden-lg glyphicon glyphicon-user" aria-hidden="true"/>
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu"
-                                            aria-labelledby="user-dropdown-toggle-xs" data-no-collapse="true">
+                                            aria-labelledby="user-dropdown-toggle-sm" data-no-collapse="true">
                                             <li>
                                                 <a href="{/dri:document/dri:meta/dri:userMeta/
                             dri:metadata[@element='identifier' and @qualifier='url']}">
@@ -426,13 +426,13 @@
                             <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/about">about</a></li>
                             <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/tour">tour</a></li>
                             <li><a class="btn btn-sm btn-info" role="button" href="{$app_path}/pages/faq">FAQ</a></li>
-                            <li><a class="btn btn-sm btn-success" role="button" href="{$app_path}/pages/download">download</a></li>
+                            <li><a class="btn btn-sm btn-success" role="button" href="{$app_path}/pages/download">download VSim</a></li>
 
                         </ul>
                               </div>
                     </div>
 
-                    <div class="navbar-header pull-right hidden-xs hidden-sm hidden-md">
+                    <div class="navbar-header pull-right hidden-xs">
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
                           </ul>
@@ -481,39 +481,39 @@
 
                                     <li>
                                         <a class="btn btn-info btn-sm" href="{$app_path}/discover">
-                                          <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Discover
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="hidden-xs hidden-sm"> Discover</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="btn btn-info btn-sm" href="{$app_path}/pages/add">
-                                          <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Submit Works
+                                          <span class="glyphicon glyphicon-upload" aria-hidden="true"></span><span class="hidden-xs hidden-sm"> Submit Works</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="btn btn-info btn-sm" href="{$app_path}/pages/about">
-                                          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About
+                                          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span><span class="hidden-xs hidden-sm"> About</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="btn btn-info btn-sm" href="{$app_path}/pages/tour">
-                                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Tour
+                                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span><span class="hidden-xs hidden-sm"> Tour</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="btn btn-info btn-sm" href="{$app_path}/pages/faq">
-                                          <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> FAQ
+                                          <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span><span class="hidden-xs hidden-sm"> FAQ</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="btn btn-success btn-sm" href="{$app_path}/pages/download">
-                                          <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download
+                                          <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download VSim
                                         </a>
                                     </li>
 
                         </ul>
 
 
-                        <button data-toggle="offcanvas" class="navbar-toggle visible-xs visible-sm visible-md hidden-lg" type="button">
+                        <button data-toggle="offcanvas" class="navbar-toggle hidden-lg" type="button">
                             <span class="sr-only"><i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
