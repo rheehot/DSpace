@@ -60,7 +60,7 @@
          <input-type>onebox</input-type>
          <hint>dc.publisher: Insert a publisher, if this project has been
            published.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>vsim</dc-schema>
@@ -71,7 +71,7 @@
          <hint>vsim.news: The news field is a freeform text entry field,
            included on a project community page. It can be edited after project
            initialization, this is a default value.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -81,7 +81,7 @@
          <label>Abstract</label>
          <input-type>textarea</input-type>
          <hint>dc.description.abstract: Insert an abstract.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -90,7 +90,7 @@
          <label>Description</label>
          <input-type>textarea</input-type>
          <hint>dc.description: Insert a description of this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>vsim</dc-schema>
@@ -101,7 +101,7 @@
          <input-type>textarea</input-type>
          <hint>vsim.research.objective: provide details of this project's
            research objective.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -112,7 +112,7 @@
          <input-type>date</input-type>
          <hint>dc.date.created: Insert the date this project was created. You can leave out the day and/or month if they aren't
          applicable.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -123,7 +123,7 @@
          <input-type>textarea</input-type>
          <hint>dc.description.sponsorship: provide details of this project's
            sponsors.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>vsim</dc-schema>
@@ -133,7 +133,7 @@
          <input-type>textarea</input-type>
          <hint>vsim.bibliography: insert a bibliography for this project, can
            be refined later.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -143,7 +143,7 @@
          <label>Authors</label>
          <input-type>name</input-type>
          <hint>dc.contributor.author: Enter the names of the authors of this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>vsim</dc-schema>
@@ -153,7 +153,7 @@
          <label>Contributor Details</label>
          <input-type>textarea</input-type>
          <hint>vsim.contributor.details: use this space to provide any additional information regarding the contributors to this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -163,7 +163,7 @@
          <label>Contributor</label>
          <input-type>name</input-type>
          <hint>dc.contributor: Enter the names of additional contributors to this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -173,7 +173,7 @@
          <label>Contributor</label>
          <input-type>name</input-type>
          <hint>dc.contributor.advisor: Enter the names of advisors to this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -184,7 +184,7 @@
          <input-type>name</input-type>
          <hint>dc.contributor.other: Enter the names of other contributors to
            this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -197,7 +197,7 @@
            available for use (not previous publication or public distribution).
            You can leave out the day and/or month if they aren't
            applicable.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -208,7 +208,7 @@
          <input-type>onebox</input-type>
          <hint>dc.coverage.spacial: briefly describe the spacial characteristics
             of this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -219,7 +219,7 @@
          <input-type>onebox</input-type>
          <hint>dc.coverage.temporal: briefly describe the temporal
            characteristics of this project.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>vsim</dc-schema>
@@ -229,7 +229,7 @@
          <input-type>onebox</input-type>
          <hint>vsim.keywords: enter a comma-separated list of keywords for this
            project, to be used to improve search results</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -240,7 +240,7 @@
          <input-type>textarea</input-type>
          <hint>dc.rights.holder: please describe the rights holder for this
            project</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -252,7 +252,7 @@
          <hint>dc.date.copyright: Please give the copyright date this project.
            You can leave out the day and/or month if they aren't
            applicable.</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -274,7 +274,7 @@
          <label>Statement of Responsibility</label>
          <input-type>textarea</input-type>
          <hint>dc.description.statementofresponsibility: please enter a statement of responsibility</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -284,7 +284,7 @@
          <label>Description URI</label>
          <input-type>onebox</input-type>
          <hint>dc.description.uri: Insert a URI to a description of this project</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -294,7 +294,7 @@
          <label>Relation - Is Part Of</label>
          <input-type>onebox</input-type>
          <hint>dc.relation.ispartof</hint>
-         <required>false</required>
+         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -304,7 +304,7 @@
          <label>Relation - requires</label>
          <input-type>onebox</input-type>
          <hint>dc.relation.requires</hint>
-         <required>false</required>
+         <required></required>
        </field>
      </page>
    </form>
