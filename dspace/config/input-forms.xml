@@ -50,6 +50,8 @@
            Title Casing.</hint>
          <required>true</required>
        </field>
+     </page>
+     <page number="2">
        <field>
          <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
