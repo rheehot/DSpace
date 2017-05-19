@@ -55,7 +55,7 @@
          <dc-element>date</dc-element>
          <dc-qualifier>issued</dc-qualifier>
          <repeatable>false</repeatable>
-         <label>Date of Issue</label>
+         <label>Date of Issue for Project</label>
          <input-type>date</input-type>
          <hint>dc.date.issued: Please give the date of previous publication or
            public distribution. You can leave out the day and/or month if they
@@ -68,7 +68,7 @@
          <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
          <repeatable>false</repeatable>
-         <label>Publisher</label>
+         <label>Project Publisher</label>
          <input-type>onebox</input-type>
          <hint>dc.publisher: Insert a publisher, if this project has been
            published.</hint>
@@ -78,7 +78,7 @@
          <dc-schema>vsim</dc-schema>
          <dc-element>news</dc-element>
          <repeatable>false</repeatable>
-         <label>News</label>
+         <label>Project News</label>
          <input-type>textarea</input-type>
          <hint>vsim.news: The news field is a freeform text entry field,
            included on a project community page. It can be edited after project
@@ -90,7 +90,7 @@
          <dc-element>description</dc-element>
          <dc-qualifier>abstract</dc-qualifier>
          <repeatable>false</repeatable>
-         <label>Abstract</label>
+         <label>Project Abstract</label>
          <input-type>textarea</input-type>
          <hint>dc.description.abstract: Insert an abstract.</hint>
          <required></required>
@@ -99,7 +99,7 @@
          <dc-schema>dc</dc-schema>
          <dc-element>description</dc-element>
          <repeatable>false</repeatable>
-         <label>Description</label>
+         <label>Project Description</label>
          <input-type>textarea</input-type>
          <hint>dc.description: Insert a description of this project.</hint>
          <required></required>
@@ -120,7 +120,7 @@
          <dc-element>date</dc-element>
          <dc-qualifier>created</dc-qualifier>
          <repeatable>false</repeatable>
-         <label>Date Created</label>
+         <label>Project Date Created</label>
          <input-type>date</input-type>
          <hint>dc.date.created: Insert the date this project was created. You
            can leave out the day and/or month if they aren't
