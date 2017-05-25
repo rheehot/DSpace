@@ -80,12 +80,11 @@
        </field>
        <field>
          <dc-schema>dc</dc-schema>
-         <dc-element>publisher</dc-element>
-         <repeatable>false</repeatable>
+         <dc-element>relation</dc-element>
+         <repeatable>true</repeatable>
          <label>Institutional Affiliation</label>
- <!-- Hardy, there may be multiple institutions keyed here ... is that a problem? -->
          <input-type>onebox</input-type>
-         <hint>dc.publisher: Insert the institution(s) associated with the project.</hint>
+         <hint>dc.relation: Insert the institution(s) associated with the project.</hint>
          <required>false</required>
        </field>
        <field>
@@ -110,6 +109,16 @@
          <required></required>
        </field>
        <field>
+         <dc-schema>vsim</dc-schema>
+         <dc-element>acknowledgements</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Funding</label>
+         <input-type>textarea</input-type>
+         <hint>vsim.acknowledgements: List any acknowledgements required for this project</hint>
+         <required></required>
+       </field>
+        <field>
          <dc-schema>vsim</dc-schema>
          <dc-element>bibliography</dc-element>
          <repeatable>false</repeatable>
@@ -244,17 +253,7 @@
            applicable.</hint>
          <required></required>
        </field>
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>date</dc-element>
-         <dc-qualifier>license</dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Creative Commons License</label>
-         <input-type>dropdown</input-type>
-         <hint>dc.date.license: All content in the VSim Repository and Archive is made available as CC BY-NC-SA (Attribution-NonCommercial-ShareAlike) unless otherwise specified by the content creator.</hint>
-         <required>false</required>
-       </field>
-       <field>
+      <field>
          <dc-schema>dc</dc-schema>
          <dc-element>rights</dc-element>
          <repeatable>false</repeatable>
@@ -278,43 +277,12 @@
        <field>
          <dc-schema>dc</dc-schema>
          <dc-element>description</dc-element>
-         <dc-qualifier>statementofresponsibility</dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Statement of Responsibility</label>
-         <input-type>textarea</input-type>
-         <hint>dc.description.statementofresponsibility: please enter a
-           statement of responsibility</hint>
-         <required></required>
-       </field>
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>description</dc-element>
          <dc-qualifier>uri</dc-qualifier>
          <repeatable>false</repeatable>
          <label>Description URI</label>
          <input-type>onebox</input-type>
          <hint>dc.description.uri: Insert a URI to a description of this
            project</hint>
-         <required></required>
-       </field>
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>relation</dc-element>
-         <dc-qualifier>ispartof</dc-qualifier>
-         <repeatable>true</repeatable>
-         <label>Relation - Is Part Of</label>
-         <input-type>onebox</input-type>
-         <hint>dc.relation.ispartof</hint>
-         <required></required>
-       </field>
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>relation</dc-element>
-         <dc-qualifier>requires</dc-qualifier>
-         <repeatable>true</repeatable>
-         <label>Relation - requires</label>
-         <input-type>onebox</input-type>
-         <hint>dc.relation.requires</hint>
          <required></required>
        </field>
      </page>
