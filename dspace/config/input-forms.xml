@@ -39,51 +39,15 @@
 
  <form-definitions>
    <form name="vsim-project">
-     <page number="1"> <!-- page one is for all required fields -->
+     <page number="1">
        <field>
          <dc-schema>dc</dc-schema>
          <dc-element>title</dc-element>
          <repeatable>false</repeatable>
          <label>Project Title</label>
          <input-type>onebox</input-type>
-         <hint>dc.title (required): Insert a title, please use appropriate
-           Title Casing.</hint>
+         <hint>dc.title (required): This field is for the main title of your project (e.g., Digital Karnak or Virtual Turin). Please use appropriate title casing.</hint>
          <required>true</required>
-       </field>
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>date</dc-element>
-         <dc-qualifier>issued</dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Date of Issue for Project</label>
-         <input-type>date</input-type>
-         <hint>dc.date.issued: Please give the date of previous publication or
-           public distribution. You can leave out the day and/or month if they
-           aren't applicable.</hint>
-         <required>You must enter at least the year.</required>
-       </field>
-     </page>
-     <page number="2"> <!-- page two is for all optional fields -->
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>publisher</dc-element>
-         <repeatable>false</repeatable>
-         <label>Project Publisher</label>
-         <input-type>onebox</input-type>
-         <hint>dc.publisher: Insert a publisher, if this project has been
-           published.</hint>
-         <required></required>
-       </field>
-       <field>
-         <dc-schema>vsim</dc-schema>
-         <dc-element>news</dc-element>
-         <repeatable>false</repeatable>
-         <label>Project News</label>
-         <input-type>textarea</input-type>
-         <hint>vsim.news: The news field is a freeform text entry field,
-           included on a project community page. It can be edited after project
-           initialization, this is a default value.</hint>
-         <required></required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -111,20 +75,27 @@
          <repeatable>false</repeatable>
          <label>Research Objective</label>
          <input-type>textarea</input-type>
-         <hint>vsim.research.objective: provide details of this project's
-           research objective.</hint>
+         <hint>vsim.research.objective: Describe the research objective of the project.</hint>
          <required></required>
+       </field>
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>publisher</dc-element>
+         <repeatable>false</repeatable>
+         <label>Institutional Affiliation</label>
+ <!-- Hardy, there may be multiple institutions keyed here ... is that a problem? -->
+         <input-type>onebox</input-type>
+         <hint>dc.publisher: Insert the institution(s) associated with the project.</hint>
+         <required>false</required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
          <dc-element>date</dc-element>
          <dc-qualifier>created</dc-qualifier>
          <repeatable>false</repeatable>
-         <label>Project Date Created</label>
+         <label>Project Start Date</label>
          <input-type>date</input-type>
-         <hint>dc.date.created: Insert the date this project was created. You
-           can leave out the day and/or month if they aren't
-         applicable.</hint>
+         <hint>dc.date.created: Insert the date this project was initiated. You can leave out the day and/or month if they aren't applicable.</hint>
          <required></required>
        </field>
        <field>
@@ -132,9 +103,9 @@
          <dc-element>description</dc-element>
          <dc-qualifier>sponsorship</dc-qualifier>
          <repeatable>false</repeatable>
-         <label>Sponsorship</label>
+         <label>Funding</label>
          <input-type>textarea</input-type>
-         <hint>dc.description.sponsorship: provide details of this project's
+         <hint>dc.description.sponsorship: Provide details about this project's funders/
            sponsors.</hint>
          <required></required>
        </field>
@@ -144,20 +115,60 @@
          <repeatable>false</repeatable>
          <label>Bibliography</label>
          <input-type>textarea</input-type>
-         <hint>vsim.bibliography: insert a bibliography for this project, can
-           be refined later.</hint>
+         <hint>vsim.bibliography: Insert a bibliography for this project, either publications about the project or about the modeled environment. This field can be refined later.</hint>
          <required></required>
+       </field>
+     <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>coverage</dc-element>
+         <dc-qualifier>spacial</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Coverage.Spacial</label>
+         <input-type>onebox</input-type>
+         <hint>dc.coverage.spacial: briefly describe the spacial characteristics
+            of this project.</hint>
+         <required>false</required>
+       </field>
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>coverage</dc-element>
+         <dc-qualifier>temporal</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Coverage.Temporal</label>
+         <input-type>onebox</input-type>
+         <hint>dc.coverage.temporal: briefly describe the temporal
+           characteristics of this project.</hint>
+         <required>false</required>
+       </field>
+       <field>
+         <dc-schema>vsim</dc-schema>
+         <dc-element>keywords</dc-element>
+         <repeatable>false</repeatable>
+         <label>Keywords</label>
+         <input-type>onebox</input-type>
+         <hint>vsim.keywords: enter a comma-separated list of keywords for this
+           project, to be used to improve search results</hint>
+         <required>false</required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
          <dc-element>contributor</dc-element>
          <dc-qualifier>author</dc-qualifier>
          <repeatable>true</repeatable>
-         <label>Authors</label>
+         <label>Author(s)</label>
          <input-type>name</input-type>
-         <hint>dc.contributor.author: Enter the names of the authors of this
-           project.</hint>
-         <required></required>
+         <hint>dc.contributor.author: Enter the names of the author(s) of this project.</hint>
+         <required>false</required>
+       </field>
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Contributor(s)</label>
+         <input-type>name</input-type>
+         <hint>dc.contributor: Enter the names of key contributors to this project.</hint>
+         <required>false</required>
        </field>
        <field>
          <dc-schema>vsim</dc-schema>
@@ -166,9 +177,7 @@
          <repeatable>false</repeatable>
          <label>Contributor Details</label>
          <input-type>textarea</input-type>
-         <hint>vsim.contributor.details: use this space to provide any
-           additional information regarding the contributors to
-             this project.</hint>
+         <hint>vsim.contributor.details: use this space to provide any additional information regarding the contributors to this project including roles and responsibilities of the various team members.</hint>
          <required></required>
        </field>
        <field>
@@ -176,21 +185,28 @@
          <dc-element>contributor</dc-element>
          <dc-qualifier>advisor</dc-qualifier>
          <repeatable>true</repeatable>
-         <label>Contributor</label>
+         <label>Associated Advisors/Scientific Committee</label>
          <input-type>name</input-type>
-         <hint>dc.contributor.advisor: Enter the names of advisors to this
-           project.</hint>
+         <hint>dc.contributor.advisor: Enter the names of advisors to this project.</hint>
          <required></required>
        </field>
-       <field>
+        <field>
          <dc-schema>dc</dc-schema>
-         <dc-element>contributor</dc-element>
-         <dc-qualifier>other</dc-qualifier>
-         <repeatable>true</repeatable>
-         <label>Contributor</label>
-         <input-type>name</input-type>
-         <hint>dc.contributor.other: Enter the names of other contributors to
-           this project.</hint>
+         <dc-element>description</dc-element>
+         <dc-qualifier>uri</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Description URI</label>
+         <input-type>onebox</input-type>
+         <hint>dc.description.uri: Insert the project URI/URL</hint>
+         <required></required>
+       </field>
+      <field>
+         <dc-schema>vsim</dc-schema>
+         <dc-element>news</dc-element>
+         <repeatable>false</repeatable>
+         <label>News</label>
+         <input-type>textarea</input-type>
+         <hint>vsim.news: The news field is a freeform text entry field for project updates and news. This information will be displayed on the project community page, and can be updated as desired after project initialization.</hint>
          <required></required>
        </field>
        <field>
@@ -208,46 +224,13 @@
        </field>
        <field>
          <dc-schema>dc</dc-schema>
-         <dc-element>coverage</dc-element>
-         <dc-qualifier>spatial</dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Coverage.Spatial</label>
-         <input-type>onebox</input-type>
-         <hint>dc.coverage.spatial: briefly describe the spatial characteristics
-            of this project.</hint>
-         <required></required>
-       </field>
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>coverage</dc-element>
-         <dc-qualifier>temporal</dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Coverage.Temporal</label>
-         <input-type>onebox</input-type>
-         <hint>dc.coverage.temporal: briefly describe the temporal
-           characteristics of this project.</hint>
-         <required></required>
-       </field>
-       <field>
-         <dc-schema>vsim</dc-schema>
-         <dc-element>keywords</dc-element>
-         <repeatable>false</repeatable>
-         <label>Keywords</label>
-         <input-type>onebox</input-type>
-         <hint>vsim.keywords: enter a comma-separated list of keywords for this
-           project, to be used to improve search results</hint>
-         <required></required>
-       </field>
-       <field>
-         <dc-schema>dc</dc-schema>
          <dc-element>rights</dc-element>
          <dc-qualifier>holder</dc-qualifier>
          <repeatable>false</repeatable>
          <label>Rights Holder</label>
          <input-type>textarea</input-type>
-         <hint>dc.rights.holder: please describe the rights holder for this
-           project</hint>
-         <required></required>
+         <hint>dc.rights.holder: Name the rights holder for this project</hint>
+         <required>false</required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
@@ -260,6 +243,37 @@
            You can leave out the day and/or month if they aren't
            applicable.</hint>
          <required></required>
+       </field>
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>license</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Creative Commons License</label>
+         <input-type>dropdown</input-type>
+         <hint>dc.date.license: All content in the VSim Repository and Archive is made available as CC BY-NC-SA (Attribution-NonCommercial-ShareAlike) unless otherwise specified by the content creator.</hint>
+         <required>false</required>
+       </field>
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>rights</dc-element>
+         <repeatable>false</repeatable>
+         <label>Permissions and Reuse</label>
+         <input-type>textarea</input-type>
+         <hint>dc.rights: Input any specific restrictions or requirments pertaining to the use of content related to the project in publications.</hint>
+         <required></required>
+       </field>
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>issued</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date of Issue</label>
+         <input-type>date</input-type>
+         <hint>dc.date.issued: Please give the date of previous publication or public distribution.
+                        You can leave out the day and/or month if they aren't
+                        applicable.</hint>
+         <required>You must enter at least the year.</required>
        </field>
        <field>
          <dc-schema>dc</dc-schema>
