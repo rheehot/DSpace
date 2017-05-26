@@ -130,11 +130,11 @@
      <field>
          <dc-schema>dc</dc-schema>
          <dc-element>coverage</dc-element>
-         <dc-qualifier>spacial</dc-qualifier>
+         <dc-qualifier>spatial</dc-qualifier>
          <repeatable>false</repeatable>
-         <label>Coverage.Spacial</label>
+         <label>Coverage.Spatial</label>
          <input-type>onebox</input-type>
-         <hint>dc.coverage.spacial: briefly describe the spacial characteristics
+         <hint>dc.coverage.spatial: briefly describe the spacial characteristics
             of this project.</hint>
          <required>false</required>
        </field>
