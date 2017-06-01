@@ -7,6 +7,7 @@
  */
 package org.dspace.content.authority;
 
+import org.dspace.content.Collection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -123,10 +124,10 @@ public abstract class GettyAuthority implements ChoiceAuthority {
 	
     // this implements the specific RoMEO API args and XML tag naming
 	@Override
-    public abstract Choices getMatches(String field,String text, int collection, int start, int limit, String locale);
+    public abstract Choices getMatches(String field,String text, Collection collection, int start, int limit, String locale);
 
 	@Override
-	public Choices getBestMatch(String field, String text, int collection, String locale) {
+	public Choices getBestMatch(String field, String text, Collection collection, String locale) {
 		return getMatches(field,text,collection,0,1,locale);
 	}
 
