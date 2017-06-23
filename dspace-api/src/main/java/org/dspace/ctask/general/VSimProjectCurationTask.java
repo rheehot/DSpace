@@ -47,6 +47,8 @@ public class VSimProjectCurationTask extends AbstractCurationTask
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
 
+    // TODO: We need a few DSpace group objects for AuthZ purposes: Admins, ContentCreators, Anonymous; keep them handy
+
     /**
      * Perform the curation task upon passed DSO
      *
@@ -112,13 +114,15 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "title", null, null, mvDcTitle.get(0).getValue());
 
               // set the description (dc.description)
+              // TODO: this will likely require a combination of the following metatdata fields, with a bit of formatting added: dc.description, vsim.acknowledgements, vsim.research.objective
+              // TODO: support markup for any of these fields, will probably need to use a markdown library, like es.nitaur.markdown/txtmark or sirthius/pegdown
               communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "description", null, null, mvDcDescription.get(0).getValue());
 
               // set the short_description (dc.description.abstract)
               communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "description", "abstract", null, mvDcDescriptionAbstract.get(0).getValue());
 
               // TODO: set the sidebar_text (dc.description.tableofcontents) we'll have to interpolate this from other values, requires discussion and/or thought
-              // probably it'll be a link to the project master? leave blank for now
+              // probably it'll be a link to the project master? leave blank for now, oh, or maybe the bibliography?
 
               // set the copyright_text (dc.rights)
               communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
@@ -133,7 +137,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
               // TODO: set the logo for the community, if possible, use projectCommunity.setLogo(Bitstream logo)
               // TODO: before we can do that, we need to find the Bitstream logo on this Project master item
-              // TODO: set the admins for this community, use setAdmins(Group admins)
+              // TODO: set the admins for this community, use setAdmins(Group admins) <- we need a Group object that matches the Content Creators group
 
 
               // TODO add a link to the top level community as metadata for this project master Item (use vsim.relation.community)
