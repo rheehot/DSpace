@@ -16,9 +16,14 @@ ALL/some of these links *can* be added to the dc fields, too, but that's not rea
 We need to add them to fields we can use to also recall the values in this script
 */
 
+// TODO: make this whole thing Idempotent (see below for notes, around line 109)
+// TODO:
+
 package org.dspace.ctask.general;
 
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.ListUtils;
 
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DSpaceObject;
@@ -44,6 +49,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
     private static final Logger log = Logger.getLogger(VSimProjectCurationTask.class);
 
     protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
+    protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
 
@@ -94,38 +100,49 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               List<MetadataValue> mvVsimContributorDetails = itemService.getMetadata(item, "vsim", "contributor", "details", Item.ANY);
               List<MetadataValue> mvVsimNews = itemService.getMetadata(item, "vsim", "news", Item.ANY, Item.ANY);
 
-              /* these don't exist yet
+              // the following are used as links and to give this Curation Task idempotency
               List<MetadataValue> mvVsimRelationCommunity = itemService.getMetadata(item, "vsim", "relation", "community", Item.ANY);
               List<MetadataValue> mvVsimRelationModels = itemService.getMetadata(item, "vsim", "relation", "models", Item.ANY);
               List<MetadataValue> mvVsimRelationArchives = itemService.getMetadata(item, "vsim", "relation", "archives", Item.ANY);
               List<MetadataValue> mvVsimRelationSubmissions = itemService.getMetadata(item, "vsim", "relation", "submissions", Item.ANY);
-              */
 
+              // TODO: MAKE THIS IDEMPOTENT!!! unfortunately, there does not seem to be an easy way to grab a collection by its handle (see line 112 below)
+              // if there is no link to the project community in this projectMaster item's metadata -- disabled for now, hjp
+              // if ( CollectionUtils.isNotEmpty(mvVsimRelationCommunity) ){
+                // create a new top level community for this project
+                Community projectCommunity = communityService.create(null, Curator.curationContext());
+              //} else {
+                // grab the linked projectCommunity by its handle
+                //Community projectCommunity = communityService.create(null, Curator.curationContext());
+              //}
 
-              // TODO: (only do this if there is no link to the project community in this projectMaster item's metadata)
-
-              // create a top level community for this project
-              Community projectCommunity = communityService.create(null, Curator.curationContext());
-
-              // set what metadata we can on this new community
-              // example here: https://github.com/DSpace/DSpace/blob/ea642d6c9289d96b37b5de3bb7a4863ec48eaa9c/dspace-api/src/test/java/org/dspace/content/packager/PackageUtilsTest.java#L79-L80
+              // set what metadata we can on this community; this should be safe to re-run over existing communities... in that case the project master
+              // will simply overwrite whatever metadata is set on the existing community
+              // code is borrowed from the example here: https://github.com/DSpace/DSpace/blob/ea642d6c9289d96b37b5de3bb7a4863ec48eaa9c/dspace-api/src/test/java/org/dspace/content/packager/PackageUtilsTest.java#L79-L80
 
               // set the title (dc.title)
-              communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "title", null, null, mvDcTitle.get(0).getValue());
-
+              if ( CollectionUtils.isNotEmpty(mvDcTitle) ) {
+                communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "title", null, null, mvDcTitle.get(0).getValue());
+              }
               // set the description (dc.description)
               // TODO: this will likely require a combination of the following metatdata fields, with a bit of formatting added: dc.description, vsim.acknowledgements, vsim.research.objective
               // TODO: support markup for any of these fields, will probably need to use a markdown library, like es.nitaur.markdown/txtmark or sirthius/pegdown
-              communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "description", null, null, mvDcDescription.get(0).getValue());
+              if ( CollectionUtils.isNotEmpty(mvDcDescription) ) {
+                communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "description", null, null, mvDcDescription.get(0).getValue());
+              }
 
               // set the short_description (dc.description.abstract)
-              communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "description", "abstract", null, mvDcDescriptionAbstract.get(0).getValue());
+              if ( CollectionUtils.isNotEmpty(mvDcDescriptionAbstract) ) {
+                communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "description", "abstract", null, mvDcDescriptionAbstract.get(0).getValue());
+              }
 
               // TODO: set the sidebar_text (dc.description.tableofcontents) we'll have to interpolate this from other values, requires discussion and/or thought
               // probably it'll be a link to the project master? leave blank for now, oh, or maybe the bibliography?
 
               // set the copyright_text (dc.rights)
-              communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
+              if ( CollectionUtils.isNotEmpty(mvDcRights) ) {
+                communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
+              }
 
               // finish the update of the projectCommunity metadata (AKA: write!)
               communityService.update(Curator.curationContext(), projectCommunity);
@@ -133,22 +150,65 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               // snag the projectCommunityhandle, we'll need it
               String projectCommunityHandle = projectCommunity.getHandle();
 
-
-
               // TODO: set the logo for the community, if possible, use projectCommunity.setLogo(Bitstream logo)
               // TODO: before we can do that, we need to find the Bitstream logo on this Project master item
               // TODO: set the admins for this community, use setAdmins(Group admins) <- we need a Group object that matches the Content Creators group
 
 
               // TODO add a link to the top level community as metadata for this project master Item (use vsim.relation.community)
+              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "community", Item.ANY, projectCommunityHandle);
+
+              // if there is no link to the project models collection in this item's metadata, create a models collection in this project's TLC and add a link to the models collection as metadata for this project master item
+              Collection projectCollModels = collectionService.create(Curator.curationContext(), projectCommunity);
+              if ( CollectionUtils.isNotEmpty(mvDcTitle) ) {
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "title", null, null, "Models: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", null, null, "Collection description for Models: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Collection short_description for Models: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Models: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
+              }
+              // write this collection
+              collectionService.update(Curator.curationContext(), projectCollModels);
+              // add a link to this collection to the item
+              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY, projectCollModels.getHandle() );
+              itemService.update(Curator.curationContext(), item);
+
+              // if there is no link to the project archives collection in this item's metadata, create an archives collection in this project's TLC and add a link to the archives collection as metadata for this project master item
+              Collection projectCollArchives = collectionService.create(Curator.curationContext(), projectCommunity);
+              if ( CollectionUtils.isNotEmpty(mvDcTitle) ) {
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "title", null, null, "Archives: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", null, null, "Collection description for Archives: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Collection short_description for Archives: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Archives: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
+              }
+              // write this collection
+              collectionService.update(Curator.curationContext(), projectCollArchives);
+              // add a link to this collection to the item
+              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY, projectCollArchives.getHandle() );
+              itemService.update(Curator.curationContext(), item);
+
+              // if there is no link to the project submissions collection in this item's metadata, create a submissions collection in this project's TLC and add a link to the submissions collection as metadata for this project master item
+              Collection projectCollSubmissions = collectionService.create(Curator.curationContext(), projectCommunity);
+              if ( CollectionUtils.isNotEmpty(mvDcTitle) ) {
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "title", null, null, "Submissions: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", null, null, "Collection description for Submissions: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Collection short_description for Submissions: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Submissions: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
+              }
+              // write this collection
+              collectionService.update(Curator.curationContext(), projectCollSubmissions);
+              // add a link to this collection to the item
+              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY, projectCollSubmissions.getHandle() );
+              itemService.update(Curator.curationContext(), item);
+
+              // update the projectCommunity (just to be safe)
+              communityService.update(Curator.curationContext(), projectCommunity);
 
 
-              // TODO: (if there is no link to the project models collection in this item's metadata) create a models collection in this project's TLC and add a link to the models collection as metadata for this project master item
-
-              // TODO: (if there is no link to the project archives collection in this item's metadata) create an archives collection in this project's TLC and add a link to the archives collection as metadata for this project master item
-
-              // TODO: (if there is no link to the project submissions collection in this item's metadata) create a submissions collection in this project's TLC and add a link to the submissions collection as metadata for this project master item
-
+              // be sure to write the changed item metadata (just in case we've missed something along the way)
+              itemService.update(Curator.curationContext(), item);
 
 
               // set the success flag and add a line to the result report
