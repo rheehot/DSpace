@@ -37,12 +37,19 @@ import org.dspace.curate.Curator;
 import org.apache.log4j.Logger;
 
 import org.dspace.content.MetadataValue;
+import org.dspace.handle.factory.HandleServiceFactory;
+import org.dspace.handle.service.HandleService;
 import org.dspace.content.factory.ContentServiceFactory;
 import org.dspace.content.service.*;
 
 import java.sql.SQLException;
 import java.io.IOException;
 
+/**
+ * VSimProjectCurationTask is a task that initializes a VSim Project structure, based on the metadata entered in a VSim Project Master item
+ *
+ * @author hardyoyo
+ */
 public class VSimProjectCurationTask extends AbstractCurationTask
 {
     /** log4j category */
@@ -50,6 +57,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
     protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
+    protected HandleService handleService = HandleServiceFactory.getInstance().getHandleService();
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
 
@@ -60,6 +68,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
      *
      * @param dso the DSpace object
      * @throws IOException if IO error
+     * @throws SQLException if SQL error
      */
 
     @Override
@@ -68,13 +77,32 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
     int status = Curator.CURATE_SKIP;
 
+
+    // If this dso is an ITEM, proceed
+    vsimInit:
 		if (dso.getType() == Constants.ITEM)
         {
           try {
 
+          // TODO: make the projectMastersCollection handle configurable, hard coding is for losers
+          String projectMasterCollectionHandle = "20.500.11930/1015"; // <-- that better be a collection object on that handle
+          DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
+          Collection projectMastersCollection = (Collection) projectMastersDSO;
+
+          Item item = (Item)dso;
+
+          // *ONLY* KEEP GOING IF THIS ITEM IS A PROJECT MASTER, OTHERWISE *STOP*!!
+          if (!itemService.isIn(item, projectMastersCollection)) {
+              break vsimInit;
+          }
+
+
+
+
               // Get All requried MetadataValues, all are returned as lists, use .get(0).getValue() to return the first value, like strings,
               // use the usual list stuff to manage multiple values
-              Item item = (Item)dso;
+
+
               String itemId = item.getHandle();
               List<MetadataValue> mvDcTitle = itemService.getMetadata(item, "dc", "title", Item.ANY, Item.ANY);
               List<MetadataValue> mvDcDescriptionAbstract = itemService.getMetadata(item, "dc", "description", "abstract", Item.ANY);
@@ -106,8 +134,11 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               List<MetadataValue> mvVsimRelationArchives = itemService.getMetadata(item, "vsim", "relation", "archives", Item.ANY);
               List<MetadataValue> mvVsimRelationSubmissions = itemService.getMetadata(item, "vsim", "relation", "submissions", Item.ANY);
 
-              // TODO: MAKE THIS IDEMPOTENT!!! unfortunately, there does not seem to be an easy way to grab a collection by its handle (see line 112 below)
-              // if there is no link to the project community in this projectMaster item's metadata -- disabled for now, hjp
+              // TODO: MAKE THIS IDEMPOTENT!!!
+              // TODO: grab the projectCommunity in the same way I do on line 80, for projectMasterCollection, using HandleService, feeding it mvVsimRelationCommunity
+              // TODO: grab the mvVsimRelationCommunity, confirm it's not null/empty
+              // TODO: confirm that the dso for this handle exists and is a community object
+              // -- disabled for now, hjp, the below is not fully cooked, it's just a start, do all of the above
               // if ( CollectionUtils.isNotEmpty(mvVsimRelationCommunity) ){
                 // create a new top level community for this project
                 Community projectCommunity = communityService.create(null, Curator.curationContext());
@@ -232,6 +263,5 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
         return status;
     }
-
 
 }
