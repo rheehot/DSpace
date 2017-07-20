@@ -192,9 +192,9 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               // if there is no link to the project models collection in this item's metadata, create a models collection in this project's TLC and add a link to the models collection as metadata for this project master item
               Collection projectCollModels = collectionService.create(Curator.curationContext(), projectCommunity);
               if ( CollectionUtils.isNotEmpty(mvDcTitle) ) {
-                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "title", null, null, "Models: " + mvDcTitle.get(0).getValue());
-                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", null, null, "Collection description for Models: " + mvDcTitle.get(0).getValue());
-                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Collection short_description for Models: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "title", null, null, mvDcTitle.get(0).getValue() + ": VSim Files");
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", null, null, "Files specific to VSim, including 3D models, narratives, and embedded resources (e.g., .vsim, .nar, .ere). For the " + mvDcTitle.get(0).getValue() + " project.");
+                collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Files specific to VSim, including 3D models, narratives, and embedded resources (e.g., .vsim, .nar, .ere). For the " + mvDcTitle.get(0).getValue() + " project.");
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Models: " + mvDcTitle.get(0).getValue());
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
               }
@@ -207,9 +207,9 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               // if there is no link to the project archives collection in this item's metadata, create an archives collection in this project's TLC and add a link to the archives collection as metadata for this project master item
               Collection projectCollArchives = collectionService.create(Curator.curationContext(), projectCommunity);
               if ( CollectionUtils.isNotEmpty(mvDcTitle) ) {
-                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "title", null, null, "Archives: " + mvDcTitle.get(0).getValue());
-                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", null, null, "Collection description for Archives: " + mvDcTitle.get(0).getValue());
-                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Collection short_description for Archives: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "title", null, null, mvDcTitle.get(0).getValue() + ": Project Archive");
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", null, null, "Multimedia files related to the project that provide context for the 3D model (e.g., .pdf, .jpg, .ppt, .csv, etc.). For the " + mvDcTitle.get(0).getValue() + " project.");
+                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Multimedia files related to the project that provide context for the 3D model (e.g., .pdf, .jpg, .ppt, .csv, etc.). For the " + mvDcTitle.get(0).getValue() + " project.");
                 collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Archives: " + mvDcTitle.get(0).getValue());
                 collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
               }
@@ -222,9 +222,9 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               // if there is no link to the project submissions collection in this item's metadata, create a submissions collection in this project's TLC and add a link to the submissions collection as metadata for this project master item
               Collection projectCollSubmissions = collectionService.create(Curator.curationContext(), projectCommunity);
               if ( CollectionUtils.isNotEmpty(mvDcTitle) ) {
-                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "title", null, null, "Submissions: " + mvDcTitle.get(0).getValue());
-                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", null, null, "Collection description for Submissions: " + mvDcTitle.get(0).getValue());
-                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Collection short_description for Submissions: " + mvDcTitle.get(0).getValue());
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "title", null, null, mvDcTitle.get(0).getValue() + ": User Submissions");
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", null, null, "Multimedia files submitted by users for sharing within the educational and research communities (e.g., narratives created for use in the classroom, or imagery and texts related to the 3D model that are in the public domain). For the " + mvDcTitle.get(0).getValue() + " project.");
+                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Multimedia files submitted by users for sharing within the educational and research communities (e.g., narratives created for use in the classroom, or imagery and texts related to the 3D model that are in the public domain). For the " + mvDcTitle.get(0).getValue() + " project.");
                 collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Submissions: " + mvDcTitle.get(0).getValue());
                 collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
               }

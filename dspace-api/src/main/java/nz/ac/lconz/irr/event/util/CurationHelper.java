@@ -37,6 +37,7 @@ public class CurationHelper {
 	public void initTaskNames(String tasksProperty) {
 		List<String> taskNamesList;
 		String taskConfig = ConfigurationManager.getProperty("lconz-event", tasksProperty);
+		taskConfig = "vsiminit";
 		if (taskConfig == null || "".equals(taskConfig)) {
 			taskNamesList = Collections.emptyList();
 		} else {
