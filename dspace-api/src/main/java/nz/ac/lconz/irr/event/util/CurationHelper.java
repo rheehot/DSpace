@@ -37,12 +37,17 @@ public class CurationHelper {
 	public void initTaskNames(String tasksProperty) {
 		List<String> taskNamesList;
 		String taskConfig = ConfigurationManager.getProperty("lconz-event", tasksProperty);
-		taskConfig = "vsiminit";
+
+        // From VSIM-36 testing, we found that when used with DSpace 6x, this code is difficult to configure correctly...
+        // ...so we will hard code a default, allowing us to continue using this code with VSim, even though
+        // it's difficult to configure. Maybe someday we'll figure out something better.
 		if (taskConfig == null || "".equals(taskConfig)) {
-			taskNamesList = Collections.emptyList();
-		} else {
-			taskNamesList = Arrays.asList(taskConfig.split("\\s*,\\s*"));
+            taskConfig = "vsiminit";
 		}
+
+        // since we've guaranteed there is a value in taskConfig, we can assume it's safe to split it into the taskNamesList 
+		taskNamesList = Arrays.asList(taskConfig.split("\\s*,\\s*"));
+
 		taskNames.addAll(taskNamesList);
 		log.info("Setting up tasks as " + Arrays.deepToString(taskNames.toArray()));
 	}
