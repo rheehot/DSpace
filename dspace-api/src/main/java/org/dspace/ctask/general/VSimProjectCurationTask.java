@@ -24,6 +24,7 @@ package org.dspace.ctask.general;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
+import org.apache.commons.io.FilenameUtils;
 
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DSpaceObject;
@@ -182,8 +183,28 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               String projectCommunityHandle = projectCommunity.getHandle();
 
               // TODO: set the logo for the community, if possible, use projectCommunity.setLogo(Bitstream logo)
+              // TODO: example: https://github.com/DSpace/DSpace/blob/269af71afb602808a14edf822ad658c3895e0a37/dspace-api/src/main/java/org/dspace/content/packager/AbstractMETSIngester.java#L994-L1010
               // TODO: before we can do that, we need to find the Bitstream logo on this Project master item
               // TODO: set the admins for this community, use setAdmins(Group admins) <- we need a Group object that matches the Content Creators group
+
+              // Get the list of Bitstreams for this Project Master item
+              List<Bitstream> projectMasterBitstreams = itemService.getNonInternalBitstreams(Curator.curationContext(), item);
+
+              // Now do something useful with these bitstreams:
+              // Loop through each bistream, find the logo, get the path, send that path to the addlogo method for all generated communities and collections
+              // NOTE: this bakes in the assumption that this bitstream lives on the same server, and thus has a file path that this curation script can reference, which is not guaranteed
+              // by DSpace. Still, good enough for now, as this assumption works for our current implementation.
+              // UGH: I don't think I can actually get the path after all...
+              // OK, we *can* go from the internal ID + the assetstore path in the configuration, and infer the actual path from that, like the Assetstore code does
+              // try that
+
+              for (Bitstream bitstream : projectMasterBitstreams) {
+                  String fileNameWithOutExt = FilenameUtils.removeExtension(bitstream.getName());
+                  if ("logo" == fileNameWithOutExt) {
+                      String path = bitstream.
+
+                  }
+              }
 
 
               // TODO add a link to the top level community as metadata for this project master Item (use vsim.relation.community)
