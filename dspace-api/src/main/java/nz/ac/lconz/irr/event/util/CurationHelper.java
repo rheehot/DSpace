@@ -1,6 +1,5 @@
 package nz.ac.lconz.irr.event.util;
 
-import nz.ac.lconz.irr.event.consumer.QueueTaskOnEvent;
 import org.apache.log4j.Logger;
 import org.dspace.content.Item;
 import org.dspace.core.ConfigurationManager;
@@ -10,7 +9,6 @@ import org.dspace.curate.Curator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,7 +43,7 @@ public class CurationHelper {
             taskConfig = "vsiminit";
 		}
 
-        // since we've guaranteed there is a value in taskConfig, we can assume it's safe to split it into the taskNamesList 
+        // since we've guaranteed there is a value in taskConfig, we can assume it's safe to split it into the taskNamesList
 		taskNamesList = Arrays.asList(taskConfig.split("\\s*,\\s*"));
 
 		taskNames.addAll(taskNamesList);

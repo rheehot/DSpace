@@ -62,6 +62,7 @@ public abstract class QueueTaskOnEvent implements Consumer {
 	}
 
 	public void finish(Context ctx) throws Exception {
+		// enables memory cleanup routines to handle this context correctly
 	}
 
 	abstract String getTasksProperty();
