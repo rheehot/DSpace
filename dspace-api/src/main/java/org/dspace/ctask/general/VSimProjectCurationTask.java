@@ -24,10 +24,13 @@ package org.dspace.ctask.general;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
+import org.apache.commons.lang.StringUtils;
+
 import org.apache.commons.io.FilenameUtils;
 
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DSpaceObject;
+import org.dspace.content.Bitstream;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
@@ -36,6 +39,7 @@ import org.dspace.curate.AbstractCurationTask;
 import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.apache.log4j.Logger;
+import org.dspace.core.ConfigurationManager;
 
 import org.dspace.content.MetadataValue;
 import org.dspace.handle.factory.HandleServiceFactory;
@@ -78,6 +82,14 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
     int status = Curator.CURATE_SKIP;
 
+    String projectMasterCollectionHandle = ConfigurationManager.getProperty("vsim.project.master.collection.handle");
+
+    // if the projectMasterCollectionHandle value isn't set, use a default
+    if (StringUtils.isEmpty(projectMasterCollectionHandle))
+      {
+        projectMasterCollectionHandle = "20.500.11930/1015"; // <-- that better be a collection object on that handle
+      }
+
 
     // If this dso is an ITEM, proceed
     vsimInit:
@@ -85,8 +97,6 @@ public class VSimProjectCurationTask extends AbstractCurationTask
         {
           try {
 
-          // TODO: make the projectMastersCollection handle configurable, hard coding is for losers
-          String projectMasterCollectionHandle = "20.500.11930/1015"; // <-- that better be a collection object on that handle
           DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
           Collection projectMastersCollection = (Collection) projectMastersDSO;
 
@@ -201,7 +211,8 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               for (Bitstream bitstream : projectMasterBitstreams) {
                   String fileNameWithOutExt = FilenameUtils.removeExtension(bitstream.getName());
                   if ("logo" == fileNameWithOutExt) {
-                      String path = bitstream.
+                      // TODO infer the bitstream path by splitting the bitstream internal ID and adding it to the assetstore path
+                      // this is kind of dumb, but it's how the bitstore migration code does it
 
                   }
               }
