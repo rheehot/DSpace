@@ -49,6 +49,9 @@ import org.dspace.handle.service.HandleService;
 import org.dspace.content.factory.ContentServiceFactory;
 import org.dspace.content.service.*;
 
+import java.io.InputStream;
+import java.io.FileInputStream;
+
 import java.sql.SQLException;
 import java.io.IOException;
 
@@ -84,8 +87,10 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
     int status = Curator.CURATE_SKIP;
 
+    // read some configuration settings
     //reference: ConfigurationService info: https://wiki.duraspace.org/display/DSPACE/DSpace+Spring+Services+Tutorial#DSpaceSpringServicesTutorial-DSpaceConfigurationService
     String projectMasterCollectionHandle = DSpaceServicesFactory.getInstance().getConfigurationService().getProperty("vsim.project.master.collection.handle");
+    String assetstoreDir = DSpaceServicesFactory.getInstance().getConfigurationService().getProperty("assetstore.dir");
 
     // if the projectMasterCollectionHandle value isn't set, use a default
     if (StringUtils.isEmpty(projectMasterCollectionHandle))
@@ -216,6 +221,25 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                   if ("logo" == fileNameWithOutExt) {
                       // TODO infer the bitstream path by splitting the bitstream internal ID and adding it to the assetstore path
                       // this is kind of dumb, but it's how the bitstore migration code does it
+                      String sInternalId = bitstream.getInternalId();
+                      String sIntermediatePath = null;
+                      sIntermediatePath = getIntermediatePath(sInternalId);
+                      StringBuilder bufFilename = new StringBuilder();
+                      bufFilename.append(assetstoreDir);
+                      bufFilename.append(File.separator);
+                      bufFilename.append(sIntermediatePath);
+                      bufFilename.append(sInternalId);
+
+                      // make an InputStream for this logo
+                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+
+                      // load the logo bitstream into the community and collections created above
+                      communityService.setLogo(Curator.curationContext(), projectCommunity, logoFileStream);
+
+                      // update of the projectCommunity (AKA: write!)
+                      communityService.update(Curator.curationContext(), projectCommunity);
+
+
 
                   }
               }
@@ -297,6 +321,28 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 		}
 
         return status;
+    }
+
+    /**
+     * Return the intermediate path derived from the internal_id. This method
+     * splits the id into groups which become subdirectories.
+     *
+     * @param iInternalId
+     *            The internal_id
+     * @return The path based on the id without leading or trailing separators
+     */
+    protected String getIntermediatePath(String iInternalId) {
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < directoryLevels; i++) {
+            int digits = i * digitsPerLevel;
+            if (i > 0) {
+                buf.append(File.separator);
+            }
+            buf.append(iInternalId.substring(digits, digits
+                    + digitsPerLevel));
+        }
+        buf.append(File.separator);
+        return buf.toString();
     }
 
 }
