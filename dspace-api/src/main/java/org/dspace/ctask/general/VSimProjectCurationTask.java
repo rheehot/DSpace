@@ -205,47 +205,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               // TODO: before we can do that, we need to find the Bitstream logo on this Project master item
               // TODO: set the admins for this community, use setAdmins(Group admins) <- we need a Group object that matches the Content Creators group
 
-              // Get the list of Bitstreams for this Project Master item
-              List<Bitstream> projectMasterBitstreams = itemService.getNonInternalBitstreams(Curator.curationContext(), item);
-
-              // Now do something useful with these bitstreams:
-              // Loop through each bistream, find the logo, get the path, send that path to the addlogo method for all generated communities and collections
-              // NOTE: this bakes in the assumption that this bitstream lives on the same server, and thus has a file path that this curation script can reference, which is not guaranteed
-              // by DSpace. Still, good enough for now, as this assumption works for our current implementation.
-              // UGH: I don't think I can actually get the path after all...
-              // OK, we *can* go from the internal ID + the assetstore path in the configuration, and infer the actual path from that, like the Assetstore code does
-              // try that
-
-              for (Bitstream bitstream : projectMasterBitstreams) {
-                  String fileNameWithOutExt = FilenameUtils.removeExtension(bitstream.getName());
-                  if ("logo" == fileNameWithOutExt) {
-                      // TODO infer the bitstream path by splitting the bitstream internal ID and adding it to the assetstore path
-                      // this is kind of dumb, but it's how the bitstore migration code does it
-                      String sInternalId = bitstream.getInternalId();
-                      String sIntermediatePath = null;
-                      sIntermediatePath = getIntermediatePath(sInternalId);
-                      StringBuilder bufFilename = new StringBuilder();
-                      bufFilename.append(assetstoreDir);
-                      bufFilename.append(File.separator);
-                      bufFilename.append(sIntermediatePath);
-                      bufFilename.append(sInternalId);
-
-                      // make an InputStream for this logo
-                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
-
-                      // load the logo bitstream into the community and collections created above
-                      communityService.setLogo(Curator.curationContext(), projectCommunity, logoFileStream);
-
-                      // update of the projectCommunity (AKA: write!)
-                      communityService.update(Curator.curationContext(), projectCommunity);
-
-
-
-                  }
-              }
-
-
-              // TODO add a link to the top level community as metadata for this project master Item (use vsim.relation.community)
+              // add a link to the top level community as metadata for this project master Item (use vsim.relation.community)
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "community", Item.ANY, projectCommunityHandle);
 
               // if there is no link to the project models collection in this item's metadata, create a models collection in this project's TLC and add a link to the models collection as metadata for this project master item
@@ -299,6 +259,55 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
               // be sure to write the changed item metadata (just in case we've missed something along the way)
               itemService.update(Curator.curationContext(), item);
+
+              // BEGIN: ADD LOGO to Community and Collections ///////////////////////////////////////////////////////////////////////////////
+              // Get the list of Bitstreams for this Project Master item
+              List<Bitstream> projectMasterBitstreams = itemService.getNonInternalBitstreams(Curator.curationContext(), item);
+
+              // Now do something useful with these bitstreams:
+              // Loop through each bistream, find the logo, get the path, send that path to the addlogo method for all generated communities and collections
+              // NOTE: this bakes in the assumption that this bitstream lives on the same server, and thus has a file path that this curation script can reference, which is not guaranteed
+              // by DSpace. Still, good enough for now, as this assumption works for our current implementation.
+
+              for (Bitstream bitstream : projectMasterBitstreams) {
+                  String fileNameWithOutExt = FilenameUtils.removeExtension(bitstream.getName());
+                  if (fileNameWithOutExt.equals("logo")) {
+                      // infer the bitstream path by splitting the bitstream internal ID and adding it to the assetstore path
+                      // this is kind of dumb, but it's how the bitstore migration code does it
+                      String sInternalId = bitstream.getInternalId();
+                      String sIntermediatePath = null;
+                      sIntermediatePath = getIntermediatePath(sInternalId);
+                      StringBuilder bufFilename = new StringBuilder();
+                      bufFilename.append(assetstoreDir);
+                      bufFilename.append(File.separator);
+                      bufFilename.append(sIntermediatePath);
+                      bufFilename.append(sInternalId);
+
+                      // make an InputStream for this logo
+                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+
+                      // load the logo bitstream into the community and collections created above
+                      communityService.setLogo(Curator.curationContext(), projectCommunity, logoFileStream);
+
+                      // update of the projectCommunity (AKA: write!)
+                      communityService.update(Curator.curationContext(), projectCommunity);
+
+                      // load the logo bitstream into collectionService for projectCollModels, projectCollArchives, projectCollSubmissions
+                      collectionService.setLogo(Curator.curationContext(), projectCollModels, logoFileStream);
+                      collectionService.setLogo(Curator.curationContext(), projectCollArchives, logoFileStream);
+                      collectionService.setLogo(Curator.curationContext(), projectCollSubmissions, logoFileStream);
+
+                      // update each collection via collectionService for projectCollModels, projectCollArchives, projectCollSubmissions
+                      collectionService.update(Curator.curationContext(), projectCollModels);
+                      collectionService.update(Curator.curationContext(), projectCollArchives);
+                      collectionService.update(Curator.curationContext(), projectCollSubmissions);
+
+                  }
+              }
+
+              // END: ADD LOGO to Community and Collections ///////////////////////////////////////////////////////////////////////////////
+
+
 
 
               // set the success flag and add a line to the result report
