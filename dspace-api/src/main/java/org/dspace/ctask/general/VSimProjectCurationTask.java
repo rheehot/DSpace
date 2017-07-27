@@ -39,7 +39,9 @@ import org.dspace.curate.AbstractCurationTask;
 import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.apache.log4j.Logger;
-import org.dspace.core.ConfigurationManager;
+
+import org.dspace.services.factory.DSpaceServicesFactory;
+import org.dspace.services.ConfigurationService;
 
 import org.dspace.content.MetadataValue;
 import org.dspace.handle.factory.HandleServiceFactory;
@@ -82,7 +84,8 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
     int status = Curator.CURATE_SKIP;
 
-    String projectMasterCollectionHandle = ConfigurationManager.getProperty("vsim.project.master.collection.handle");
+    //reference: ConfigurationService info: https://wiki.duraspace.org/display/DSPACE/DSpace+Spring+Services+Tutorial#DSpaceSpringServicesTutorial-DSpaceConfigurationService
+    String projectMasterCollectionHandle = DSpaceServicesFactory.getInstance().getConfigurationService().getProperty("vsim.project.master.collection.handle");
 
     // if the projectMasterCollectionHandle value isn't set, use a default
     if (StringUtils.isEmpty(projectMasterCollectionHandle))
