@@ -297,9 +297,19 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                       // update of the projectCommunity (AKA: write!)
                       communityService.update(Curator.curationContext(), projectCommunity);
 
-                      // load the logo bitstream into collectionService for projectCollModels, projectCollArchives, projectCollSubmissions
+                      // re-open the logoFileStream, the setLogo method closes it
+                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+                      // load the logo bitstream into collectionService for projectCollModels
                       collectionService.setLogo(Curator.curationContext(), projectCollModels, logoFileStream);
+
+                      // re-open the logoFileStream, the setLogo method closes it
+                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+                      // load the logo bitstream into collectionService for projectCollArchives
                       collectionService.setLogo(Curator.curationContext(), projectCollArchives, logoFileStream);
+
+                      // re-open the logoFileStream, the setLogo method closes it
+                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+                      // load the logo bitstream into collectionService for projectCollSubmissions
                       collectionService.setLogo(Curator.curationContext(), projectCollSubmissions, logoFileStream);
 
                       // update each collection via collectionService for projectCollModels, projectCollArchives, projectCollSubmissions
