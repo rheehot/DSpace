@@ -289,28 +289,28 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                       bufFilename.append(sInternalId);
 
                       // make an InputStream for this logo
-                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+                      InputStream projectLogoFileStream4Community = new FileInputStream(bufFilename.toString());
 
                       // load the logo bitstream into the community and collections created above
-                      communityService.setLogo(Curator.curationContext(), projectCommunity, logoFileStream);
+                      communityService.setLogo(Curator.curationContext(), projectCommunity, projectLogoFileStream4Community);
 
                       // update of the projectCommunity (AKA: write!)
                       communityService.update(Curator.curationContext(), projectCommunity);
 
                       // re-open the logoFileStream, the setLogo method closes it
-                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+                      InputStream projectLogoFileStream4projectCollModels = new FileInputStream(bufFilename.toString());
                       // load the logo bitstream into collectionService for projectCollModels
-                      collectionService.setLogo(Curator.curationContext(), projectCollModels, logoFileStream);
+                      collectionService.setLogo(Curator.curationContext(), projectCollModels, projectLogoFileStream4projectCollModels);
 
                       // re-open the logoFileStream, the setLogo method closes it
-                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+                      InputStream projectLogoFileStream4projectCollArchives = new FileInputStream(bufFilename.toString());
                       // load the logo bitstream into collectionService for projectCollArchives
-                      collectionService.setLogo(Curator.curationContext(), projectCollArchives, logoFileStream);
+                      collectionService.setLogo(Curator.curationContext(), projectCollArchives, projectLogoFileStream4projectCollArchives);
 
                       // re-open the logoFileStream, the setLogo method closes it
-                      InputStream logoFileStream = new FileInputStream(bufFilename.toString());
+                      InputStream projectLogoFileStream4projectCollSubmissions = new FileInputStream(bufFilename.toString());
                       // load the logo bitstream into collectionService for projectCollSubmissions
-                      collectionService.setLogo(Curator.curationContext(), projectCollSubmissions, logoFileStream);
+                      collectionService.setLogo(Curator.curationContext(), projectCollSubmissions, projectLogoFileStream4projectCollSubmissions);
 
                       // update each collection via collectionService for projectCollModels, projectCollArchives, projectCollSubmissions
                       collectionService.update(Curator.curationContext(), projectCollModels);
