@@ -43,6 +43,8 @@ import org.apache.log4j.Logger;
 import org.dspace.services.factory.DSpaceServicesFactory;
 import org.dspace.services.ConfigurationService;
 
+import java.io.File;
+
 import org.dspace.content.MetadataValue;
 import org.dspace.handle.factory.HandleServiceFactory;
 import org.dspace.handle.service.HandleService;
@@ -70,6 +72,9 @@ public class VSimProjectCurationTask extends AbstractCurationTask
     protected HandleService handleService = HandleServiceFactory.getInstance().getHandleService();
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
+
+    private static final int digitsPerLevel = 2;
+    private static final int directoryLevels = 3;
 
     // TODO: We need a few DSpace group objects for AuthZ purposes: Admins, ContentCreators, Anonymous; keep them handy
 
