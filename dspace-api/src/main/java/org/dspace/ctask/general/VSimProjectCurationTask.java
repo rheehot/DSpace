@@ -41,7 +41,6 @@ import org.dspace.curate.Curator;
 import org.apache.log4j.Logger;
 
 import org.dspace.services.factory.DSpaceServicesFactory;
-import org.dspace.services.ConfigurationService;
 
 import java.io.File;
 
@@ -276,7 +275,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
               for (Bitstream bitstream : projectMasterBitstreams) {
                   String fileNameWithOutExt = FilenameUtils.removeExtension(bitstream.getName());
-                  if (fileNameWithOutExt.equals("logo")) {
+                  if ("logo".equals(fileNameWithOutExt)) {
                       // infer the bitstream path by splitting the bitstream internal ID and adding it to the assetstore path
                       // this is kind of dumb, but it's how the bitstore migration code does it
                       String sInternalId = bitstream.getInternalId();
