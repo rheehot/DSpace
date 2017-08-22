@@ -69,10 +69,28 @@
             <exclusion>
                <groupId>ant</groupId>
                <artifactId>ant</artifactId>
-            </exclusion>
+           </exclusion>
          </exclusions>
       </dependency>
-
+      <dependency>
+         <groupId>org.pegdown</groupId>
+         <artifactId>pegdown</artifactId>
+         <version>1.6.0</version>
+         <exclusions>
+             <exclusion>
+                 <groupId>jsoup</groupId>
+                 <artifactId>jsoup</artifactId>
+             </exclusion>
+             <exclusion>
+                 <groupId>org.ow2.asm</groupId>
+                 <artifactId>asm</artifactId>
+             </exclusion>
+             <exclusion>
+                 <groupId>org.parboiled</groupId>
+                 <artifactId>parboiled-java</artifactId>
+             </exclusion>
+          </exclusions>
+     </dependency>
    </dependencies>
 
 </project>
