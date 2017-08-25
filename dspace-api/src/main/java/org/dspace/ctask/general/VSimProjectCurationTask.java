@@ -50,6 +50,8 @@ import org.dspace.handle.service.HandleService;
 import org.dspace.content.factory.ContentServiceFactory;
 import org.dspace.content.service.*;
 
+import org.pegdown.PegDownProcessor;
+
 import java.io.InputStream;
 import java.io.FileInputStream;
 
@@ -181,6 +183,9 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               // set the description (dc.description)
               // TODO: this will likely require a combination of the following metatdata fields, with a bit of formatting added: dc.description, vsim.acknowledgements, vsim.research.objective
               // TODO: support markup for any of these fields, will probably need to use a markdown library, like es.nitaur.markdown/txtmark or sirthius/pegdown
+
+              // TODO: add pegdown stuff here
+
               if ( CollectionUtils.isNotEmpty(mvDcDescription) ) {
                 communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "description", null, null, mvDcDescription.get(0).getValue());
               }
