@@ -182,7 +182,6 @@
                                             <!-- and now proceed with the normal content -->
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
-                                            <script type="text/javascript">DSpace.getTemplate('vsim-carousel');</script>
 
                                               <div class="hidden-lg">
                                                 <xsl:call-template name="buildFooter"/>
