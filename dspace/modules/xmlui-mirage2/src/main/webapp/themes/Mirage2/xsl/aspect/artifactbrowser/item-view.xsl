@@ -125,6 +125,7 @@
                 <div class="col-sm-8">
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
                     <xsl:call-template name="itemSummaryView-DIM-URI"/>
+                    <xsl:call-template name="itemSummaryView-DIM-project-community"/>
                     <xsl:call-template name="itemSummaryView-collections"/>
                 </div>
             </div>
@@ -283,6 +284,29 @@
             </div>
         </xsl:if>
     </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-project-community">
+        <xsl:if test="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='community' and descendant::text()]">
+            <div class="simple-item-view-uri item-page-field-wrapper table">
+                <h5>VSim Project Community</h5>
+                <span>
+                    <xsl:for-each select="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='community']">
+                        <a>
+                            <xsl:attribute name="href">
+                                <!-- TODO: add whatever is necessary to this link and text to make it work -->
+                                <xsl:copy-of select="./node()"/>
+                            </xsl:attribute>
+                            <xsl:copy-of select="./node()"/>
+                        </a>
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='relation' and @qualifier='community']) != 0">
+                            <br/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </span>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
 
     <xsl:template name="itemSummaryView-DIM-date">
         <xsl:if test="dim:field[@element='date' and @qualifier='issued' and descendant::text()]">
