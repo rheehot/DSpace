@@ -126,6 +126,9 @@
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
                     <xsl:call-template name="itemSummaryView-DIM-URI"/>
                     <xsl:call-template name="itemSummaryView-DIM-project-community"/>
+                    <xsl:call-template name="itemSummaryView-DIM-project-models"/>
+                    <xsl:call-template name="itemSummaryView-DIM-project-archives"/>
+                    <xsl:call-template name="itemSummaryView-DIM-project-submissions"/>
                     <xsl:call-template name="itemSummaryView-collections"/>
                 </div>
             </div>
@@ -293,12 +296,82 @@
                     <xsl:for-each select="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='community']">
                         <a>
                             <xsl:attribute name="href">
-                                <!-- TODO: add whatever is necessary to this link and text to make it work -->
+                                <xsl:value-of select="$base-uri"/>
+                                <xsl:text>/xmlui/handle/</xsl:text>
                                 <xsl:copy-of select="./node()"/>
                             </xsl:attribute>
                             <xsl:copy-of select="./node()"/>
                         </a>
                         <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='relation' and @qualifier='community']) != 0">
+                            <br/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </span>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-project-models">
+        <xsl:if test="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='models' and descendant::text()]">
+            <div class="simple-item-view-uri item-page-field-wrapper table">
+                <h5>VSim Project Models Collection</h5>
+                <span>
+                    <xsl:for-each select="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='models']">
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="$base-uri"/>
+                                <xsl:text>/xmlui/handle/</xsl:text>
+                                <xsl:copy-of select="./node()"/>
+                            </xsl:attribute>
+                            <xsl:copy-of select="./node()"/>
+                        </a>
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='relation' and @qualifier='models']) != 0">
+                            <br/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </span>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-project-archives">
+        <xsl:if test="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='archives' and descendant::text()]">
+            <div class="simple-item-view-uri item-page-field-wrapper table">
+                <h5>VSim Project Archives Collection</h5>
+                <span>
+                    <xsl:for-each select="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='archives']">
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="$base-uri"/>
+                                <xsl:text>/xmlui/handle/</xsl:text>
+                                <xsl:copy-of select="./node()"/>
+                            </xsl:attribute>
+                            <xsl:copy-of select="./node()"/>
+                        </a>
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='relation' and @qualifier='archives']) != 0">
+                            <br/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </span>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-project-submissions">
+        <xsl:if test="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='submissions' and descendant::text()]">
+            <div class="simple-item-view-uri item-page-field-wrapper table">
+                <h5>VSim Project Submissions Collection</h5>
+                <span>
+                    <xsl:for-each select="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='submissions']">
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="$base-uri"/>
+                                <xsl:text>/xmlui/handle/</xsl:text>
+                                <xsl:copy-of select="./node()"/>
+                            </xsl:attribute>
+                            <xsl:copy-of select="./node()"/>
+                        </a>
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='relation' and @qualifier='submissions']) != 0">
                             <br/>
                         </xsl:if>
                     </xsl:for-each>
