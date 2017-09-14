@@ -109,7 +109,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-9 main-content">
 
                                     <xsl:choose>
-                                        <!-- if this is the main home page, show the main hero block, the featured collection block, and the fancy buttons -->
+                                        <!-- if this is the main home page, show the main hero block, the featured project block, and the fancy buttons -->
                                         <xsl:when test="normalize-space($request-uri)=''">
                                             <h1 class="text-center">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
                                             <div class="container">
@@ -117,11 +117,30 @@
                                                 <div class="span8">
                                                 <div class="hero-unit">
                                                     <h1>Digital Karnak</h1>
-                                                    <p>This is a bit about the featured collection, Digital Karnak.</p>
+                                                    <p>Through at least three thousand years of development, from local shrine in a regional town to national center of power, 
+                                                        the temple of Amun-Ra at Karnak has known dramatic modifications tied in with political shifts, religious reform and 
+                                                        ritual changes. As a legacy of a culture where every aspect of life was permeated with religion, the study of this temple 
+                                                        complex touches upon every factor of human existence in ancient Egypt. Karnak therefore presents an excellent entry for 
+                                                        understanding more about all aspects of ancient Egyptian culture and the study of its legacy. The 3D model of the temple 
+                                                        was constructed to offer students a completely new way to view the temple: reign-by-reign, following the complex patterns 
+                                                        of royal construction, modification and destruction that are now obscured by the latest building phases at the site.
+                                                    </p>
+                                                     
+                                                    <p>The <a href="/xmlui/handle/20.500.11930/1023">Digital Karnak Project</a> combines the experience and talent of two sections 
+                                                        of the University of California at Los Angeles (UCLA): the Experiential Technologies Center (ETC) and the UCLA Encyclopedia 
+                                                        of Egyptology (UEE). Directed by Dr. Diane Favro through the School of the Arts and Architecture with support from UCLA’s 
+                                                        Academic Technology Services, the ETC uses powerful information technology tools to support creative and cross-disciplinary 
+                                                        research in archaeology, architecture, humanities, social sciences, and the performing arts. Dr. Willeke Wendrich of the 
+                                                        Department of Near Eastern Languages and Cultures is director of the UCLA Digital Humanities Incubator Group (UDHIG) and 
+                                                        the editor-in-chief of the online UCLA Encyclopedia of Egyptology (UEE), a repository for scholarly content related to 
+                                                        Egypt.</p>
                                                 </div>
                                                 </div>
-                                                <div class="span4">
-                                                insert digital karnak photo here
+                                                <div class="thumbnail">
+                                                    <img src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg" />
+                                                    <div class="vsim-featured-project">
+                                                        <h3 class="vsim-featured-project-caption">Featured Project</h3>
+                                                    </div>
                                                 </div>
                                             </div></div>
                                             <p class="text-center">

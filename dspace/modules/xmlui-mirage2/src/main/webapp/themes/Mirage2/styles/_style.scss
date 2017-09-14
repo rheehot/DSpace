@@ -17,6 +17,23 @@
     ::selection { @content; }
 }
 
+// vsim styles for front page content
+.vsim-featured-project {
+    background: none repeat scroll 0 0 #00a3e0;
+    opacity: 0.3;
+    margin: 0 auto;
+    margin-top: -80px;
+    text-align:left;
+    position: relative;
+    width:100%;
+    padding: 5px 0 5px 20px;
+}
+
+.vsim-featured-project-caption {
+    color: #fff;
+    font-weight: bold;
+}
+
 // tweak the carousel controls
 .carousel-control {
         opacity:100;
