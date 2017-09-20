@@ -41,6 +41,10 @@
     <xsl:variable name="request-uri" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='request'][@qualifier='URI']"/>
     <xsl:variable name="app_path" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]" />
     <xsl:variable name="containerType" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='focus'][@qualifier='containerType']" />
+    <!--
+        vsim-project-masters-handle: the handle for the VSim Project Masters Collection
+    -->
+    <xsl:variable name="vsim-project-masters-handle" select="confman:getProperty('vsim.project.masters.handle')"/>
 
     <!--
         The starting point of any XSL processing is matching the root element. In DRI the root element is document,

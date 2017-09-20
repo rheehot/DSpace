@@ -5,6 +5,8 @@
 
 <head>Submitting Content to VSim</head>
 
+<p><xref target="/xmlui/handle/$vsim-project-masters-handle/submit">Submit a Project</xref> (note: this requires a login, and you must be an approved content creator)</p>
+
 <hi rend="bold">Who may submit content?</hi>
 
 <p>Gosh, what a great question. When we have an answer for this, we will put it here.</p>
@@ -18,13 +20,13 @@
 
 <hi rend="bold">Previously published content</hi>
 
-<p>Publishers may restrict your ability to include previously published content in an open access repository. 
+<p>Publishers may restrict your ability to include previously published content in an open access repository.
     Contact us for help in determining the guidelines for specific journals and publishers.</p>
 
 <hi rend="bold">Contact us</hi>
 
-<p><xref target="/xmlui/pages/contact">Contact us</xref> if you 
-    have questions about submitting content, preferred file formats, and publisher restrictions on 
+<p><xref target="/xmlui/pages/contact">Contact us</xref> if you
+    have questions about submitting content, preferred file formats, and publisher restrictions on
     previously published material.</p>
 
 </div>
