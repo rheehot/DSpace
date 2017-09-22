@@ -134,6 +134,12 @@
                                                     <a href="{$app_path}/discover" class="btn btn-large"><img src="/xmlui/themes/Mirage2/images/BrowseLink.png" alt=" Browse "/></a>
                                             </p>
                                         </xsl:when>
+                                        <!-- if this is the submission page, show the link to the project masters submission page -->
+                                        <xsl:when test="normalize-space($request-uri)='pages/add'">
+                                            <p class="text-center">
+                                                <a href="/xmlui/handle/{$vsim-project-masters-handle}/submit" class="btn btn-large"><img src="/xmlui/themes/Mirage2/images/SubmitLink.png" alt=" Submit a Project "/></a>
+                                            </p>
+                                        </xsl:when>
                                         <!-- if this is the tour page, show the tour carousel -->
                                         <xsl:when test="normalize-space($request-uri)='pages/tour'">
 
