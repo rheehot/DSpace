@@ -17,19 +17,19 @@
 
 <hi rend="bold">User Types</hi>
 <p>
-    <hi rend="bold">Unregistered User:</hi> Anyone can download VSim and content from the 
+    <hi rend="italic">Unregistered User:</hi> Anyone can download VSim and content from the 
     archive without registering as a user.
 </p>
 
 <p>
-    <hi rend="bold">General User:</hi> Users must be registered in order to upload VSim 
+    <hi rend="italic">General User:</hi> Users must be registered in order to upload VSim 
     narratives, embedded resource files, and archival content to the 
     community collections. We encourage the community to share 
     resources and narratives through related repositories. 
 </p>
 
 <p>
-    <hi rend="bold">Content Contributor/Creator:</hi> General users must request permission 
+    <hi rend="italic">Content Contributor/Creator:</hi> General users must request permission 
     to upgrade their account to ‘Content Contributor/Creator’ so that 
     they can submit their own models and projects to the Repository and 
     Archive. Access is granted on a case by case basis by the Digital 
@@ -72,7 +72,7 @@
 </p>
 
 <p>
-    <hi rend="bold">Models:</hi> The models collections houses VSim 
+    <hi rend="italic">Models:</hi> The models collections houses VSim 
     file types as well as many popular model file types. The VSim 
     file formats include binary model files (.vsim), individual 
     narrative files (.nar), and individual embedded resource files 
@@ -86,7 +86,7 @@
 
 
 <p>
-    <hi rend="bold">Archives:</hi> The archives collection is for all 
+    <hi rend="italic">Archives:</hi> The archives collection is for all 
     other project-related files. From project notes, to static images, 
     to final documentation or publication documents, the archive can 
     hold whatever additional files you would like to offer the user 
