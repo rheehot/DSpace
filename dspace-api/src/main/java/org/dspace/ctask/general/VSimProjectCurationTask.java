@@ -38,6 +38,11 @@ import org.dspace.content.MetadataSchema;
 import org.dspace.curate.AbstractCurationTask;
 import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
+
+import org.dspace.eperson.factory.EPersonServiceFactory;
+import org.dspace.eperson.Group;
+import org.dspace.eperson.service.GroupService;
+
 import org.apache.log4j.Logger;
 
 import org.dspace.services.factory.DSpaceServicesFactory;
@@ -69,13 +74,15 @@ public class VSimProjectCurationTask extends AbstractCurationTask
     protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
     protected HandleService handleService = HandleServiceFactory.getInstance().getHandleService();
+    protected GroupService groupService = EPersonServiceFactory.getInstance().getGroupService();
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
 
     private static final int digitsPerLevel = 2;
     private static final int directoryLevels = 3;
 
-    // TODO: We need a few DSpace group objects for AuthZ purposes: Admins, ContentCreators, Anonymous; keep them handy
+    // We need a DSpace group object for AuthZ purposes, for ContentCreators, to keep handy
+    Group ContentCreatorsGroupObj = groupService.findByName(Curator.curationContext(), "Content Creators");
 
     /**
      * Perform the curation task upon passed DSO
@@ -204,10 +211,12 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               // snag the projectCommunityhandle, we'll need it
               String projectCommunityHandle = projectCommunity.getHandle();
 
-              // TODO: set the logo for the community, if possible, use projectCommunity.setLogo(Bitstream logo)
-              // TODO: example: https://github.com/DSpace/DSpace/blob/269af71afb602808a14edf822ad658c3895e0a37/dspace-api/src/main/java/org/dspace/content/packager/AbstractMETSIngester.java#L994-L1010
-              // TODO: before we can do that, we need to find the Bitstream logo on this Project master item
+              // set the logo for the community, if possible, use projectCommunity.setLogo(Bitstream logo)
               // TODO: set the admins for this community, use setAdmins(Group admins) <- we need a Group object that matches the Content Creators group
+
+              // create the groups we need
+              projectCommunityAdminGroupObj = communityService.createAdministrators(Curator.curationContext(), projectCommunity);
+
 
               // add a link to the top level community as metadata for this project master Item (use vsim.relation.community)
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "community", Item.ANY, projectCommunityHandle);
