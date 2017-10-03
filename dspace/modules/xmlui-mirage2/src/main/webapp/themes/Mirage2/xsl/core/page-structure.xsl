@@ -207,7 +207,7 @@
                                         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                                         <xsl:choose>
-                                            <xsl:when test="string-length($request-uri)&gt;0 and not (starts-with($request-uri, 'pages/')) and not ($containerType='type:community' or $containerType='type:collection')">
+                                            <xsl:when test="(string-length($request-uri)&gt;0 and not (starts-with($request-uri, 'pages/')) and not ($containerType='type:community' or $containerType='type:collection')) or $containerType='type:item'">
                                                 <xsl:apply-templates select="dri:options"/>
                                             </xsl:when>
 
