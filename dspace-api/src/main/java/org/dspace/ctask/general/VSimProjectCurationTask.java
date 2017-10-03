@@ -17,7 +17,6 @@ We need to add them to fields we can use to also recall the values in this scrip
 */
 
 // TODO: make this whole thing Idempotent (see below for notes, around line 109)
-// TODO:
 
 package org.dspace.ctask.general;
 
@@ -295,8 +294,6 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, AnonymousGroupObj);
               groupService.update(Curator.curationContext(), projectCollSubmissionsAdminGroupObj);
               groupService.update(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj);
-
-//TODO: wait ^^^ that needs to be the totally open anonymous group, right?
 
               // write this collection
               collectionService.update(Curator.curationContext(), projectCollSubmissions);
