@@ -106,31 +106,32 @@
     <xsl:template match="dim:dim" mode="itemSummaryView-DIM">
         <div class="item-summary-view-metadata">
             <xsl:call-template name="itemSummaryView-DIM-title"/>
+            <xsl:call-template name="itemSummaryView-DIM-affiliation"/>
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-8">
                     <div class="row">
                         <div class="col-xs-6 col-sm-12">
                             <xsl:call-template name="itemSummaryView-DIM-thumbnail"/>
                         </div>
-                        <div class="col-xs-6 col-sm-12">
-                            <xsl:call-template name="itemSummaryView-DIM-file-section"/>
-                        </div>
                     </div>
                     <xsl:call-template name="itemSummaryView-DIM-date"/>
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
-                    <xsl:if test="$ds_item_view_toggle_url != ''">
-                        <xsl:call-template name="itemSummaryView-show-full"/>
-                    </xsl:if>
-                </div>
-                <div class="col-sm-8">
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
                     <xsl:call-template name="itemSummaryView-DIM-URI"/>
-                    <xsl:call-template name="itemSummaryView-DIM-project-community"/>
+               </div>
+                <div class="col-sm-4">
+                   <div>
+                        <xsl:call-template name="itemSummaryView-DIM-file-section"/>
+                   </div>
+                   <xsl:call-template name="itemSummaryView-DIM-project-community"/>
                     <xsl:call-template name="itemSummaryView-DIM-project-models"/>
                     <xsl:call-template name="itemSummaryView-DIM-project-archives"/>
                     <xsl:call-template name="itemSummaryView-DIM-project-submissions"/>
                     <xsl:call-template name="itemSummaryView-collections"/>
-                </div>
+                     <xsl:if test="$ds_item_view_toggle_url != ''">
+                        <xsl:call-template name="itemSummaryView-show-full"/>
+                    </xsl:if>
+                 </div>
             </div>
         </div>
     </xsl:template>
@@ -204,10 +205,40 @@
         </div>
     </xsl:template>
 
+    <xsl:template name="itemSummaryView-DIM-affiliation">
+        <xsl:if test="dim:field[@element='relation'][not(@qualifier)]">
+            <div class="simple-item-view-affiliation item-page-field-wrapper table">
+                <div>
+                    <xsl:for-each select="dim:field[@element='relation'][not(@qualifier)]">
+                        <xsl:choose>
+                            <xsl:when test="node()">
+                                <xsl:copy-of select="node()"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>&#160;</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="count(following-sibling::dim:field[@element='relation'][not(@qualifier)]) != 0">
+                            <div class="spacer">&#160;</div>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="count(dim:field[@element='relation'][not(@qualifier)]) &gt; 1">
+                        <div class="spacer">&#160;</div>
+                    </xsl:if>
+                </div>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+
     <xsl:template name="itemSummaryView-DIM-abstract">
         <xsl:if test="dim:field[@element='description' and @qualifier='abstract']">
             <div class="simple-item-view-description item-page-field-wrapper table">
-                <h5 class="visible-xs"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-abstract</i18n:text></h5>
+                <h5 class="visible-xs">
+                    
+                    <!-- TODO: conditionally show either "item" or "project" based on whether this is an ordinary item or a project master -->
+                    
+                    <xsl:text>Item Description</xsl:text></h5>
                 <div>
                     <xsl:for-each select="dim:field[@element='description' and @qualifier='abstract']">
                         <xsl:choose>
@@ -425,7 +456,14 @@
             <xsl:when test="//mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE']/mets:file">
                 <div class="item-page-field-wrapper table word-break">
                     <h5>
-                        <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-viewOpen</i18n:text>
+
+                        <i aria-hidden="true">
+                            <xsl:attribute name="class">
+                            <xsl:text>glyphicon glyphicon-arrow-down</xsl:text>
+                            </xsl:attribute>
+                        </i>
+
+                        <xsl:text>Download</xsl:text>
                     </h5>
 
                     <xsl:variable name="label-1">
@@ -751,7 +789,7 @@
             <xsl:attribute name="href">
                 <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
             </xsl:attribute>
-            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-viewOpen</i18n:text>
+            <xsl:text>Download</xsl:text>
         </a>
     </xsl:template>
 

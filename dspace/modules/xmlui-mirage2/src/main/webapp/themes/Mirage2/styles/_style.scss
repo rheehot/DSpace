@@ -55,7 +55,10 @@
     color: #fff;
 }
 
-
+.thumbnail {
+    border: none;
+    text-align:left;
+}
 
 .thumbnail h1{
   position:absolute;
@@ -66,6 +69,11 @@
   text-align:center;
   transform:translateY(-50%); /* doesn't work in IE9 and older I'm affraid */
   margin:0;
+}
+
+.item-page-field-wrapper h5 {
+    font-size: 24px;
+    font-weight: normal;
 }
 
 
@@ -171,6 +179,10 @@ a.list-group-item {
     }
 }
 
+
+.page-header {
+    border-bottom: none;
+}
 
 /*
  * Footer
