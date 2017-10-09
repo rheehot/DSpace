@@ -12,10 +12,12 @@
  */
 
 //example mixin to set the text-selection style
+/*
 @mixin selection {
     ::-moz-selection { @content; }
     ::selection { @content; }
 }
+*/
 
 // vsim styles for front page content
 .vsim-featured-project {
@@ -72,7 +74,7 @@
 }
 
 .item-page-field-wrapper h5 {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: normal;
 }
 
@@ -153,6 +155,11 @@ a.list-group-item {
     border-width: 0 0 4px 0;
 }
 
+// drop the bullets for collection membership on the item pages
+.ds-referenceSet-list ul {
+    list-style-type: none;
+}
+
 // override the styling for the breadcrumb trail
 .trail-wrapper {
     background-color: $white;
@@ -179,6 +186,9 @@ a.list-group-item {
     }
 }
 
+.item-page-field-wrapper h4 {
+    margin-top: 40px;
+}
 
 .page-header {
     border-bottom: none;

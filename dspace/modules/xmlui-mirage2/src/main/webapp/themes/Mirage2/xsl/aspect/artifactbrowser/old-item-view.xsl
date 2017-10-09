@@ -120,25 +120,25 @@
                     <xsl:call-template name="itemSummaryView-DIM-URI"/>
                     <xsl:call-template name="itemSummaryView-collections"/>
                </div>
-               <div class="col-sm-4">
+                <div class="col-sm-4">
                    <div>
                         <xsl:call-template name="itemSummaryView-DIM-file-section"/>
                    </div>
 
-                   <xsl:if test="count(dim:field[@mdschema='vsim' and @element='relation']) &gt; 1">
-                       <div>
-                           <h4 class="text-right"><xsl:text>Related Files</xsl:text></h4>
-                            <hr/>
-                            <xsl:call-template name="itemSummaryView-DIM-project-community"/>
-                            <xsl:call-template name="itemSummaryView-DIM-project-models"/>
-                            <xsl:call-template name="itemSummaryView-DIM-project-archives"/>
-                            <xsl:call-template name="itemSummaryView-DIM-project-submissions"/>
-                       </div>
-                    </xsl:if>
-                    <xsl:if test="$ds_item_view_toggle_url != ''">
+
+                   <div>
+                       <h4 class="text-right"><xsl:text>Related Files</xsl:text></h4>
+                        <hr/>
+                        <xsl:call-template name="itemSummaryView-DIM-project-community"/>
+                        <xsl:call-template name="itemSummaryView-DIM-project-models"/>
+                        <xsl:call-template name="itemSummaryView-DIM-project-archives"/>
+                        <xsl:call-template name="itemSummaryView-DIM-project-submissions"/>
+                   </div>
+                     <xsl:if test="$ds_item_view_toggle_url != ''">
                         <xsl:call-template name="itemSummaryView-show-full"/>
                     </xsl:if>
-                </div>
+
+                 </div>
             </div>
         </div>
     </xsl:template>
@@ -242,18 +242,11 @@
     <xsl:template name="itemSummaryView-DIM-abstract">
         <xsl:if test="dim:field[@element='description' and @qualifier='abstract']">
             <div class="simple-item-view-description item-page-field-wrapper table">
-                <h4>
+                <h4 class="visible-xs">
                     
                     <!-- TODO: conditionally show either "item" or "project" based on whether this is an ordinary item or a project master -->
-                    <xsl:choose>
-                        <xsl:when test="$containerType='type:item' and $container='hdl:' + $vsim-project-masters-handle">
-                            <xsl:text>Project Description</xsl:text>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:text>Item Description</xsl:text>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </h4>
+                    
+                    <xsl:text>Item Description</xsl:text></h4>
                 <div>
                     <xsl:for-each select="dim:field[@element='description' and @qualifier='abstract']">
                         <xsl:choose>
