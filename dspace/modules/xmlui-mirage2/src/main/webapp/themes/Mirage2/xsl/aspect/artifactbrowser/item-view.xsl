@@ -121,7 +121,7 @@
                     <xsl:call-template name="itemSummaryView-DIM-contributor-details"/>
                     <xsl:call-template name="itemSummaryView-DIM-project-sponsorship"/>
                     <xsl:call-template name="itemSummaryView-DIM-acknowledgements"/>
-                    <xsl:call-template name="itemSummaryView-DIM-vsim-reuse"/>
+                    <xsl:call-template name="itemSummaryView-DIM-reuse"/>
                     <xsl:call-template name="itemSummaryView-DIM-URI"/>
                     <xsl:call-template name="itemSummaryView-collections"/>
                </div>
@@ -392,7 +392,7 @@
                                 <xsl:text>&#160;</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='acknowledgements' and not(@qualifier)']) != 0">
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='acknowledgements' and not(@qualifier)]) != 0">
                             <div class="spacer">&#160;</div>
                         </xsl:if>
                     </xsl:for-each>
@@ -421,7 +421,7 @@
                                 <xsl:text>&#160;</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='reuse' and not(@qualifier)']) != 0">
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='reuse' and not(@qualifier)]) != 0">
                             <div class="spacer">&#160;</div>
                         </xsl:if>
                     </xsl:for-each>
