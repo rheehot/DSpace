@@ -117,6 +117,11 @@
                     <xsl:call-template name="itemSummaryView-DIM-date"/>
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
+                    <xsl:call-template name="itemSummaryView-DIM-description"/>
+                    <xsl:call-template name="itemSummaryView-DIM-contributor-details"/>
+                    <xsl:call-template name="itemSummaryView-DIM-project-sponsorship"/>
+                    <xsl:call-template name="itemSummaryView-DIM-acknowledgements"/>
+                    <xsl:call-template name="itemSummaryView-DIM-vsim-reuse"/>
                     <xsl:call-template name="itemSummaryView-DIM-URI"/>
                     <xsl:call-template name="itemSummaryView-collections"/>
                </div>
@@ -238,19 +243,18 @@
         </xsl:if>
     </xsl:template>
 
-
     <xsl:template name="itemSummaryView-DIM-abstract">
         <xsl:if test="dim:field[@element='description' and @qualifier='abstract']">
             <div class="simple-item-view-description item-page-field-wrapper table">
                 <h4>
                     
-                    <!-- TODO: conditionally show either "item" or "project" based on whether this is an ordinary item or a project master -->
+                    <!-- conditionally show either "item" or "project" based on whether this is an ordinary item or a project master -->
                     <xsl:choose>
-                        <xsl:when test="$containerType='type:item' and $container='hdl:' + $vsim-project-masters-handle">
-                            <xsl:text>Project Description</xsl:text>
+                        <xsl:when test="dim:field[@element='type'][not(@qualifier)] = 'VSimProjectMaster'">
+                            <xsl:text>Project Abstract</xsl:text>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:text>Item Description</xsl:text>
+                            <xsl:text>Item Abstract</xsl:text>
                         </xsl:otherwise>
                     </xsl:choose>
                 </h4>
@@ -275,6 +279,73 @@
             </div>
         </xsl:if>
     </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-description">
+        <xsl:if test="dim:field[@element='description'][not(@qualifierier)]">
+            <div class="simple-item-view-description item-page-field-wrapper table">
+                <h4>
+                    
+                    <!-- TODO: conditionally show either "item" or "project" based on whether this is an ordinary item or a project master -->
+                    <xsl:choose>
+                        <xsl:when test="dim:field[@element='type'][not(@qualifier)] = 'VSimProjectMaster'">
+                            <xsl:text>Project Description</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>Item Description</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </h4>
+                <div>
+                    <xsl:for-each select="dim:field[@element='description' and not(@qualifier)]">
+                        <xsl:choose>
+                            <xsl:when test="node()">
+                                <xsl:copy-of select="node()"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>&#160;</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="count(following-sibling::dim:field[@element='description' and not(@qualifier)]) != 0">
+                            <div class="spacer">&#160;</div>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="count(dim:field[@element='description' and not(@qualifier)]) &gt; 1">
+                        <div class="spacer">&#160;</div>
+                    </xsl:if>
+                </div>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-contributor-details">
+
+        <xsl:if test="dim:field[@mdschema='vsim' and @element='contributor' and @qualifier='details' and descendant::text()]">
+            <div class="simple-item-view-description item-page-field-wrapper table">
+                <h4>
+                    <xsl:text>Contributor Details</xsl:text>
+                </h4>
+                <div>
+                    <xsl:for-each select="dim:field[@mdschema='vsim' and @element='contributor' and @qualifier='details']">
+                        <xsl:choose>
+                            <xsl:when test="node()">
+                                <xsl:copy-of select="node()"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>&#160;</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='contributor' and @qualifier='details']) != 0">
+                            <div class="spacer">&#160;</div>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="count(dim:field[@mdschema='vsim' and @element='contributor' and @qualifier='details']) &gt; 1">
+                        <div class="spacer">&#160;</div>
+                    </xsl:if>
+                </div>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
 
     <xsl:template name="itemSummaryView-DIM-authors">
         <xsl:if test="dim:field[@element='contributor'][@qualifier='author' and descendant::text()] or dim:field[@element='creator' and descendant::text()] or dim:field[@element='contributor' and descendant::text()]">
