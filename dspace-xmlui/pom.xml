@@ -257,6 +257,13 @@
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+		<!-- use Tuckey to rewrite project browse links -->
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>4.0.3</version>
+		</dependency>
+
 
     </dependencies>
 
