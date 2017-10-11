@@ -128,7 +128,7 @@
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
                     <xsl:call-template name="itemSummaryView-DIM-contributors"/>
                     <xsl:call-template name="itemSummaryView-DIM-contributor-details"/>
-                    <xsl:call-template name="itemSummaryView-DIM-associated-advisors"/>
+                    <xsl:call-template name="itemSummaryView-DIM-advisors"/>
                     <xsl:call-template name="itemSummaryView-DIM-project-website"/>
                     <xsl:call-template name="itemSummaryView-DIM-news"/>
                     <xsl:call-template name="itemSummaryView-DIM-rights-holder"/>
@@ -652,10 +652,10 @@
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-contributors">
-        <xsl:if test="dim:field[@element='contributor'][@qualifier='other' and descendant::text()]]">
+        <xsl:if test="dim:field[@element='contributor'][@qualifier='other' and descendant::text()]">
             <div class="simple-item-view-contributors item-page-field-wrapper table">
                 <xsl:choose>
-                    <xsl:when test="(count(dim:field[@element='contributor'][@qualifier='other' and descendant::text()]) = 1">
+                    <xsl:when test="(count(dim:field[@element='contributor'][@qualifier='other' and descendant::text()])) = 1">
                         <h4><xsl:text>Contributor</xsl:text></h4>
                     </xsl:when>
                     <xsl:otherwise>
@@ -674,10 +674,10 @@
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-advisors">
-        <xsl:if test="dim:field[@element='contributor'][@qualifier='advisor' and descendant::text()]]">
+        <xsl:if test="dim:field[@element='contributor'][@qualifier='advisor' and descendant::text()]">
             <div class="simple-item-view-advisors item-page-field-wrapper table">
                 <xsl:choose>
-                    <xsl:when test="(count(dim:field[@element='contributor'][@qualifier='advisor' and descendant::text()]) = 1">
+                    <xsl:when test="(count(dim:field[@element='contributor'][@qualifier='advisor' and descendant::text()])) = 1">
                         <h4><xsl:text>Advisor</xsl:text></h4>
                     </xsl:when>
                     <xsl:otherwise>
@@ -783,7 +783,7 @@
                     <xsl:text>Rights Holder</xsl:text>
                 </h4>
                 <div>
-                    <xsl:for-each select="dim:field[@element='rights' and @qualifier'holder']">
+                    <xsl:for-each select="dim:field[@element='rights' and @qualifier='holder']">
                         <xsl:choose>
                             <xsl:when test="node()">
                                 <xsl:copy-of select="node()"/>
@@ -812,7 +812,7 @@
                     <xsl:text>Date of Copyright</xsl:text>
                 </h4>
                 <div>
-                    <xsl:for-each select="dim:field[@element='date' and @qualifier'copyright']">
+                    <xsl:for-each select="dim:field[@element='date' and @qualifier='copyright']">
                         <xsl:choose>
                             <xsl:when test="node()">
                                 <xsl:copy-of select="node()"/>
