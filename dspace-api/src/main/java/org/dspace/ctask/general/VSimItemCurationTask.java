@@ -8,15 +8,11 @@
 
  /*
 THE PLAN:
-[x] get the project metadata from the Project Master Item
-what fields are we going to use for the links we will be checking below?
-we talked about using dc.relation.ispartof and dc.relation.requires, but that's not expressive enough for what we need
-we need four new fields: vsim.relation.community, vsim.relation.models, vsim.relation.archives, vsim.relation.submissions
-ALL/some of these links *can* be added to the dc fields, too, but that's not really important to us right now.
-We need to add them to fields we can use to also recall the values in this script
+[] only run this script for items that are NOT project master items
+[] find the corresponding project master item using collection membership information on this item
+[] get the project metadata from the Project Master Item
+[] copy the vsim.relation links (to the project collections) from the project master item to this item
 */
-
-// TODO: make this whole thing Idempotent (see below for notes, around line 109)
 
 package org.dspace.ctask.general;
 
@@ -61,11 +57,11 @@ import java.sql.SQLException;
 import java.io.IOException;
 
 /**
- * VSimProjectCurationTask is a task that initializes a VSim Project structure, based on the metadata entered in a VSim Project Master item
+ * VSimItemCurationTask is a task that copies important vsim.relation metadata from a project master to an item
  *
  * @author hardyoyo
  */
-public class VSimProjectCurationTask extends AbstractCurationTask
+public class VSimItemCurationTask extends AbstractCurationTask
 {
 /** log4j category */
     private static final Logger log = Logger.getLogger(VSimProjectCurationTask.class);
@@ -107,7 +103,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
 
     // If this dso is an ITEM, proceed
-    vsimInit:
+    vsimItem:
 		if (dso.getType() == Constants.ITEM)
         {
           try {
@@ -117,17 +113,36 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
           Item item = (Item)dso;
 
-          // *ONLY* KEEP GOING IF THIS ITEM IS A PROJECT MASTER, OTHERWISE *STOP*!!
-          if (!itemService.isIn(item, projectMastersCollection)) {
-              break vsimInit;
+          // IF THIS ITEM IS A PROJECT MASTER, *STOP*!! OTHERWISE, CONTINUE...
+          if (itemService.isIn(item, projectMastersCollection)) {
+              break vsimItem;
           }
 
+              // TODO: find the corresponding project master item for all itmes in this collection
+              // first, grab the collection object for this item
+              // then grab the vsim.relation.projectMaster metadata
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              // this is all copied code beyond this point VVVV
 
               // Get All requried MetadataValues, all are returned as lists, use .get(0).getValue() to return the first value, like strings,
               // use the usual list stuff to manage multiple values
-
 
               String itemId = item.getHandle();
               List<MetadataValue> mvDcTitle = itemService.getMetadata(item, "dc", "title", Item.ANY, Item.ANY);
@@ -231,9 +246,6 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Files specific to VSim, including 3D models, narratives, and embedded resources (e.g., .vsim, .nar, .ere). For the " + mvDcTitle.get(0).getValue() + " project.");
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Models: " + mvDcTitle.get(0).getValue());
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
-                // ADD A LINK TO BACK TO THE PROJECT MASTER ITEM
-                collectionService.addMetadata(Curator.curationContext(), projectCollModels, "vsim", "relation", "projectMaster", null, itemId);
-
               }
 
               // create the Administrators and Submitters groups we need
@@ -260,8 +272,6 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                 collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Multimedia files related to the project that provide context for the 3D model (e.g., .pdf, .jpg, .ppt, .csv, etc.). For the " + mvDcTitle.get(0).getValue() + " project.");
                 collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Archives: " + mvDcTitle.get(0).getValue());
                 collectionService.addMetadata(Curator.curationContext(), projectCollArchives, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
-                // ADD A LINK TO BACK TO THE PROJECT MASTER ITEM
-                collectionService.addMetadata(Curator.curationContext(), projectCollArchives, "vsim", "relation", "projectMaster", null, itemId);
               }
 
               // create the Administrators and Submitters groups we need
@@ -288,8 +298,6 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                 collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Multimedia files submitted by users for sharing within the educational and research communities (e.g., narratives created for use in the classroom, or imagery and texts related to the 3D model that are in the public domain). For the " + mvDcTitle.get(0).getValue() + " project.");
                 collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Submissions: " + mvDcTitle.get(0).getValue());
                 collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
-                // ADD A LINK TO BACK TO THE PROJECT MASTER ITEM
-                collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, "vsim", "relation", "projectMaster", null, itemId);
               }
 
               // create the Administrators and Submitters groups we need
