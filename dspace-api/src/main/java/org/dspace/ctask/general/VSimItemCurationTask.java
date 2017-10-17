@@ -68,8 +68,8 @@ public class VSimItemCurationTask extends AbstractCurationTask
 
     protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
+    protected ItemService itemService = ContentServiceFactory.getInstance().getItemService();
     protected HandleService handleService = HandleServiceFactory.getInstance().getHandleService();
-    protected GroupService groupService = EPersonServiceFactory.getInstance().getGroupService();
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
 
@@ -93,7 +93,6 @@ public class VSimItemCurationTask extends AbstractCurationTask
     // read some configuration settings
     //reference: ConfigurationService info: https://wiki.duraspace.org/display/DSPACE/DSpace+Spring+Services+Tutorial#DSpaceSpringServicesTutorial-DSpaceConfigurationService
     String projectMasterCollectionHandle = DSpaceServicesFactory.getInstance().getConfigurationService().getProperty("vsim.project.master.collection.handle");
-    String assetstoreDir = DSpaceServicesFactory.getInstance().getConfigurationService().getProperty("assetstore.dir");
 
     // if the projectMasterCollectionHandle value isn't set, use a default
     if (StringUtils.isEmpty(projectMasterCollectionHandle))
@@ -118,11 +117,15 @@ public class VSimItemCurationTask extends AbstractCurationTask
               break vsimItem;
           }
 
-              // TODO: find the corresponding project master item for all itmes in this collection
+              // TODO: find the corresponding project master item for all items in this collection
               // first, grab the collection object for this item
+              // - ItemService has this method: public List<Collection> getCollectionsNotLinked(Context context, Item item) throws SQLException;
+              List<Collection> thisItemCollection = itemService.getCollectionsNotLinked(Curator.curationContext(), item);
+
               // then grab the vsim.relation.projectMaster metadata
 
 
+              // then copy the collection links from the projectMaster item to this item
 
 
 
@@ -139,7 +142,9 @@ public class VSimItemCurationTask extends AbstractCurationTask
 
 
 
-              // this is all copied code beyond this point VVVV
+
+
+              // this is all copied code beyond this point, use for inspiration, when the script is written above, delete everything below here VVVV
 
               // Get All requried MetadataValues, all are returned as lists, use .get(0).getValue() to return the first value, like strings,
               // use the usual list stuff to manage multiple values
