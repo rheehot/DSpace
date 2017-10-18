@@ -85,7 +85,6 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
     // read some configuration settings
     //reference: ConfigurationService info: https://wiki.duraspace.org/display/DSPACE/DSpace+Spring+Services+Tutorial#DSpaceSpringServicesTutorial-DSpaceConfigurationService
     String projectMasterCollectionHandle = DSpaceServicesFactory.getInstance().getConfigurationService().getProperty("vsim.project.master.collection.handle");
-    String assetstoreDir = DSpaceServicesFactory.getInstance().getConfigurationService().getProperty("assetstore.dir");
 
     // if the projectMasterCollectionHandle value isn't set, use a default
     if (StringUtils.isEmpty(projectMasterCollectionHandle))
@@ -156,7 +155,7 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
               // KEEP THIS AT THE END OF THE SCRIPT
 
               status = Curator.CURATE_SUCCESS;
-              result = "VSim Project Master item links intialized based on " + itemId + " | title: " + mvDcTitle.get(0).getValue() ;
+              result = "VSim Project Master item links intialized based on " + itemId;
 
             // catch any exceptions
             } catch (AuthorizeException authE) {

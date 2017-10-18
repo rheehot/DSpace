@@ -111,6 +111,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
           Collection projectMastersCollection = (Collection) projectMastersDSO;
 
           Item item = (Item)dso;
+          String itemId = item.getHandle();
 
           // IF THIS ITEM IS A PROJECT MASTER, *STOP*!! OTHERWISE, CONTINUE...
           if (itemService.isIn(item, projectMastersCollection)) {
@@ -144,7 +145,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY, mvVsimMasterRelationArchives.get(0).getValue());
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY, mvVsimMasterRelationSubmissions.get(0).getValue());
 
-…	            // update the itemService to write the values we just set
+              // update the itemService to write the values we just set
               itemService.update(Curator.curationContext(), item);
 
               // set the success flag and add a line to the result report
