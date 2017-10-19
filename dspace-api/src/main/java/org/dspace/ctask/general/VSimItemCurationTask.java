@@ -7,11 +7,8 @@
  */
 
  /*
-THE PLAN:
-[] only run this script for items that are NOT project master items
-[] find the corresponding project master item using collection membership information on this item
-[] get the project metadata from the Project Master Item
-[] copy the vsim.relation links (to the project collections) from the project master item to this item
+TODO: refactor this script to follow this example:
+https://github.com/DSpace/DSpace/blob/ea642d6c9289d96b37b5de3bb7a4863ec48eaa9c/dspace-api/src/main/java/org/dspace/ctask/general/ProfileFormats.java
 */
 
 package org.dspace.ctask.general;
@@ -33,6 +30,7 @@ import org.dspace.content.MetadataSchema;
 import org.dspace.curate.AbstractCurationTask;
 import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
+import org.dspace.curate.Distributive;
 
 import org.dspace.eperson.factory.EPersonServiceFactory;
 import org.dspace.eperson.Group;
@@ -61,6 +59,7 @@ import java.io.IOException;
  *
  * @author hardyoyo
  */
+@Distributive
 public class VSimItemCurationTask extends AbstractCurationTask
 {
 /** log4j category */
@@ -84,8 +83,15 @@ public class VSimItemCurationTask extends AbstractCurationTask
      * @throws SQLException if SQL error
      */
 
+     @Override
+     public int perform(DSpaceObject dso) throws IOException
+     {
+         distribute(dso);
+         return Curator.CURATE_SUCCESS;
+     }
+
     @Override
-    public int perform(DSpaceObject dso) throws IOException
+    protected void performItem(Item item) throws IOException
     {
 
     int status = Curator.CURATE_SKIP;
@@ -100,17 +106,13 @@ public class VSimItemCurationTask extends AbstractCurationTask
         projectMasterCollectionHandle = "20.500.11930/1015"; // <-- that better be a collection object on that handle
       }
 
-
-    // If this dso is an ITEM, proceed
     vsimItem:
-		if (dso.getType() == Constants.ITEM)
-        {
           try {
 
           DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
           Collection projectMastersCollection = (Collection) projectMastersDSO;
 
-          Item item = (Item)dso;
+          // grab the handle for this item, we'll need it later
           String itemId = item.getHandle();
 
           // IF THIS ITEM IS A PROJECT MASTER, *STOP*!! OTHERWISE, CONTINUE...
@@ -164,9 +166,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
 
               setResult(result);
               report(result);
-		}
 
-        return status;
     }
 
 }
