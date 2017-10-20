@@ -83,12 +83,12 @@ public class VSimItemCurationTask extends AbstractCurationTask
      * @throws SQLException if SQL error
      */
 
-     @Override
-     public int perform(DSpaceObject dso) throws IOException
-     {
+    @Override
+    public int perform(DSpaceObject dso) throws IOException
+    {
          distribute(dso);
          return Curator.CURATE_SUCCESS;
-     }
+    }
 
     @Override
     protected void performItem(Item item) throws IOException

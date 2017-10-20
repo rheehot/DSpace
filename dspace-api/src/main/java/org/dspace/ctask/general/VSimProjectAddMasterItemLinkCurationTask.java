@@ -25,6 +25,7 @@ import org.dspace.content.MetadataSchema;
 import org.dspace.curate.AbstractCurationTask;
 import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
+import org.dspace.curate.Distributive;
 
 import org.dspace.eperson.factory.EPersonServiceFactory;
 import org.dspace.eperson.Group;
@@ -53,6 +54,7 @@ import java.io.IOException;
  *
  * @author hardyoyo
  */
+@Distributive
 public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTask
 {
 /** log4j category */
@@ -76,9 +78,16 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
      * @throws SQLException if SQL error
      */
 
-    @Override
-    public int perform(DSpaceObject dso) throws IOException
-    {
+     @Override
+     public int perform(DSpaceObject dso) throws IOException
+     {
+          distribute(dso);
+          return Curator.CURATE_SUCCESS;
+     }
+
+     @Override
+     protected void performItem(Item item) throws IOException
+     {
 
     int status = Curator.CURATE_SKIP;
 
@@ -95,22 +104,16 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
 
     // If this dso is an ITEM, proceed
     vsimInit:
-		if (dso.getType() == Constants.ITEM)
-        {
+
           try {
 
           DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
           Collection projectMastersCollection = (Collection) projectMastersDSO;
 
-          Item item = (Item)dso;
-
           // *ONLY* KEEP GOING IF THIS ITEM IS A PROJECT MASTER, OTHERWISE *STOP*!!
           if (!itemService.isIn(item, projectMastersCollection)) {
               break vsimInit;
           }
-
-
-
 
               // Get All requried MetadataValues, all are returned as lists, use .get(0).getValue() to return the first value, like strings,
               // use the usual list stuff to manage multiple values
@@ -168,9 +171,7 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
 
               setResult(result);
               report(result);
-		}
 
-        return status;
     }
 
 }
