@@ -174,7 +174,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                 // create a new top level community for this project
                 Community projectCommunity = communityService.create(null, Curator.curationContext());
               //} else {
-                // grab the linked projectCommunity by its handle
+                // grab the linked projectCommunity by its handle  NOTE: due to VSIM-82, this won't ever work, the projectCommunity handle won't point to the projectCommunity
                 //Community projectCommunity = communityService.create(null, Curator.curationContext());
               //}
 
@@ -376,9 +376,6 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               }
 
               // END: ADD LOGO to Community and Collections ///////////////////////////////////////////////////////////////////////////////
-
-
-
 
               // set the success flag and add a line to the result report
               // KEEP THIS AT THE END OF THE SCRIPT
