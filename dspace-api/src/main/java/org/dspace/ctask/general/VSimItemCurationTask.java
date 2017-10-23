@@ -65,7 +65,6 @@ public class VSimItemCurationTask extends AbstractCurationTask
 /** log4j category */
     private static final Logger log = Logger.getLogger(VSimProjectCurationTask.class);
 
-    protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
     protected ItemService itemService = ContentServiceFactory.getInstance().getItemService();
     protected HandleService handleService = HandleServiceFactory.getInstance().getHandleService();
@@ -136,13 +135,11 @@ public class VSimItemCurationTask extends AbstractCurationTask
               DSpaceObject projectMasterDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterHandle);
               Item projectMasterItem = (Item) projectMasterDSO;
 
-              List<MetadataValue> mvVsimMasterRelationCommunity = itemService.getMetadata(projectMasterItem, "vsim", "relation", "community", Item.ANY);
               List<MetadataValue> mvVsimMasterRelationModels = itemService.getMetadata(projectMasterItem, "vsim", "relation", "models", Item.ANY);
               List<MetadataValue> mvVsimMasterRelationArchives = itemService.getMetadata(projectMasterItem, "vsim", "relation", "archives", Item.ANY);
               List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
 
               // set the relation values to the projectMaster values gathered above
-              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "community", Item.ANY, mvVsimMasterRelationCommunity.get(0).getValue());
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY, mvVsimMasterRelationModels.get(0).getValue());
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY, mvVsimMasterRelationArchives.get(0).getValue());
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY, mvVsimMasterRelationSubmissions.get(0).getValue());
