@@ -120,6 +120,8 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
 
               // get the handle to this master item, we'll need it
               String itemId = item.getHandle();
+              log.info("VSimProjectAddMasterItemLinkCurationTask: processing master item at handle: " + itemId);
+
 
               // the following are used to find the containers to which we need to add the itemId
               List<MetadataValue> mvVsimRelationCommunity = itemService.getMetadata(item, "vsim", "relation", "community", Item.ANY);
@@ -139,11 +141,15 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
               Collection projectCollSubmissions = (Collection) projectCollSubmissionsDSO;
 
               // set the link back to the project master item for each container object we grabbed above
+              log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollModels at handle: " + projectCollModels.getHandle());
               collectionService.addMetadata(Curator.curationContext(), projectCollModels, "vsim", "relation", "projectMaster", null, itemId);
+              log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollArchives at handle: " + projectCollArchives.getHandle());
               collectionService.addMetadata(Curator.curationContext(), projectCollArchives, "vsim", "relation", "projectMaster", null, itemId);
+              log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollSubmissions at handle: " + projectCollSubmissions.getHandle());
               collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, "vsim", "relation", "projectMaster", null, itemId);
 
               // now write all that metadata with a set of updates
+              log.info("VSimProjectAddMasterItemLinkCurationTask: Writing changes to all three project collections for master item at handle: " + itemId);
               collectionService.update(Curator.curationContext(), projectCollModels);
               collectionService.update(Curator.curationContext(), projectCollArchives);
               collectionService.update(Curator.curationContext(), projectCollSubmissions);

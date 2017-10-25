@@ -119,6 +119,8 @@ public class VSimItemCurationTask extends AbstractCurationTask
               break vsimItem;
           }
 
+              log.info("VSimItemCurationTask: processing item at handle: " + itemId);
+
               // TODO: find the corresponding project master item for all items in this collection
               // first, grab the collection object for this item
               List<Collection> thisItemCollection = itemService.getCollectionsNotLinked(Curator.curationContext(), item);
@@ -131,6 +133,8 @@ public class VSimItemCurationTask extends AbstractCurationTask
 
               String projectMasterHandle = mvProjectMaster.get(0).getValue();
 
+              log.info("VSimItemCurationTask: found the corresponding projectMaster handle: " + projectMasterHandle);
+
               // get the collection links from the project master item
               DSpaceObject projectMasterDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterHandle);
               Item projectMasterItem = (Item) projectMasterDSO;
@@ -139,12 +143,19 @@ public class VSimItemCurationTask extends AbstractCurationTask
               List<MetadataValue> mvVsimMasterRelationArchives = itemService.getMetadata(projectMasterItem, "vsim", "relation", "archives", Item.ANY);
               List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
 
+
               // set the relation values to the projectMaster values gathered above
+              log.info("VSimItemCurationTask:  - adding vsim.relation.models: " + mvVsimMasterRelationModels.get(0).getValue());
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY, mvVsimMasterRelationModels.get(0).getValue());
+
+              log.info("VSimItemCurationTask:  - adding vsim.relation.archives: " + mvVsimMasterRelationArchives.get(0).getValue());
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY, mvVsimMasterRelationArchives.get(0).getValue());
+
+              log.info("VSimItemCurationTask:  - adding vsim.relation.submissions: " + mvVsimMasterRelationSubmissions.get(0).getValue());
               itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY, mvVsimMasterRelationSubmissions.get(0).getValue());
 
               // update the itemService to write the values we just set
+              log.info("VSimItemCurationTask: writing changes to item at handle: " + itemId);
               itemService.update(Curator.curationContext(), item);
 
               // set the success flag and add a line to the result report
