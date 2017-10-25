@@ -9,7 +9,6 @@
 package org.dspace.ctask.general;
 
 import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -21,15 +20,10 @@ import org.dspace.content.Bitstream;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
-import org.dspace.content.MetadataSchema;
 import org.dspace.curate.AbstractCurationTask;
 import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.dspace.curate.Distributive;
-
-import org.dspace.eperson.factory.EPersonServiceFactory;
-import org.dspace.eperson.Group;
-import org.dspace.eperson.service.GroupService;
 
 import org.apache.log4j.Logger;
 
@@ -63,12 +57,8 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
     protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
     protected HandleService handleService = HandleServiceFactory.getInstance().getHandleService();
-    protected GroupService groupService = EPersonServiceFactory.getInstance().getGroupService();
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
-
-    private static final int digitsPerLevel = 2;
-    private static final int directoryLevels = 3;
 
     /**
      * Perform the curation task upon passed DSO
