@@ -14,19 +14,13 @@ https://github.com/DSpace/DSpace/blob/ea642d6c9289d96b37b5de3bb7a4863ec48eaa9c/d
 package org.dspace.ctask.general;
 
 import java.util.List;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
-
-import org.apache.commons.io.FilenameUtils;
 
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DSpaceObject;
-import org.dspace.content.Bitstream;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
-import org.dspace.content.MetadataSchema;
 import org.dspace.curate.AbstractCurationTask;
-import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.dspace.curate.Distributive;
 

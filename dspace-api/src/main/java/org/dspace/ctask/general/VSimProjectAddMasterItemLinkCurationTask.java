@@ -9,19 +9,13 @@
 package org.dspace.ctask.general;
 
 import java.util.List;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
-
-import org.apache.commons.io.FilenameUtils;
 
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DSpaceObject;
-import org.dspace.content.Bitstream;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
-import org.dspace.content.Community;
 import org.dspace.curate.AbstractCurationTask;
-import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.dspace.curate.Distributive;
 
@@ -29,16 +23,11 @@ import org.apache.log4j.Logger;
 
 import org.dspace.services.factory.DSpaceServicesFactory;
 
-import java.io.File;
-
 import org.dspace.content.MetadataValue;
 import org.dspace.handle.factory.HandleServiceFactory;
 import org.dspace.handle.service.HandleService;
 import org.dspace.content.factory.ContentServiceFactory;
 import org.dspace.content.service.*;
-
-import java.io.InputStream;
-import java.io.FileInputStream;
 
 import java.sql.SQLException;
 import java.io.IOException;
@@ -114,7 +103,6 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
 
 
               // the following are used to find the containers to which we need to add the itemId
-              List<MetadataValue> mvVsimRelationCommunity = itemService.getMetadata(item, "vsim", "relation", "community", Item.ANY);
               List<MetadataValue> mvVsimRelationModels = itemService.getMetadata(item, "vsim", "relation", "models", Item.ANY);
               List<MetadataValue> mvVsimRelationArchives = itemService.getMetadata(item, "vsim", "relation", "archives", Item.ANY);
               List<MetadataValue> mvVsimRelationSubmissions = itemService.getMetadata(item, "vsim", "relation", "submissions", Item.ANY);
