@@ -194,7 +194,6 @@ and the recent submissions listing
                         <map:match type="HandleTypeMatcher" pattern="community">
                             <map:transform type="SidebarFacetsTransformer"/>
                             <map:transform type="CommunitySearch"/>
-                            <map:transform type="CommunityRecentSubmissions"/>
                             <map:serialize type="xml"/>
                         </map:match>
                         <map:match type="HandleTypeMatcher" pattern="collection">
