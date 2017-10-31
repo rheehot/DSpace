@@ -82,7 +82,6 @@ and the recent submissions listing
                     -->
             <map:match pattern="">
                 <map:transform type="SidebarFacetsTransformer"/>
-                <map:transform type="FrontPageFeeds"/>
                 <map:serialize type="xml"/>
             </map:match>
 
@@ -179,9 +178,6 @@ and the recent submissions listing
                             <map:match type="HandleTypeMatcher" pattern="collection">
                                 <map:match type="ContainerHomePageSelector" pattern="discoveryRecentSubmissions">
                                     <map:transform type="SidebarFacetsTransformer"/>
-                                    <map:transform type="RecentSubmissionTransformer">
-                                        <map:parameter name="isHomePage" value="true"/>
-                                    </map:transform>
                                     <map:serialize type="xml"/>
                                 </map:match>
                             </map:match>
