@@ -25,7 +25,6 @@ and the recent submissions listing
             <map:transformer name="SimpleSearch" src="org.dspace.app.xmlui.aspect.discovery.SimpleSearch"/>
             <map:transformer name="BrowseFacet" src="org.dspace.app.xmlui.aspect.discovery.BrowseFacet"/>
             <map:transformer name="SearchFacetFilter" src="org.dspace.app.xmlui.aspect.discovery.SearchFacetFilter"/>
-            <map:transformer name="FrontPageFeeds" src="org.dspace.app.xmlui.aspect.discovery.SiteViewer"/>
             <map:transformer name="SidebarFacetsTransformer" src="org.dspace.app.xmlui.aspect.discovery.SidebarFacetsTransformer"/>
 
             <map:transformer name="CommunitySearch" src="org.dspace.app.xmlui.aspect.discovery.CommunitySearch"/>
