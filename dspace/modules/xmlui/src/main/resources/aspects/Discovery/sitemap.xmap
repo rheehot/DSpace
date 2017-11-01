@@ -25,9 +25,12 @@ and the recent submissions listing
             <map:transformer name="SimpleSearch" src="org.dspace.app.xmlui.aspect.discovery.SimpleSearch"/>
             <map:transformer name="BrowseFacet" src="org.dspace.app.xmlui.aspect.discovery.BrowseFacet"/>
             <map:transformer name="SearchFacetFilter" src="org.dspace.app.xmlui.aspect.discovery.SearchFacetFilter"/>
+            <map:transformer name="FrontPageFeeds" src="org.dspace.app.xmlui.aspect.discovery.SiteViewer"/>
+            <map:transformer name="SiteRecentSubmissions" src="org.dspace.app.xmlui.aspect.discovery.SiteRecentSubmissions"/>
             <map:transformer name="SidebarFacetsTransformer" src="org.dspace.app.xmlui.aspect.discovery.SidebarFacetsTransformer"/>
 
             <map:transformer name="CommunitySearch" src="org.dspace.app.xmlui.aspect.discovery.CommunitySearch"/>
+            <map:transformer name="CommunityRecentSubmissions" src="org.dspace.app.xmlui.aspect.discovery.CommunityRecentSubmissions"/>
 
 			<map:transformer name="CSVExportDiscoveryNavigation" src="org.dspace.app.xmlui.aspect.discovery.CSVExportDiscoveryNavigation"/>
 
@@ -177,6 +180,9 @@ and the recent submissions listing
                             <map:match type="HandleTypeMatcher" pattern="collection">
                                 <map:match type="ContainerHomePageSelector" pattern="discoveryRecentSubmissions">
                                     <map:transform type="SidebarFacetsTransformer"/>
+                                    <map:transform type="RecentSubmissionTransformer">
+                                        <map:parameter name="isHomePage" value="true"/>
+                                    </map:transform>
                                     <map:serialize type="xml"/>
                                 </map:match>
                             </map:match>
