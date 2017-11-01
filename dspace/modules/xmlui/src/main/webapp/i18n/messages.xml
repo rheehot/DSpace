@@ -262,7 +262,7 @@
          but in future, they should be refactored to a more relevant key prefix -->
 	<message key="xmlui.ArtifactBrowser.SimpleSearch.title">Search/Browse/Discover</message>
 	<message key="xmlui.ArtifactBrowser.SimpleSearch.trail">Search/Browse/Discover</message>
-	<message key="xmlui.ArtifactBrowser.SimpleSearch.head">Search</message>
+	<message key="xmlui.ArtifactBrowser.SimpleSearch.head">Search/Browse/Discover</message>
 	<message key="xmlui.ArtifactBrowser.SimpleSearch.search_scope">Search Scope</message>
 	<message key="xmlui.ArtifactBrowser.SimpleSearch.full_text_search">Full Text Search</message>
 
