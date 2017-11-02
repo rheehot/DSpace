@@ -8,8 +8,8 @@
     http://www.dspace.org/license/
 
 -->
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
     <display-name>Manakin</display-name>
@@ -41,13 +41,13 @@
     <param-name>dspace.dir</param-name>
     <param-value>${dspace.dir}</param-value>
   </context-param>
-  
+
   <!--  configures the locations that Spring configurations are searched for. -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>/WEB-INF/spring/*.xml</param-value>
   </context-param>
-  
+
   <!--
     - Use the Cocoon debug filter together with the Cocoon demo webapp
   <filter-mapping>
@@ -70,20 +70,20 @@
   <!--
     - Declare a filter for debugging incoming request
     -->
-    
+
   <!-- session/request filter (from util), handles setting up requests and sessions correctly -->
   <filter>
     <filter-name>dspace.request</filter-name>
     <filter-class>org.dspace.utils.servlet.DSpaceWebappServletFilter</filter-class>
   </filter>
-  
+
   <filter>
     <description>Log debug information about each request</description>
     <display-name>Cocoon debug filter</display-name>
     <filter-name>CocoonDebugFilter</filter-name>
     <filter-class>org.apache.cocoon.servlet.DebugFilter</filter-class>
   </filter>
-  
+
    <filter>
     <description>Log debug information about each request</description>
     <display-name>Cocoon debug filter</display-name>
@@ -112,6 +112,13 @@
       <filter-class>org.dspace.rdf.negotiation.NegotiationFilter</filter-class>
   </filter>
 
+  <!--
+      Use Tuckey to provide rewrites and redirects
+    -->
+  <filter>
+      <filter-name>UrlRewriteFilter</filter-name>
+      <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+  </filter>
 
   <!-- Filter mappings ================================================ -->
 
@@ -120,7 +127,14 @@
         <filter-name>dspace.request</filter-name>
         <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
+
+  <filter-mapping>
+      <filter-name>UrlRewriteFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher>
+      <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+
   <!--
     - Use the Cocoon multipart filter together with the Cocoon demo webapp
     -->
@@ -143,7 +157,7 @@
       <filter-name>rdf-content-negotiation</filter-name>
       <url-pattern>/handle/*</url-pattern>
   </filter-mapping>
-  
+
   <!--
     - Use the Cocoon debug filter together with the Cocoon demo webapp
   <filter-mapping>
@@ -167,7 +181,7 @@
         <listener-class>org.dspace.app.util.DSpaceWebappListener</listener-class>
     </listener>
 
-  
+
     <!-- Listener to clean up Commons-FileUpload -->
     <listener>
       <listener-class>org.apache.commons.fileupload.servlet.FileCleanerCleanup</listener-class>
