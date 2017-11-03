@@ -12,7 +12,7 @@
          xsi:noNamespaceSchemaLocation="ehcache.xsd"
          updateCheck='false'>
 
-    <diskStore path="java.io.tmpdir"/>
+        <diskStore path="java.io.tmpdir/VSimHibernateCache"/>
 
     <!--
     Mandatory Default Cache configuration. These settings will be applied to caches
