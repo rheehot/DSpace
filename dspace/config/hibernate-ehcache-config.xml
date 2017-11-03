@@ -22,7 +22,7 @@
 
     <!-- WARNING: If you are running multiple DSpace instances on the same server, make sure to start
          each DSpace instance with another value for java.io.tmpdir !!! -->
-    <diskStore path="java.io.tmpdir/DSpaceHibernateCache"/>
+    <diskStore path="java.io.tmpdir/VSimHibernateCache"/>
 
     <!--
     Cache configuration
@@ -222,7 +222,7 @@
         -->
 
     <!-- CACHES FOR TESTING -->
-<!-- 
+<!--
     <cache name="org.dspace.caching.MemOnly"
          maxElementsInMemory="10000"
          eternal="false"
@@ -256,11 +256,11 @@
          timeToLiveSeconds="30"
          overflowToDisk="false"
          memoryStoreEvictionPolicy="LRU">
-         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
-            properties="replicateAsynchronously=true, 
-               replicatePuts=true, 
-               replicateUpdates=true, 
-               replicateUpdatesViaCopy=false, 
+         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+            properties="replicateAsynchronously=true,
+               replicatePuts=true,
+               replicateUpdates=true,
+               replicateUpdatesViaCopy=false,
                replicateRemovals=true "/>
      </cache>
 
@@ -275,20 +275,20 @@
          diskPersistent="false"
          diskExpiryThreadIntervalSeconds="120"
          memoryStoreEvictionPolicy="LRU">
-         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
-            properties="replicateAsynchronously=true, 
-               replicatePuts=true, 
-               replicateUpdates=true, 
-               replicateUpdatesViaCopy=false, 
+         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+            properties="replicateAsynchronously=true,
+               replicatePuts=true,
+               replicateUpdates=true,
+               replicateUpdatesViaCopy=false,
                replicateRemovals=true "/>
      </cache>
 -->
 
    <!-- Place configuration for your caches following -->
 
-   <!-- this cache tracks the timestamps of the most recent updates to particular tables. 
-     It is important that the cache timeout of the underlying cache implementation be set to a 
-     higher value than the timeouts of any of the query caches. In fact, it is recommended that 
+   <!-- this cache tracks the timestamps of the most recent updates to particular tables.
+     It is important that the cache timeout of the underlying cache implementation be set to a
+     higher value than the timeouts of any of the query caches. In fact, it is recommended that
      the the underlying cache not be configured for expiry at all. -->
     <cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
            maxElementsInMemory="6000" eternal="true" overflowToDisk="false" />
@@ -364,13 +364,13 @@
 
     Add cacheEventListenerFactory to the cache
     ==========================================
-         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
-            properties="replicateAsynchronously=true, 
-               replicatePuts=true, 
-               replicateUpdates=true, 
-               replicateUpdatesViaCopy=false, 
+         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+            properties="replicateAsynchronously=true,
+               replicatePuts=true,
+               replicateUpdates=true,
+               replicateUpdatesViaCopy=false,
                replicateRemovals=true "/>
-    
+
     For Example:
     ============
     <cache name="org.dspace.authz.api.SecurityService.cache"
@@ -383,11 +383,11 @@
          maxElementsOnDisk="100000"
          diskPersistent="true"
          diskExpiryThreadIntervalSeconds="120">
-         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
-            properties="replicateAsynchronously=true, 
-               replicatePuts=true, 
-               replicateUpdates=true, 
-               replicateUpdatesViaCopy=false, 
+         <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+            properties="replicateAsynchronously=true,
+               replicatePuts=true,
+               replicateUpdates=true,
+               replicateUpdatesViaCopy=false,
                replicateRemovals=true "/>
    </cache>
 
@@ -490,8 +490,8 @@
     * socketTimeoutMillis - the number of ms client sockets will stay open when sending
       messages to the listener. This should be long enough for the slowest message.
       If not specified it defaults 120000ms.
-    * timeToLive - You can control how far the multicast packets propagate by setting the 
-    badly misnamed time to live. Using the multicast IP protocol, the timeToLive value 
+    * timeToLive - You can control how far the multicast packets propagate by setting the
+    badly misnamed time to live. Using the multicast IP protocol, the timeToLive value
     indicates the scope or range in which a packet may be forwarded. By convention:
         0 is restricted to the same host
         1 is restricted to the same subnet
@@ -508,18 +508,18 @@
 
 
    <!-- Option A: automatic discovery using tcp multicast
-        For the multicast version, the IP address is no longer that of the server. 
-        Rather, you need to choose the address and port in a designated range that has been reserved for multicasting. 
-        It is as if the server and all potential clients are agreeing that messages will be left in a particular location. 
-        The available addresses for multicasting are in the range 224.0.0.0 through 239.255.255.255. 
-        You can check for the assigned addresses in this range (http://www.iana.org/assignments/multicast-addresses). 
+        For the multicast version, the IP address is no longer that of the server.
+        Rather, you need to choose the address and port in a designated range that has been reserved for multicasting.
+        It is as if the server and all potential clients are agreeing that messages will be left in a particular location.
+        The available addresses for multicasting are in the range 224.0.0.0 through 239.255.255.255.
+        You can check for the assigned addresses in this range (http://www.iana.org/assignments/multicast-addresses).
         Recommended default is to use the IP address 230.0.0.1 and the port 4446.
 
    <cacheManagerPeerProviderFactory
       class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
-      properties="peerDiscovery=automatic, 
+      properties="peerDiscovery=automatic,
          multicastGroupAddress=230.0.0.1,
-         multicastGroupPort=4446, 
+         multicastGroupPort=4446,
          timeToLive=1" />
     -->
 
@@ -534,37 +534,37 @@
 -->
 
 
-    <!-- 
+    <!--
         A CacheManagerPeerListener listens for messages from peers to the current CacheManager.
-        
-        You configure the CacheManagerPeerListener by specifiying a CacheManagerPeerListenerFactory which is used to create 
+
+        You configure the CacheManagerPeerListener by specifiying a CacheManagerPeerListenerFactory which is used to create
         the CacheManagerPeerListener using the plugin mechanism.
-        
+
         The attributes of cacheManagerPeerListenerFactory are:
-        * class - a fully qualified factory class name 
+        * class - a fully qualified factory class name
         * properties - comma separated properties having meaning only to the factory.
-        
-        Ehcache comes with a built-in RMI-based distribution system. The listener component is RMICacheManagerPeerListener 
+
+        Ehcache comes with a built-in RMI-based distribution system. The listener component is RMICacheManagerPeerListener
         which is configured using RMICacheManagerPeerListenerFactory. It is configured as per the following example:
-        
+
         <cacheManagerPeerListenerFactory
             class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
             properties="hostName=localhost, port=40001, socketTimeoutMillis=2000" />
-        
+
         Valid properties are:
-        * hostName (optional) - the hostName of the host the listener is running on. Specify where the host is 
+        * hostName (optional) - the hostName of the host the listener is running on. Specify where the host is
             multihomed and you want to control the interface over which cluster messages are received.
-            
+
             The hostname is checked for reachability during CacheManager initialisation.
-            
-            If the hostName is unreachable, the CacheManager will refuse to start and an CacheException will be thrown 
+
+            If the hostName is unreachable, the CacheManager will refuse to start and an CacheException will be thrown
             indicating connection was refused.
-            
-            If unspecified, the hostname will use InetAddress.getLocalHost().getHostAddress(), which corresponds to the 
+
+            If unspecified, the hostname will use InetAddress.getLocalHost().getHostAddress(), which corresponds to the
             default host network interface.
-            
-            Warning: Explicitly setting this to localhost refers to the local loopback of 127.0.0.1, which is not network 
-            visible and will cause no replications to be received from remote hosts. You should only use this setting when 
+
+            Warning: Explicitly setting this to localhost refers to the local loopback of 127.0.0.1, which is not network
+            visible and will cause no replications to be received from remote hosts. You should only use this setting when
             multiple CacheManagers are on the same machine.
 
             NOTE: this is not obvious, but if you run a netstat -an | grep LISTEN you will see that the configuration shown below:
@@ -573,7 +573,7 @@
             even if there is no netowkr connection. On the other hand, if you use localhost there will be a resolution
             failure on startup. This is probably what you should use regardless of the setup of the peer provider factory. -AZ
         * port (mandatory) - the port the listener listens on.
-        * socketTimeoutMillis (optional) - the number of seconds client sockets will wait when sending messages to this 
+        * socketTimeoutMillis (optional) - the number of seconds client sockets will wait when sending messages to this
             listener until they give up. By default this is 2000ms.
     -->
 
