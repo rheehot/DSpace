@@ -39,6 +39,13 @@
 
   <dc-type>
     <schema>vsim</schema>
+    <element>continent</element>
+    <qualifier></qualifier>
+    <scope_note>Specifies on which of the 7 continents the project's subject is/was primarily located. To be used in addition to or in place of dc.coverage.spatial.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>vsim</schema>
     <element>contributor</element>
     <qualifier>details</qualifier>
     <scope_note>Contributor details for this VSim project.</scope_note>
@@ -61,8 +68,15 @@
   <dc-type>
     <schema>vsim</schema>
     <element>peerreview</element>
-    <qualifier></qualifier>
-    <scope_note>Peer Review details for this VSim project.</scope_note>
+    <qualifier>agency</qualifier>
+    <scope_note>Field for the journal/publisher/community that conducted the peer review and are conferring their imprimatur on the item.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>vsim</schema>
+    <element>peerreview</element>
+    <qualifier>status</qualifier>
+    <scope_note>Indicates whether the item has been peer-reviewed.</scope_note>
   </dc-type>
 
   <dc-type>
@@ -89,6 +103,13 @@
   <dc-type>
     <schema>vsim</schema>
     <element>relation</element>
+    <qualifier>projectMaster</qualifier>
+    <scope_note>handle for the project master item for this VSim project</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>vsim</schema>
+    <element>relation</element>
     <qualifier>submissions</qualifier>
     <scope_note>handle for the submissions DSpace collection for this VSim project</scope_note>
   </dc-type>
@@ -98,6 +119,13 @@
     <element>research</element>
     <qualifier>objective</qualifier>
     <scope_note>Research Objective for this VSim project.</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>vsim</schema>
+    <element>reuse</element>
+    <qualifier>submissions</qualifier>
+    <scope_note>Restrictions or requirements pertaining to the use of content related to the project in publications</scope_note>
   </dc-type>
 
 </dspace-dc-types>
