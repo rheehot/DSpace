@@ -15,7 +15,7 @@
 
  <form-map>
    <name-map collection-handle="default" form-name="traditional" />
-   <name-map collection-handle="20.500.11930/1015" form-name="vsim-project" />
+   <name-map collection-handle="20.500.11991/1009" form-name="vsim-project" />
  </form-map>
 
  <!-- The form-definitions map lays out the detailed definition of all the -->
