@@ -82,7 +82,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
     // if the projectMasterCollectionHandle value isn't set, use a default
     if (StringUtils.isEmpty(projectMasterCollectionHandle))
       {
-        projectMasterCollectionHandle = "20.500.11930/1015"; // <-- that better be a collection object on that handle
+        projectMasterCollectionHandle = "20.500.11991/1009"; // <-- that better be a collection object on that handle
       }
 
     vsimItem:
