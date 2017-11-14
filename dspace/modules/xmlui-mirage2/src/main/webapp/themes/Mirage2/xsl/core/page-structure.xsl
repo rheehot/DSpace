@@ -127,7 +127,7 @@
                                                     </div>
                                                     <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4 vsim-featured-project-text">
                                                             <h3>Digital Karnak</h3>
-                                                            <p>The <a href="/xmlui/handle/20.500.11930/1018">Digital Karnak Project</a> aims to make the site of Karnak
+                                                            <p>The <a href="/xmlui/handle/20.500.11991/1012">Digital Karnak Project</a> aims to make the site of Karnak
                                                                 more accessible to students and instructors in the English-speaking world. As part of this goal, a 3-D Virtual
                                                                 Reality model of the temple was constructed, offering students a completely new way to view the temple:
                                                                 reign-by-reign, following the complex patterns of royal construction, modification and destruction that are
