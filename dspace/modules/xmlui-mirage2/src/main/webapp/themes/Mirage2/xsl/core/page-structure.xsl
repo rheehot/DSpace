@@ -116,8 +116,8 @@
                                     <xsl:choose>
                                         <!-- if this is the main home page, show the main hero block, the featured project block, and the fancy buttons -->
                                         <xsl:when test="normalize-space($request-uri)=''">
-                                            <h1 class="text-center">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
-                                            <div class="container vsim-featured-project-container">
+                                            <h1 class="text-center hidden-xs">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
+                                            <div class="container vsim-featured-project-container hidden-xs">
                                                 <div class="row-fluid">
                                                     <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5 vsim-featured-project-thumbnail">
                                                         <img src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg"/>
@@ -200,7 +200,7 @@
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
 
-                                              <div class="hidden-lg">
+                                              <div class="hidden-lg hidden-med hidden-sm">
                                                 <xsl:call-template name="buildFooter"/>
                                             </div>
                                         </div>
@@ -566,7 +566,6 @@
                             <!-- small navigation buttons for sm and xs screens, keep scrolling down for the full-sized buttons -->
                             <li><a class="btn" role="button" href="{$app_path}/projects">browse</a></li>
                             <li><a class="btn" role="button" href="{$app_path}/pages/add">submit project</a></li>
-                            <li><a class="btn" role="button" href="{$app_path}/pages/download">download</a></li>
 
                         </ul>
                               </div>
@@ -858,19 +857,16 @@
     <!-- Like the header, the footer contains various miscellaneous text, links, and image placeholders -->
     <xsl:template name="buildFooter">
         <footer class="vsim-footer">
-                <div>
-                    <div class="col-xs-7 col-sm-8">
-                        <div class="pull-left">
+                    <div class="col-xs-7 col-sm-8 pull-left">
                             <a href="https://www.library.ucla.edu/">
-                                <img src="{$theme-path}images/UCLALibrary.png" />
+                                <img class="img-responsive" src="{$theme-path}images/UCLALibrary.png" />
                             </a>
                             <a href="https://idre.ucla.edu/">
-                                <img src="{$theme-path}images/IDRE.png" />
+                                <img class="img-responsive" src="{$theme-path}images/IDRE.png" />
                             </a>
                             <a href="https://www.neh.gov/">
-                                <img src="{$theme-path}images/Humanities.png" />
+                                <img class="img-responsive" src="{$theme-path}images/Humanities.png" />
                             </a>
-                        </div>
                     </div>
                     <div class="col-xs-5 col-sm-4 hidden-print">
                         <div class="pull-right">
@@ -908,7 +904,6 @@
                             </a>
                         </div>
 
-                    </div>
                 </div>
                 <!--Invisible link to HTML sitemap (for search engines) -->
                 <a class="hidden">
