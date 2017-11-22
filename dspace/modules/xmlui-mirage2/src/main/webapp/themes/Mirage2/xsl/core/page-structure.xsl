@@ -144,7 +144,7 @@
                                         <!-- if this is the submission page, show the link to the project masters submission page -->
                                         <xsl:when test="normalize-space($request-uri)='pages/add'">
                                             <p class="text-center">
-                                                <a href="/xmlui/handle/{$vsim-project-masters-handle}/submit" class="btn btn-large"><img src="/xmlui/themes/Mirage2/images/SubmitLink.png" alt=" Submit a Project "/></a>
+                                                <a href="/xmlui/handle/{$vsim-project-masters-handle}/submit" class="btn btn-large btn-vsim-project-submit"><img src="/xmlui/themes/Mirage2/images/SubmitLink.png" alt=" Submit a Project "/></a>
                                             </p>
                                         </xsl:when>
                                         <!-- if this is the tour page, show the tour carousel -->
@@ -856,19 +856,21 @@
 
     <!-- Like the header, the footer contains various miscellaneous text, links, and image placeholders -->
     <xsl:template name="buildFooter">
-        <footer class="vsim-footer">
-                    <div class="col-xs-7 col-sm-8 pull-left">
-                            <a href="https://www.library.ucla.edu/">
-                                <img class="img-responsive" src="{$theme-path}images/UCLALibrary.png" />
+        <footer class="vsim-footer container">
+                    <div class="col-md-10 col-lg-10 col-xs-7 col-sm-8 pull-left">
+                        <div class="btn-group" role="group" aria-label="footer-branding">
+                           <a class="btn" role="button" href="https://www.library.ucla.edu/">
+                                <img class="img-responsive img-vsim-footer" src="{$theme-path}images/UCLALibrary.png" />
                             </a>
-                            <a href="https://idre.ucla.edu/">
-                                <img class="img-responsive" src="{$theme-path}images/IDRE.png" />
+                            <a class="btn" role="button" href="https://idre.ucla.edu/">
+                                <img class="img-responsive img-vsim-footer" src="{$theme-path}images/IDRE.png" />
                             </a>
-                            <a href="https://www.neh.gov/">
-                                <img class="img-responsive" src="{$theme-path}images/Humanities.png" />
+                            <a class="btn" role="button" href="https://www.neh.gov/">
+                                <img class="img-responsive img-vsim-footer" src="{$theme-path}images/Humanities.png" />
                             </a>
+                        </div>
                     </div>
-                    <div class="col-xs-5 col-sm-4 hidden-print">
+                    <div class="col-md-2 col-lg-2 col-xs-5 col-sm-4 hidden-print">
                         <div class="pull-right">
                             <a>
                                 <xsl:attribute name="href">
