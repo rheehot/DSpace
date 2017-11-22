@@ -116,16 +116,16 @@
                                     <xsl:choose>
                                         <!-- if this is the main home page, show the main hero block, the featured project block, and the fancy buttons -->
                                         <xsl:when test="normalize-space($request-uri)=''">
-                                            <h1 class="text-center hidden-xs">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
-                                            <div class="container vsim-featured-project-container hidden-xs">
+                                            <h1 class="text-center">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
+                                            <div class="container vsim-featured-project-container">
                                                 <div class="row-fluid">
-                                                    <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5 vsim-featured-project-thumbnail">
-                                                        <img src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg"/>
+                                                    <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail">
+                                                        <img class="img-responsive" src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg"/>
                                                         <div class="vsim-featured-project">
                                                             <h3 class="vsim-featured-project-caption">Featured Project</h3>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4 vsim-featured-project-text">
+                                                    <div class="col-md-4 col-sm-4 col-lg-4 vsim-featured-project-text">
                                                             <h3>Digital Karnak</h3>
                                                             <p>The <a href="/xmlui/handle/20.500.11991/1012">Digital Karnak Project</a> aims to make the site of Karnak
                                                                 more accessible to students and instructors in the English-speaking world. As part of this goal, a 3-D Virtual
@@ -493,7 +493,7 @@
                             <img src="{$theme-path}images/vsim.png" />
                         </a>
 
-                        <div class="navbar-header pull-right hidden-lg hidden-md hidden-sm">
+                        <div class="navbar-header pull-right hidden-lg hidden-md">
                         <ul class="nav nav-pills pull-left ">
 
                             <xsl:if test="count(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='page'][@qualifier='supportedLocale']) &gt; 1">
@@ -571,7 +571,7 @@
                               </div>
                     </div>
 
-                    <div class="navbar-header pull-right hidden-xs">
+                    <div class="navbar-header pull-right hidden-xs hidden-sm">
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
                           </ul>
