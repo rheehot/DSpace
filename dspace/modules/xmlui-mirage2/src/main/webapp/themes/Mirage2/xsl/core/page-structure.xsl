@@ -116,7 +116,7 @@
                                     <xsl:choose>
                                         <!-- if this is the main home page, show the main hero block, the featured project block, and the fancy buttons -->
                                         <xsl:when test="normalize-space($request-uri)=''">
-                                            <h1 class="text-center">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
+                                            <h1 class="text-center vsim-tagline">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
                                             <div class="container vsim-featured-project-container">
                                                 <div class="row-fluid">
                                                     <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail">
@@ -135,7 +135,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="text-center">
+                                            <p class="vsim-button-bar">
                                                     <a href="{$app_path}/pages/tour" class="btn btn-large"><img src="/xmlui/themes/Mirage2/images/TourLink.png" alt=" Tour "/></a>
                                                     <a href="{$app_path}/pages/download" class="btn btn-large"><img src="/xmlui/themes/Mirage2/images/DownloadLink.png" alt=" Download "/></a>
                                                     <a href="{$app_path}/projects"><img src="/xmlui/themes/Mirage2/images/BrowseLink.png" alt=" Browse "/></a>
@@ -630,7 +630,7 @@
                                     </li>
                                    <li>
                                         <a class="btn" href="{$app_path}/pages/download">
-                                           Download
+                                           Download VSim
                                         </a>
                                     </li>
 
