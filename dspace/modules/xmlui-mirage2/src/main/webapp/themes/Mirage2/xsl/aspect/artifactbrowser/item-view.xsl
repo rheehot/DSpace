@@ -142,8 +142,10 @@
                <div class="col-sm-4">
 
                   <!-- hide the download links on project master pages, show them on all other item pages -->
+                  <!-- ... on project master pages, instead show the submit to this project link -->
                   <xsl:choose>
                       <xsl:when test="dim:field[@element='type'][not(@qualifier)] = 'VSimProjectMaster'">
+                             <xsl:call-template name="itemSummaryView-submit-to-project-link"/>
                       </xsl:when>
                       <xsl:otherwise>
                         <div>
@@ -975,6 +977,30 @@
                 </div>
             </div>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-submit-to-project-link">
+      <div class="item-page-field-wrapper table word-break text-right">
+        <xsl:for-each select="dim:field[@mdschema='vsim' and @element='relation' and @qualifier='submissions']">
+            <a>
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$base-uri"/>
+                    <xsl:text>/xmlui/handle/</xsl:text>
+                    <xsl:copy-of select="./node()"/>
+                    <xsl:text>/submit</xsl:text>
+                </xsl:attribute>
+                <i aria-hidden="true">
+                    <xsl:attribute name="class">
+                    <xsl:text>glyphicon glyphicon-arrow-up</xsl:text>
+                    </xsl:attribute>
+                </i>
+                <xsl:text>Submit to this project</xsl:text>
+            </a>
+            <xsl:if test="count(following-sibling::dim:field[@mdschema='vsim' and @element='relation' and @qualifier='submissions']) != 0">
+                <br/>
+            </xsl:if>
+        </xsl:for-each>
+      </div>
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-file-section">
