@@ -20,6 +20,17 @@
 */
 
 // vsim styles for front page content
+.vsim-tagline {
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.vsim-button-bar {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .vsim-featured-project {
     background: none repeat scroll 0 0 #00a3e0;
     opacity: 0.7;
@@ -237,4 +248,3 @@ a.list-group-item {
     padding: 20px;
   }
 }
-
