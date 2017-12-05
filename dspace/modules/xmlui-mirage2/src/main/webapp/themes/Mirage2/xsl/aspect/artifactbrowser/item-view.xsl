@@ -661,7 +661,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
 
-            <!--TODO: add the copyright date here, see VSIM-109 -->
+            <!-- add the copyright date here, see VSIM-109 -->
             <xsl:if test="dim:field[@element='date' and @qualifier='copyright' and descendant::text()]">
                         <xsl:for-each select="dim:field[@element='date' and @qualifier='copyright']">
                             <xsl:choose>
