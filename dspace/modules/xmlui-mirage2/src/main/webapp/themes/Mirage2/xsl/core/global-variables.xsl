@@ -71,6 +71,9 @@
         <xsl:value-of select="$pagemeta/dri:metadata[@element='request'][@qualifier='serverName']"/>
     </xsl:variable>
 
+		<xsl:variable name="current-handle">
+			<xsl:value-of select="$pagemeta/dri:metadata[@element='identifier'][@qualifier='handle']"/>
+		</xsl:variable>
 
     <xsl:variable name="SFXLink">
         <xsl:if test="$pagemeta/dri:metadata[@element='sfx'][@qualifier='server']">
