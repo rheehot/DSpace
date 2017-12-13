@@ -108,6 +108,7 @@
         <xsl:param name="position"/>
         <xsl:choose>
             <xsl:when test=". = 'simple'">
+							  <div style="clear: both;"></div> <!-- Clear the float -->
                 <div class="pagination-simple clearfix {$position}">
                     <xsl:variable name="gear"
                                   select="//dri:div[@id='aspect.artifactbrowser.ConfigurableBrowse.div.browse-controls'
