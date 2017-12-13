@@ -12,11 +12,9 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
-import org.dspace.content.Community;
 import org.dspace.content.Item;
 import org.dspace.content.factory.ContentServiceFactory;
 import org.dspace.content.service.CollectionService;
-import org.dspace.content.service.CommunityService;
 import org.dspace.content.service.ItemService;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
@@ -44,7 +42,6 @@ public class GenerateSitemaps
     /** Logger */
     private static Logger log = Logger.getLogger(GenerateSitemaps.class);
 
-    private static final CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
     private static final CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
     private static final ItemService itemService = ContentServiceFactory.getInstance().getItemService();
     private static final ConfigurationService configurationService = DSpaceServicesFactory.getInstance().getConfigurationService();
@@ -181,21 +178,6 @@ public class GenerateSitemaps
 
         Context c = new Context(Context.Mode.READ_ONLY);
 
-        List<Community> comms = communityService.findAll(c);
-
-        for (Community comm : comms) {
-            String url = handleURLStem + comm.getHandle();
-
-            if (makeHTMLMap) {
-                html.addURL(url, null);
-            }
-            if (makeSitemapOrg) {
-                sitemapsOrg.addURL(url, null);
-            }
-
-            c.uncacheEntity(comm);
-        }
-
         List<Collection> colls = collectionService.findAll(c);
 
         for (Collection coll : colls) {
@@ -238,8 +220,7 @@ public class GenerateSitemaps
         {
             int files = html.finish();
             log.info(LogManager.getHeader(c, "write_sitemap",
-                    "type=html,num_files=" + files + ",communities="
-                            + comms.size() + ",collections=" + colls.size()
+                    "type=html,num_files=" + files + ",collections=" + colls.size()
                             + ",items=" + itemCount));
         }
 
@@ -247,8 +228,7 @@ public class GenerateSitemaps
         {
             int files = sitemapsOrg.finish();
             log.info(LogManager.getHeader(c, "write_sitemap",
-                    "type=html,num_files=" + files + ",communities="
-                            + comms.size() + ",collections=" + colls.size()
+                    "type=html,num_files=" + files + ",collections=" + colls.size()
                             + ",items=" + itemCount));
         }
 
