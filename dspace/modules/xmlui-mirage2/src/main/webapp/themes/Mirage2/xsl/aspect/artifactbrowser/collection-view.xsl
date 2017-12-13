@@ -43,8 +43,6 @@
     <!-- A collection rendered in the detailView pattern; default way of viewing a collection. -->
     <xsl:template name="collectionDetailView-DIM">
         <div class="detail-view">&#160;
-            <!-- Generate the logo, if present, from the file section -->
-            <xsl:apply-templates select="./mets:fileSec/mets:fileGrp[@USE='LOGO']"/>
             <!-- Generate the info about the collections from the metadata section -->
             <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
                 mode="collectionDetailView-DIM"/>
@@ -78,6 +76,6 @@
         	</div>
         </xsl:if>
     </xsl:template>
-        
+
 
 </xsl:stylesheet>
