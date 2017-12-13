@@ -60,21 +60,18 @@
             <xsl:when test="'file' = $emphasis">
 
 
-                <div class="item-wrapper row">
-                    <div class="col-sm-3 hidden-xs">
-                        <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
-                            <xsl:with-param name="href" select="$href"/>
-                        </xsl:apply-templates>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                      <div class="thumbnail">
+                          <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
+                              <xsl:with-param name="href" select="$href"/>
+                          </xsl:apply-templates>
+                          <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+                                               mode="itemSummaryList-DIM-metadata-thumbnail-captions">
+                              <xsl:with-param name="href" select="$href"/>
+                          </xsl:apply-templates>
+                      </div>
                     </div>
 
-                    <div class="col-sm-9">
-                        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                                             mode="itemSummaryList-DIM-metadata">
-                            <xsl:with-param name="href" select="$href"/>
-                        </xsl:apply-templates>
-                    </div>
-
-                </div>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
@@ -174,6 +171,95 @@
         </div>
     </xsl:template>
 
+    <xsl:template match="dim:dim" mode="itemSummaryList-DIM-metadata-thumbnail-captions">
+        <xsl:param name="href"/>
+        <div class="caption">
+            <p>
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="$href"/>
+                    </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="dim:field[@element='title']">
+                            <xsl:value-of select="dim:field[@element='title'][1]/node()"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.no-title</i18n:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:element>
+                <span class="Z3988">
+                    <xsl:attribute name="title">
+                        <xsl:call-template name="renderCOinS"/>
+                    </xsl:attribute>
+                    &#xFEFF; <!-- non-breaking space to force separating the end tag -->
+                </span>
+            </p>
+            <div class="artifact-info">
+                <span class="author h4">
+                    <small>
+                    <xsl:choose>
+                        <xsl:when test="dim:field[@element='contributor'][@qualifier='author']">
+                            <xsl:for-each select="dim:field[@element='contributor'][@qualifier='author']">
+                                <span>
+                                  <xsl:if test="@authority">
+                                    <xsl:attribute name="class"><xsl:text>ds-dc_contributor_author-authority</xsl:text></xsl:attribute>
+                                  </xsl:if>
+                                  <xsl:copy-of select="node()"/>
+                                </span>
+                                <xsl:if test="count(following-sibling::dim:field[@element='contributor'][@qualifier='author']) != 0">
+                                    <xsl:text>; </xsl:text>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </xsl:when>
+                        <xsl:when test="dim:field[@element='creator']">
+                            <xsl:for-each select="dim:field[@element='creator']">
+                                <xsl:copy-of select="node()"/>
+                                <xsl:if test="count(following-sibling::dim:field[@element='creator']) != 0">
+                                    <xsl:text>; </xsl:text>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </xsl:when>
+                        <xsl:when test="dim:field[@element='contributor']">
+                            <xsl:for-each select="dim:field[@element='contributor']">
+                                <xsl:copy-of select="node()"/>
+                                <xsl:if test="count(following-sibling::dim:field[@element='contributor']) != 0">
+                                    <xsl:text>; </xsl:text>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.no-author</i18n:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    </small>
+                </span>
+                <xsl:text> </xsl:text>
+                <xsl:if test="dim:field[@element='date' and @qualifier='issued']">
+	                <span class="publisher-date h4">  <small>
+	                    <xsl:text>(</xsl:text>
+	                    <xsl:if test="dim:field[@element='publisher']">
+	                        <span class="publisher">
+	                            <xsl:copy-of select="dim:field[@element='publisher']/node()"/>
+	                        </span>
+	                        <xsl:text>, </xsl:text>
+	                    </xsl:if>
+	                    <span class="date">
+	                        <xsl:value-of select="substring(dim:field[@element='date' and @qualifier='issued']/node(),1,10)"/>
+	                    </span>
+	                    <xsl:text>)</xsl:text>
+                        </small></span>
+                </xsl:if>
+            </div>
+            <xsl:if test="dim:field[@element = 'description' and @qualifier='abstract']">
+                <xsl:variable name="abstract" select="dim:field[@element = 'description' and @qualifier='abstract']/node()"/>
+                <div class="artifact-abstract">
+                    <xsl:value-of select="util:shortenString($abstract, 220, 10)"/>
+                </div>
+            </xsl:if>
+        </div>
+    </xsl:template>
+
     <xsl:template name="itemDetailList-DIM">
         <xsl:call-template name="itemSummaryList-DIM"/>
     </xsl:template>
@@ -181,11 +267,10 @@
 
     <xsl:template match="mets:fileSec" mode="artifact-preview">
         <xsl:param name="href"/>
-        <div class="thumbnail artifact-preview">
-            <a class="image-link" href="{$href}">
+            <a class="d-block mb-4 h-100 image-link" href="{$href}">
                 <xsl:choose>
                     <xsl:when test="mets:fileGrp[@USE='THUMBNAIL']">
-                        <img class="img-responsive img-thumbnail" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
+                        <img class="img-fluid img-rounded" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
                             <xsl:attribute name="src">
                                 <xsl:value-of
                                         select="mets:fileGrp[@USE='THUMBNAIL']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
@@ -193,7 +278,7 @@
                         </img>
                     </xsl:when>
                     <xsl:otherwise>
-                        <img class="img-thumbnail" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
+                        <img class="img-rounded" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
                             <xsl:attribute name="data-src">
                                 <xsl:text>holder.js/100%x</xsl:text>
                                 <xsl:value-of select="$thumbnail.maxheight"/>
@@ -203,7 +288,6 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
-        </div>
     </xsl:template>
 
 
