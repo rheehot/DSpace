@@ -290,7 +290,7 @@
                         <img class="img-responsive img-rounded img-padded" alt="[narrative]" src="{concat($theme-path, '/images/mime-thumbs/narrative.png')}" title="VSim Narrative file"/>
                     </xsl:when>
                     <xsl:otherwise>
-                      <img class="img-responsive img-rounded img-padded" alt="[data]" src="{concat($theme-path, '/images/mime-thumbs/data.png')}" title="VSim Narrative file"/>
+                      <img class="img-responsive img-rounded img-padded" alt="[data]" src="{concat($theme-path, '/images/mime-thumbs/data.png')}" title="VSim Data file"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
