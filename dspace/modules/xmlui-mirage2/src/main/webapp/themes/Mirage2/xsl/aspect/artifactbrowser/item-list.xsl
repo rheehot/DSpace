@@ -278,16 +278,16 @@
                         </img>
                     </xsl:when>
                     <xsl:when test="@MIMETYPE = 'application/x-zip-compressed'">
-                        <img class="img-fluid img-rounded" alt="[zip]" src="{concat($theme-path, '/images/mime-thumbs/zip.png')}" title="PDF file"/>
+                        <img class="img-fluid img-rounded img-padded" alt="[zip]" src="{concat($theme-path, '/images/mime-thumbs/zip.png')}" title="PDF file"/>
                     </xsl:when>
                     <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-model'">
-                        <img class="img-fluid img-rounded" alt="[model]" src="{concat($theme-path, '/images/mime-thumbs/model.png')}" title="VSIM Model file"/>
+                        <img class="img-fluid img-rounded img-padded" alt="[model]" src="{concat($theme-path, '/images/mime-thumbs/model.png')}" title="VSIM Model file"/>
                     </xsl:when>
                     <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-archive'">
-                        <img class="img-fluid img-rounded" alt="[archive]" src="{concat($theme-path, '/images/mime-thumbs/arhcive.png')}" title="VSim Archive file"/>
+                        <img class="img-fluid img-rounded img-padded" alt="[archive]" src="{concat($theme-path, '/images/mime-thumbs/arhcive.png')}" title="VSim Archive file"/>
                     </xsl:when>
                     <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-narrative'">
-                        <img class="img-fluid img-rounded" alt="[narrative]" src="{concat($theme-path, '/images/mime-thumbs/narrative.png')}" title="VSim Narrative file"/>
+                        <img class="img-fluid img-rounded img-padded" alt="[narrative]" src="{concat($theme-path, '/images/mime-thumbs/narrative.png')}" title="VSim Narrative file"/>
                     </xsl:when>
                     <xsl:otherwise>
                     </xsl:otherwise>
