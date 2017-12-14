@@ -270,21 +270,27 @@
             <a class="d-block mb-4 h-100 image-link" href="{$href}">
                 <xsl:choose>
                     <xsl:when test="mets:fileGrp[@USE='THUMBNAIL']">
-                        <img class="img-fluid img-rounded" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
+                        <img class="img-responsive img-rounded img-padded" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
                             <xsl:attribute name="src">
                                 <xsl:value-of
                                         select="mets:fileGrp[@USE='THUMBNAIL']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
                             </xsl:attribute>
                         </img>
                     </xsl:when>
+                    <xsl:when test="@MIMETYPE = 'application/x-zip-compressed'">
+                        <img class="img-responsive img-rounded img-padded" alt="[zip]" src="{concat($theme-path, '/images/mime-thumbs/zip.png')}" title="PDF file"/>
+                    </xsl:when>
+                    <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-model'">
+                        <img class="img-responsive img-rounded img-padded" alt="[model]" src="{concat($theme-path, '/images/mime-thumbs/model.png')}" title="VSIM Model file"/>
+                    </xsl:when>
+                    <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-archive'">
+                        <img class="img-responsive img-rounded img-padded" alt="[archive]" src="{concat($theme-path, '/images/mime-thumbs/arhcive.png')}" title="VSim Archive file"/>
+                    </xsl:when>
+                    <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-narrative'">
+                        <img class="img-responsive img-rounded img-padded" alt="[narrative]" src="{concat($theme-path, '/images/mime-thumbs/narrative.png')}" title="VSim Narrative file"/>
+                    </xsl:when>
                     <xsl:otherwise>
-                        <img class="img-rounded" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
-                            <xsl:attribute name="data-src">
-                                <xsl:text>holder.js/100%x</xsl:text>
-                                <xsl:value-of select="$thumbnail.maxheight"/>
-                                <xsl:text>/text:No Thumbnail</xsl:text>
-                            </xsl:attribute>
-                        </img>
+                      <img class="img-responsive img-rounded img-padded" alt="[data]" src="{concat($theme-path, '/images/mime-thumbs/data.png')}" title="VSim Data file"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
