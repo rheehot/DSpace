@@ -219,20 +219,26 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <img class="img-thumbnail" alt="Thumbnail">
+                    <img class="img-responsive img-rounded img-padded" alt="Thumbnail">
                         <xsl:attribute name="src">
                             <xsl:value-of select="$src"/>
                         </xsl:attribute>
                     </img>
                 </xsl:when>
+                <xsl:when test="@MIMETYPE = 'application/x-zip-compressed'">
+                    <img class="img-responsive img-rounded img-padded" alt="[zip]" src="{concat($theme-path, '/images/mime-thumbs/zip.png')}" title="PDF file"/>
+                </xsl:when>
+                <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-model'">
+                    <img class="img-responsive img-rounded img-padded" alt="[model]" src="{concat($theme-path, '/images/mime-thumbs/model.png')}" title="VSIM Model file"/>
+                </xsl:when>
+                <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-archive'">
+                    <img class="img-responsive img-rounded img-padded" alt="[archive]" src="{concat($theme-path, '/images/mime-thumbs/arhcive.png')}" title="VSim Archive file"/>
+                </xsl:when>
+                <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-narrative'">
+                    <img class="img-responsive img-rounded img-padded" alt="[narrative]" src="{concat($theme-path, '/images/mime-thumbs/narrative.png')}" title="VSim Narrative file"/>
+                </xsl:when>
                 <xsl:otherwise>
-                    <img class="img-thumbnail" alt="Thumbnail">
-                        <xsl:attribute name="data-src">
-                            <xsl:text>holder.js/100%x</xsl:text>
-                            <xsl:value-of select="$thumbnail.maxheight"/>
-                            <xsl:text>/text:No Thumbnail</xsl:text>
-                        </xsl:attribute>
-                    </img>
+                  <img class="img-responsive img-rounded img-padded" alt="[data]" src="{concat($theme-path, '/images/mime-thumbs/data.png')}" title="VSim Narrative file"/>
                 </xsl:otherwise>
             </xsl:choose>
         </div>
