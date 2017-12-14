@@ -42,8 +42,8 @@
     <xsl:variable name="isModal" select="dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='framing'][@qualifier='modal']/text()='true'"/>
 
 		<!-- the VSim Featured Project handle from dspace.cfg, needed for the featured project on the home page -->
-		<xsl:variable name="vsim_featured_project_handle" select="confman:getIntProperty('vsim.featured.project.handle', '20.500.11991/1012')"/>
-		<xsl:variable name="vsim_featured_project_hero_image" select="concat('xmlui/bitstream/handle/', $vsim_featured_project_handle ,'/hero.jpg.jpg')">
+		<xsl:variable name="vsim_featured_project_handle" select="confman:getProperty('vsim.featured.project.handle')"/>
+		<xsl:variable name="vsim_featured_project_hero_image" select="concat('/xmlui/bitstream/handle/', $vsim_featured_project_handle ,'/hero.jpg.jpg')"/>
 
     <!--the max thumbnail height & width from dspace.cfg, needed for item view and item list pages-->
     <xsl:variable name="thumbnail.maxheight" select="confman:getIntProperty('thumbnail.maxheight', 150)"/>
