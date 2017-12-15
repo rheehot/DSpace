@@ -225,20 +225,20 @@
                         </xsl:attribute>
                     </img>
                 </xsl:when>
-                <xsl:when test="@MIMETYPE = 'application/x-zip-compressed'">
-                    <img class="img-responsive img-rounded img-padded" alt="[zip]" src="{concat($theme-path, '/images/mime-thumbs/zip.png')}" title="PDF file"/>
+                <xsl:when test="//mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL']/mets:file/@MIMETYPE = 'application/x-zip-compressed'">
+                    <img class="img-responsive img-padded" alt="[zip]" src="{concat($theme-path, '/images/mime-thumbs/zip.png')}" title="Zip file"/>
                 </xsl:when>
-                <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-model'">
-                    <img class="img-responsive img-rounded img-padded" alt="[model]" src="{concat($theme-path, '/images/mime-thumbs/model.png')}" title="VSIM Model file"/>
+                <xsl:when test="//mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL']/mets:file/@MIMETYPE = 'application/vnd.ucla.idre.vsim-model'">
+                    <img class="img-responsive img-padded" alt="[model]" src="{concat($theme-path, '/images/mime-thumbs/model.png')}" title="VSIM Model file"/>
                 </xsl:when>
-                <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-archive'">
-                    <img class="img-responsive img-rounded img-padded" alt="[archive]" src="{concat($theme-path, '/images/mime-thumbs/arhcive.png')}" title="VSim Archive file"/>
+                <xsl:when test="//mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL']/mets:file/@MIMETYPE = 'application/vnd.ucla.idre.vsim-archive'">
+                    <img class="img-responsive img-padded" alt="[archive]" src="{concat($theme-path, '/images/mime-thumbs/archive.png')}" title="VSim Archive file"/>
                 </xsl:when>
-                <xsl:when test="@MIMETYPE = 'application/vnd.ucla.idre.vsim-narrative'">
-                    <img class="img-responsive img-rounded img-padded" alt="[narrative]" src="{concat($theme-path, '/images/mime-thumbs/narrative.png')}" title="VSim Narrative file"/>
+                <xsl:when test="//mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL']/mets:file/@MIMETYPE = 'application/vnd.ucla.idre.vsim-narrative'">
+                    <img class="img-responsive img-padded" alt="[narrative]" src="{concat($theme-path, '/images/mime-thumbs/narrative.png')}" title="VSim Narrative file"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <img class="img-responsive img-rounded img-padded" alt="[data]" src="{concat($theme-path, '/images/mime-thumbs/data.png')}" title="VSim data file"/>
+                  <img class="img-responsive img-padded" alt="[data]" src="{concat($theme-path, '/images/mime-thumbs/data.png')}" title="VSim data file"/>
                 </xsl:otherwise>
             </xsl:choose>
         </div>
