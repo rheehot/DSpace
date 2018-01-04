@@ -205,7 +205,7 @@
                                             </div>
                                         </div>
                                         <!-- VSIM-40 this is the sidebar we need to "turn off" for all home pages (main, collection and community) -->
-                                        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                                        <div class="col-xs-6 col-sm-3 col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                                         <!-- SHOULD WE SHOW THE SIDEBAR? -->
                                         <xsl:choose>
@@ -480,7 +480,8 @@
                 <div class="container">
                     <div class="navbar-header">
 
-                        <button type="button" class="navbar-toggle" data-toggle="offcanvas">
+                        <!-- the infamous "Hamburger Button" -->
+                        <button type="button" class="navbar-toggle visible-xs" data-toggle="offcanvas">
                             <span class="sr-only">
                                 <i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text>
                             </span>
@@ -493,7 +494,7 @@
                             <img src="{$theme-path}images/vsim.png" />
                         </a>
 
-                        <div class="navbar-header pull-right hidden-lg hidden-md">
+                        <div class="navbar-header pull-right hidden-lg hidden-md hidden-sm">
                         <ul class="nav nav-pills pull-left ">
 
                             <xsl:if test="count(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='page'][@qualifier='supportedLocale']) &gt; 1">
@@ -571,7 +572,7 @@
                               </div>
                     </div>
 
-                    <div class="navbar-header pull-right hidden-xs hidden-sm">
+                    <div class="navbar-header pull-right hidden-xs">
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
                           </ul>
@@ -636,8 +637,8 @@
 
                         </ul>
 
-
-                        <button data-toggle="offcanvas" class="navbar-toggle hidden-lg" type="button">
+                        <!-- another incarnation of the "hamburger button" -->
+                        <button data-toggle="offcanvas" class="navbar-toggle visible-xs visible-sm" type="button">
                             <span class="sr-only"><i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
