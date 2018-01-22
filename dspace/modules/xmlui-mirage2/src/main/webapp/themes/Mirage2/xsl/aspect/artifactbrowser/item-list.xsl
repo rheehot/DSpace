@@ -61,7 +61,7 @@
 
 
                     <div class="col-lg-3 col-md-4 col-xs-6">
-                      <div class="thumbnail">
+                      <div class="thumbnail" data-mh="vsim-gallery">
                           <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
                               <xsl:with-param name="href" select="$href"/>
                           </xsl:apply-templates>
