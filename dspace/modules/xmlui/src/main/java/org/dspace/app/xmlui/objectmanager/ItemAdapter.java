@@ -38,6 +38,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import org.dspace.util.MultiFormatDateParser;
+
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -320,6 +325,16 @@ public class ItemAdapter extends AbstractAdapter
                                 if (av != null && av instanceof OrcidAuthorityValue) {
                                     attributes.put("orcid_id", ((OrcidAuthorityValue)av).getOrcid_id());
                                 }
+                         }
+                         // VSIM-113-if this metadataField is a dc.date.copyright field, get the year from that date and inject it as an attribute
+                         if (dcv.getMetadataField().getMetadataSchema().getName() == "dc" && metadataField.getElement() == "date" && metadataField.getQualifier() == "copyright" ) {
+                           Date date = MultiFormatDateParser.parse(metadataField.getValue());
+                           if (date != null)
+                           {
+                               String copyrightYear = DateFormatUtils.formatUTC(date, "yyyy");
+                               attributes.put("copyright_year", copyrightYear);
+                           }
+
                          }
                         startElement(DIM, "field", attributes);
                         sendCharacters(dcv.getValue());

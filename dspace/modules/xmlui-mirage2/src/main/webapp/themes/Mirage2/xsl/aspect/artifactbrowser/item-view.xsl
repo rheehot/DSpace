@@ -667,25 +667,10 @@
                     </xsl:otherwise>
                 </xsl:choose>
 
-            <!-- add the copyright date here, see VSIM-109 -->
-            <xsl:if test="dim:field[@element='date' and @qualifier='copyright' and descendant::text()]">
-                        <xsl:for-each select="dim:field[@element='date' and @qualifier='copyright']">
-                            <xsl:choose>
-                                <xsl:when test="node()">
-                                  <xsl:text> (</xsl:text>
-                                    <xsl:copy-of select="node()"/>
-                                  <xsl:text>) </xsl:text>
-                                </xsl:when>
-                            </xsl:choose>
-                            <xsl:if test="count(following-sibling::dim:field[@element='date' and @qualifier='copyright']) != 0">
-                                <div class="spacer">&#160;</div>
-                            </xsl:if>
-                        </xsl:for-each>
-                        <xsl:if test="count(dim:field[@element='date' and @qualifier='copyright']) &gt; 1">
-                            <div class="spacer">&#160;</div>
-                        </xsl:if>
+            <!-- add the copyright date here, see VSIM-109 and VSIM-113-->
+            <xsl:if test="@copyright_year">
+                <xsl:text> ({@copyright_year}) </xsl:text>
             </xsl:if>
-
             </div>
         </xsl:if>
     </xsl:template>
