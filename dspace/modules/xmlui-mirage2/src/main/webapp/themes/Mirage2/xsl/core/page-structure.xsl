@@ -975,7 +975,6 @@
 
     <xsl:template name="addJavascript">
 
-        <script src="{concat($theme-path, 'vendor/modernizr/modernizr.min.js')}">&#160;</script>
         <script type="text/javascript"><xsl:text>
                          if(typeof window.publication === 'undefined'){
                             window.publication={};
