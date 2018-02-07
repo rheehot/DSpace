@@ -200,7 +200,7 @@
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
 
-                                              <div class="hidden-lg hidden-med hidden-sm">
+                                              <div class="hidden-lg hidden-md hidden-sm">
                                                 <xsl:call-template name="buildFooter"/>
                                             </div>
                                         </div>
