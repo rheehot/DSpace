@@ -128,6 +128,7 @@ public abstract class ImageMagickThumbnailFilter extends MediaFilter {
                 if (verbose) {
                         System.out.println("IM Thumbnail Param: " + op);
                 }
+                op.autoOrient();
                 cmd.run(op);
                 return f2;
         }
