@@ -45,6 +45,7 @@
 .vsim-featured-project-text {
     background-color: $brand-primary;
     color: #fff;
+    padding-left: 0;
 }
 
 .vsim-featured-project-text a {
@@ -67,6 +68,10 @@
 .btn-vsim-project-submit {
     margin-top: 100px;
     border-color: #000;
+}
+
+.vsim-featured-project-thumbnail {
+    padding-right: 0;
 }
 
 .vsim-featured-project-thumbnail img{
@@ -152,6 +157,12 @@
 // utility class for redering text italic
 .italic {
     font-style: italic;
+}
+
+// utility class for removing padding
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
 }
 
 // add back underlined links, because we like them

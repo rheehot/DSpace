@@ -119,13 +119,13 @@
                                             <h1 class="text-center vsim-tagline">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
                                             <div class="container vsim-featured-project-container">
                                                 <div class="row-fluid">
-                                                    <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail">
+                                                    <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail nopadding">
                                                         <img class="img-responsive" src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg"/>
                                                         <div class="vsim-featured-project">
                                                             <h3 class="vsim-featured-project-caption">Featured Project</h3>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 col-sm-4 col-lg-4 vsim-featured-project-text">
+                                                    <div class="col-md-4 col-sm-4 col-lg-4 vsim-featured-project-text nopadding">
                                                             <h3>Digital Karnak</h3>
                                                             <p>The <a href="/xmlui/handle/{$vsim_featured_project_handle}">Digital Karnak Project</a> aims to make the site of Karnak
                                                                 more accessible to students and instructors in the English-speaking world. As part of this goal, a 3-D Virtual
