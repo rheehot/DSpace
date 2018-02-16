@@ -154,6 +154,12 @@
     font-style: italic;
 }
 
+// utility class for removing padding
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
 // add back underlined links, because we like them
 a {
     text-decoration: underline;
