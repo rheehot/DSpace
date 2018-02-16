@@ -219,7 +219,7 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <img class="img-responsive img-rounded img-padded" alt="Thumbnail">
+                    <img class="img-responsive img-padded" alt="Thumbnail">
                         <xsl:attribute name="src">
                             <xsl:value-of select="$src"/>
                         </xsl:attribute>

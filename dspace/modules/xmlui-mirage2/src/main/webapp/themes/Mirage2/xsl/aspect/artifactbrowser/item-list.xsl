@@ -269,7 +269,7 @@
             <a class="d-block mb-4 h-100 image-link" href="{$href}">
                 <xsl:choose>
                     <xsl:when test="mets:fileGrp[@USE='THUMBNAIL']">
-                        <img class="img-responsive img-rounded img-padded" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
+                        <img class="img-responsive img-padded" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
                             <xsl:attribute name="src">
                                 <xsl:value-of
                                         select="mets:fileGrp[@USE='THUMBNAIL']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
