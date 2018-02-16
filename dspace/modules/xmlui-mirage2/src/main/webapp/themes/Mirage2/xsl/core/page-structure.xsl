@@ -120,7 +120,7 @@
                                             <div class="container vsim-featured-project-container">
                                                 <div class="row-fluid">
                                                     <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail nopadding" data-mh="featured-project">
-                                                        <img class="img-responsive" src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg"/>
+                                                        <img data-mh="featured-project" class="img-responsive" src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg"/>
                                                         <div class="vsim-featured-project">
                                                             <h3 class="vsim-featured-project-caption">Featured Project</h3>
                                                         </div>
