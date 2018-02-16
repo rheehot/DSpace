@@ -214,9 +214,13 @@
         <!--The search filters which can be used on the discovery search page (same as defaultConfiguration above)-->
         <property name="searchFilters">
             <list>
-                <ref bean="searchFilterSubject" />
-                <ref bean="searchFilterTimePeriod" />
-                <ref bean="searchFilterContinent" />
+              <ref bean="searchFilterTitle" />
+              <ref bean="searchFilterAuthor" />
+              <ref bean="searchFilterType" />
+              <ref bean="searchFilterSubject" />
+              <ref bean="searchFilterTimePeriod" />
+              <ref bean="searchFilterContinent" />
+              <ref bean="searchFilterIssued" />
             </list>
         </property>
 
