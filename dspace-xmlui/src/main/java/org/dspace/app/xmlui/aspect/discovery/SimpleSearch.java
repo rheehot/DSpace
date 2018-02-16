@@ -166,6 +166,17 @@ public class SimpleSearch extends AbstractSearch implements CacheableProcessingC
         java.util.List<String> filterOperators = DiscoveryUIUtils.getRepeatableParameters(request, "filter_relational_operator");
         java.util.List<String> filterValues = DiscoveryUIUtils.getRepeatableParameters(request,  "filter");
 
+        // VSIM-125:
+        // If we don't have any filters set in the request, we need to add a default that matches this information:
+        //filtertype_1=type&filter_relational_operator_1=equals&filter_1=VSimProjectMaster
+
+        if(filterTypes.size() == 0)
+        {
+          filterTypes.add("type");
+          filterOperators.add("equals");
+          filterValues.add("VSimProjectMaster");
+        }
+
         if(0 < filterFields.size() && filterTypes.size() == 0)
         {
             //Display the add filters url ONLY if we have no filters selected & filters can be added
@@ -253,7 +264,7 @@ public class SimpleSearch extends AbstractSearch implements CacheableProcessingC
         typeSelect.addOption(StringUtils.equals(relationalOperator, "notcontains"), "notcontains", T_filter_notcontain);
         typeSelect.addOption(StringUtils.equals(relationalOperator, "notequals"), "notequals", T_filter_notequals);
         typeSelect.addOption(StringUtils.equals(relationalOperator, "notauthority"), "notauthority", T_filter_notauthority);
-         
+
 
 
 
