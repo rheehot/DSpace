@@ -37,12 +37,10 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
+import org.apache.commons.lang.time.DateFormatUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import org.dspace.util.MultiFormatDateParser;
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -328,7 +326,7 @@ public class ItemAdapter extends AbstractAdapter
                          }
                          // VSIM-113-if this metadataField is a dc.date.copyright field, get the year from that date and inject it as an attribute
                          if (dcv.getMetadataField().getMetadataSchema().getName() == "dc" && metadataField.getElement() == "date" && metadataField.getQualifier() == "copyright" ) {
-                           Date date = MultiFormatDateParser.parse(metadataField.getValue());
+                           Date date = MultiFormatDateParser.parse(dcv.getValue());
                            if (date != null)
                            {
                                String copyrightYear = DateFormatUtils.formatUTC(date, "yyyy");
