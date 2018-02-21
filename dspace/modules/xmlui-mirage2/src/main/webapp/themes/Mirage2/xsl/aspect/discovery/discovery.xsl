@@ -173,10 +173,10 @@
                         </xsl:choose>
                         </small></span>
                     <xsl:text> </xsl:text>
-                    <xsl:if test="dri:list[@n=(concat($handle, ':dc.date.issued'))]">
+                    <xsl:if test="not(dri:list[@n=(concat($handle, ':dc.date.issued'))]='')">
                         <span class="publisher-date h4">   <small>
                             <xsl:text>(</xsl:text>
-                            <xsl:if test="dri:list[@n=(concat($handle, ':dc.publisher'))]">
+                            <xsl:if test="not(dri:list[@n=(concat($handle, ':dc.publisher'))]='')">
                                 <span class="publisher">
                                     <xsl:apply-templates select="dri:list[@n=(concat($handle, ':dc.publisher'))]/dri:item"/>
                                 </span>
