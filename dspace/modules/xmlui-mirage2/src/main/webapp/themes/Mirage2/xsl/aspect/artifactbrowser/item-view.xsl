@@ -668,8 +668,15 @@
                 </xsl:choose>
 
             <!-- add the issued date here, see VSIM-109 and VSIM-113-->
-            <xsl:if test="@issued_year">
-                <xsl:text> ({@issued_year}) </xsl:text>
+            <xsl:if test="dim:field[@element='date' and @qualifier='issued' and descendant::text()]">
+                <xsl:text>(</xsl:text>
+                    <xsl:for-each select="dim:field[@element='date' and @qualifier='issued']">
+                        <xsl:copy-of select="substring(./node(),1,4)"/>
+                        <xsl:if test="count(following-sibling::dim:field[@element='date' and @qualifier='issued']) != 0">
+                            <br/>
+                        </xsl:if>
+                    </xsl:for-each>
+                <xsl:text>)</xsl:text>
             </xsl:if>
             </div>
         </xsl:if>

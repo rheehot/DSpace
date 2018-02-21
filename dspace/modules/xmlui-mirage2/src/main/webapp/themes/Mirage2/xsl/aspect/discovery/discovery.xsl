@@ -184,7 +184,7 @@
                             </xsl:if>
                             <span class="date">
                                 <xsl:value-of
-                                        select="substring(dri:list[@n=(concat($handle, ':dc.date.issued'))]/dri:item,1,10)"/>
+                                        select="substring(dri:list[@n=(concat($handle, ':dc.date.issued'))]/dri:item,1,4)"/>
                             </span>
                             <xsl:text>)</xsl:text>
                             </small></span>
