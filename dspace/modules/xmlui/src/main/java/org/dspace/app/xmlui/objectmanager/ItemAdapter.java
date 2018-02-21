@@ -324,13 +324,13 @@ public class ItemAdapter extends AbstractAdapter
                                     attributes.put("orcid_id", ((OrcidAuthorityValue)av).getOrcid_id());
                                 }
                          }
-                         // VSIM-113-if this metadataField is a dc.date.copyright field, get the year from that date and inject it as an attribute
-                         if (dcv.getMetadataField().getMetadataSchema().getName() == "dc" && metadataField.getElement() == "date" && metadataField.getQualifier() == "copyright" ) {
+                         // VSIM-113-if this metadataField is a dc.date.issued field, get the year from that date and inject it as an attribute
+                         if (dcv.getMetadataField().getMetadataSchema().getName() == "dc" && metadataField.getElement() == "date" && metadataField.getQualifier() == "issued" ) {
                            Date date = MultiFormatDateParser.parse(dcv.getValue());
                            if (date != null)
                            {
-                               String copyrightYear = DateFormatUtils.formatUTC(date, "yyyy");
-                               attributes.put("copyright_year", copyrightYear);
+                               String issuedYear = DateFormatUtils.formatUTC(date, "yyyy");
+                               attributes.put("issued_year", issuedYear);
                            }
 
                          }

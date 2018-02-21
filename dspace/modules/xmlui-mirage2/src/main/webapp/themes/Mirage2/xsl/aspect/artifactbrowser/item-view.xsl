@@ -667,9 +667,9 @@
                     </xsl:otherwise>
                 </xsl:choose>
 
-            <!-- add the copyright date here, see VSIM-109 and VSIM-113-->
-            <xsl:if test="@copyright_year">
-                <xsl:text> ({@copyright_year}) </xsl:text>
+            <!-- add the issued date here, see VSIM-109 and VSIM-113-->
+            <xsl:if test="@issued_year">
+                <xsl:text> ({@issued_year}) </xsl:text>
             </xsl:if>
             </div>
         </xsl:if>
