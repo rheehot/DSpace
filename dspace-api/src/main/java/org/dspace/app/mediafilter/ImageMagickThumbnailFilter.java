@@ -122,6 +122,10 @@ public abstract class ImageMagickThumbnailFilter extends MediaFilter {
                 f2.deleteOnExit();
                 ConvertCmd cmd = new ConvertCmd();
                 IMOperation op = new IMOperation();
+
+		op.strip();
+		op.interlace("Plane");
+		op.quality(80.0);
                 op.autoOrient();
                 op.addImage(f.getAbsolutePath());
                 op.thumbnail(width, height);
