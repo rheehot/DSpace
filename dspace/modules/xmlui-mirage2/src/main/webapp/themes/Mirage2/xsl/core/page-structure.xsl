@@ -116,7 +116,7 @@
                                     <xsl:choose>
                                         <!-- if this is the main home page, show the main hero block, the featured project block, and the fancy buttons -->
                                         <xsl:when test="normalize-space($request-uri)=''">
-                                            <h1 class="text-center vsim-tagline">Let VSim facilitate real-time<br/>exploration in your classroom</h1>
+                                            <h1 class="text-center vsim-tagline">Welcome to the VSim Repository and Archive!</h1>
                                             <div class="container vsim-featured-project-container">
                                                 <div class="row-fluid">
                                                     <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail nopadding" data-mh="featured-project">
