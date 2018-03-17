@@ -141,12 +141,6 @@
                                                     <a href="{$app_path}/projects"><img src="/xmlui/themes/Mirage2/images/BrowseLink.png" alt=" Browse "/></a>
                                             </p>
                                         </xsl:when>
-                                        <!-- if this is the submission page, show the link to the project masters submission page -->
-                                        <xsl:when test="normalize-space($request-uri)='pages/add'">
-                                            <p class="text-center">
-                                                <a href="/xmlui/handle/{$vsim-project-masters-handle}/submit" class="btn btn-large btn-vsim-project-submit"><img src="/xmlui/themes/Mirage2/images/SubmitLink.png" alt=" Submit a Project "/></a>
-                                            </p>
-                                        </xsl:when>
                                         <!-- if this is the tour page, show the tour carousel -->
                                         <xsl:when test="normalize-space($request-uri)='pages/tour'">
 
@@ -199,6 +193,14 @@
                                             <!-- and now proceed with the normal content -->
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
+					<xsl:choose>
+                                        <!-- if this is the submission page, show the link to the project masters submission page -->
+                                        <xsl:when test="normalize-space($request-uri)='pages/add'">
+                                            <p class="text-center">
+                                                <a href="/xmlui/handle/{$vsim-project-masters-handle}/submit" class="btn btn-large btn-vsim-project-submit"><img src="/xmlui/themes/Mirage2/images/SubmitLink.png" alt=" Submit a Project "/></a>
+                                            </p>
+                                        </xsl:when>
+					</xsl:choose>
 
                                               <div class="hidden-lg hidden-md hidden-sm">
                                                 <xsl:call-template name="buildFooter"/>
