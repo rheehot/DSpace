@@ -3,17 +3,11 @@
 <body>
 <div id="file.add.div.add" n="news" rend="primary">
 
-<head>Submitting Content to VSim</head>
+<head>Submitting Content to the VSim Repository and Archive</head>
 
-<hi rend="bold">Who may submit content?</hi>
+<hi rend="bold">Submitting to the VSim Repository and Archive is easy.</hi>
 
-<p>The long-term vision of the project is to build a thriving community of 
-    scholars and educators sharing their 3D content and leveraging existing 
-    and new academic modeling work for broad educational use through a 
-    project repository and archive focused on the real-time explorations of 
-    reconstruction of historic urban environments. Contributors must be 
-    registered users before they can submit to the archive. (Registration 
-    is free.)</p>
+<p>The long-term vision of the project is to build a thriving community of scholars and educators creating and sharing 3D content. To contribute to the repository and archive, users can register for a free account under the following types:</p>
 
 <hi rend="bold">User Types</hi>
 <p>
@@ -22,90 +16,54 @@
 </p>
 
 <p>
-    <hi rend="italic">General User:</hi> Users must be registered in order to upload VSim 
-    narratives, embedded resource files, and archival content to the 
-    community collections. We encourage the community to share 
-    resources and narratives through related repositories. 
+    <hi rend="italic">General User:</hi> Registered General Users can upload VSim narratives, embedded resource files, and archival content to the community collections of the different 3D projects through the “Submissions” link on the main project page. If you’ve created a VSim narrative or a lesson plan for a particular project, please share!
 </p>
 
 <p>
-    <hi rend="italic">Content Contributor/Creator:</hi> General users must request permission 
-    to upgrade their account to ‘Content Contributor/Creator’ so that 
-    they can submit their own models and projects to the Repository and 
-    Archive. Access is granted on a case by case basis by the Digital 
-    Library Program and the Institute for Digital Research and 
-    Education. Submission requests for models and projects will be 
-    vetted for their academic rigor and educational contribution to the 
-    community. To request an upgrade, e-mail <xref target="mailto:vsim@library.ucla.edu">vsim@library.ucla.edu</xref> 
-    with your full name, institutional affiliation, a short description 
-    of the project and/or model (approximately 800 words), and a 
-    bibliography of resources that informed the construction of the 
-    model and guided the project. Requests may take up to a week to 
-    approve.  
+    <hi rend="italic">Content Contributor/Creator:</hi> General users must request permission to upgrade their account to ‘Content Creator’ so that they can submit their own models and projects to the VSim Repository and Archive. Access is granted on a case-by-case basis by the Digital Library Program and the Institute for Digital Research and Education. Submission requests for models and projects will be vetted for their academic rigor and educational contribution to the community. <hi rend="bold">To request a free upgraded account, users should e-mail vsim@library.ucla.edu with your full name, institutional affiliation, a short description of the project and/or model (approximately 800 words), and a bibliography of resources that informed the construction of the model and guided the project.</hi> Requests may take up to a week to approve. 
 </p>
 
-<hi rend="bold">Submitting files</hi>
+<hi rend="bold">For Registered General Users -- How to contribute content to a project’s Submissions collection</hi>
 <p>
-    Once registered as Content Contributor/Creators, users can submit a 
-    project to the archive. The submission process involves completion 
-    of the project metadata form, and uploading a ‘hero’ image to be 
-    used as the project thumbnail. Once created, projects can store 
-    collections of models, VSim files, and other project related 
-    resources. See “File Types” to learn more about what can be stored 
-    and shared through the VSim archive. The final steps of the 
-    submission process involve licensing agreements for rights and 
-    distribution. (We encourage the use of Creative Commons 
-    Attribution-NonCommercial-ShareAlike 
-    (<xref target="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</xref>) license.)
+    1. Register to become a General User.
 </p>
-
 <p>
-    To start your project submission, click the SUBMIT PROJECT button 
-    at the top of this page.
+    Any registered user can submit content to a project’s Submissions collection. If you have not registered for a free account, (<xref target="/xmlui/register">click here</xref>).
 </p>
-
-<hi rend="bold">File types</hi>
 <p>
-    Most electronic formats can be placed in VSim. Project resources 
-    are divided into three different collections: Models, Archives, 
-    and Submissions.
+    2. Go to a Project page.
 </p>
-
 <p>
-    <hi rend="italic">Models:</hi> The models collections houses VSim 
-    file types as well as many popular model file types. The VSim 
-    file formats include binary model files (.vsim), individual 
-    narrative files (.nar), and individual embedded resource files 
-    (.ere). 
+    3. Click on "Submissions" under "Related Files."
 </p>
-
-<list n="models" id="file.add.models.list" type="bulleted">
-    <item>VSim file types: .vsim, .nar, and .ere </item>
-    <item>Other model formats: .flt, .obj, .osg , .osgt, .osgb, .ive, .3ds, .skp</item>
-</list>
-
-
 <p>
-    <hi rend="italic">Archives:</hi> The archives collection is for all 
-    other project-related files. From project notes, to static images, 
-    to final documentation or publication documents, the archive can 
-    hold whatever additional files you would like to offer the user 
-    community to better understand and utilize your project models. 
-    These files can also help other users customize their own VSim 
-    narratives and embedded resources for the project model.
+    4. Click "Submit a new item to this collection."
+</p>
+<p>
+    Complete the short item form, which asks for some basic information about the resource, such as creator, date, and title. Upload your file. To see what what types of files are accepted, please see the (<xref target="xmlui/pages/faq">FAQs</xref>).
 </p>
 
-<list n="archives" id="file.add.archives.list" type="bulleted">
-    <item>Other resources include: .pdf, .jpeg, .jpg, .tif, .png, .cad, .doc, .docx, .mp4, .mpg, .csv, .ppt, .tar, .zip, .kml (basically any file type that supports your project)</item>
-</list>
-
-
-<hi rend="bold">Contact us</hi>
-
-<p><xref target="/xmlui/contact">Contact us</xref> if you have 
-    questions about submitting content, preferred file formats, and 
-    inclusion of previously published content in an open access 
-    repository.
+<hi rend="bold">For Content Creators -- How to Submit a Project</hi>
+<p>
+    1. Register and become a Content Creator.
+</p>
+<p>
+    Content Creators can submit a model to the archive. If you have not registered for a free account, (<xref target="/xmlui/register">click here</xref>), and then request to become a Content Creator by following the instructions found under the "Content Creator" in the "User Type" section above.
+</p>
+<p>
+    2. Create a project page for your model and archival materials.
+</p>
+<p>
+    The submission process involves completion of the project metadata form, and uploading a ‘hero’ image to be used as the project thumbnail. Once your project is approved, you can begin to add models and related content to your project archive.
+</p>
+<p>
+    3. Populate your project archive.
+</p>
+<p>
+   From your project page, submit new items to your Vsim Files, Archives, or Submissions. Follow instructions in the VSim Repository and Archive user guide. To see what what types of files are accepted, please see the (<xref target="xmlui/pages/faq">FAQs</xref>).
+</p>    
+<p>
+   Now click on the "Submit Project" button to get started.
 </p>
 
 </div>
