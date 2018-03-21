@@ -384,6 +384,10 @@
                       <xsl:value-of select="$current-handle"/>
                       <xsl:text>/logo.png</xsl:text>
                   </xsl:attribute>
+                  <xsl:attribute name="onerror">
+                      <xsl:text>this.style.display='none'</xsl:text>
+                  </xsl:attribute>
+
               </img>
 
                 <h4>
