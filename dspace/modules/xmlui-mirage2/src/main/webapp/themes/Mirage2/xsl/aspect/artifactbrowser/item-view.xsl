@@ -378,7 +378,7 @@
         <xsl:if test="dim:field[@element='description' and @qualifier='sponsorship' and descendant::text()]">
             <div class="simple-item-view-project-sponsorship item-page-field-wrapper table">
 
-              <img class="img-responsive vsim-project-logo">
+              <img>
                   <xsl:attribute name="src">
                       <xsl:text>/xmlui/bitstream/handle/</xsl:text>
                       <xsl:value-of select="$current-handle"/>
