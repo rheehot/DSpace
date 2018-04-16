@@ -113,7 +113,7 @@
          <repeatable>true</repeatable>
          <label>Author(s)/PI(s)</label>
          <input-type>name</input-type>
-         <hint>List the names of the principal author(s) and/or PI(s) of the project. Use the "Lookup" button to chose a name from the ORCID Registry.</hint>
+         <hint>List the names of the principal author(s) and/or PI(s) of the project. Use the "Lookup" button to choose a name from the ORCID Registry.</hint>
          <!-- dc.contributor.author -->
          <required></required>
        </field>
@@ -124,7 +124,7 @@
          <repeatable>true</repeatable>
          <label>Contributor(s)</label>
          <input-type>name</input-type>
-         <hint>Enter the names of other key contributors to the project. Use the "Lookup" button to chose a name from the ORCID Registry.</hint>
+         <hint>Enter the names of other key contributors to the project. Use the "Lookup" button to choose a name from the ORCID Registry.</hint>
          <!-- dc.contributor.other -->
          <required></required>
        </field>
@@ -146,7 +146,7 @@
          <repeatable>true</repeatable>
          <label>Associated Advisor(s)/Scientific Committee</label>
          <input-type>name</input-type>
-         <hint>Enter the names of external advisors to the project. Use the "Lookup" button to chose a name from the ORCID Registry.</hint>
+         <hint>Enter the names of external advisors to the project. Use the "Lookup" button to choose a name from the ORCID Registry.</hint>
          <!-- dc.contributor.advisor -->
          <required></required>
        </field>
@@ -336,7 +336,7 @@
          <repeatable>true</repeatable>
          <label>Authors</label>
          <input-type>name</input-type>
-         <hint>Please enter the name(s) of the author(s) of the item, if applicable. Use the "Lookup" button to chose a name from the ORCID Registry.</hint>
+         <hint>Please enter the name(s) of the author(s) of the item, if applicable. Use the "Lookup" button to choose a name from the ORCID Registry.</hint>
          <required></required>
        </field>
 
