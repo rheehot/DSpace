@@ -11,7 +11,7 @@
         "html5shiv": "3.7.2",
         "holderjs": "2.4.1",
         "datatables": "1.10.3",
-        "matchheight": "0.7.2"
+        "matchheight": "c72b76f7d522301ae3efa6610acb24af3b705e0b"
     },
     "devDependencies": {}
 }
