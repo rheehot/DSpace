@@ -103,6 +103,8 @@
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.title">Title</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.dateIssued">Date issued</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.has_content_in_original_bundle">Has File(s)</message>
+    <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.original_bundle_filenames">Filename</message>
+    <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.original_bundle_descriptions">File description</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.type">Type</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.timePeriod">Time Period</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.continent">Continent</message>
@@ -173,7 +175,7 @@
    	<message key="xmlui.Discovery.AbstractSearch.head1_collection">Showing {0} out of a total of {1} results for collection: {2}. <span class="searchTime">({3} seconds)</span></message>
    	<message key="xmlui.Discovery.AbstractSearch.head1_none">Showing {0} out of a total of {1} results. <span class="searchTime">({2} seconds)</span></message>
 
-    <message key="xmlui.Discovery.AbstractSearch.head2"></message>
+    <message key="xmlui.Discovery.AbstractSearch.head2">Communities or Collections matching your query</message>
    	<message key="xmlui.Discovery.AbstractSearch.head3">Items matching your query</message>
 
    	<message key="xmlui.Discovery.SimpleSearch.did_you_mean">Did you mean: </message>

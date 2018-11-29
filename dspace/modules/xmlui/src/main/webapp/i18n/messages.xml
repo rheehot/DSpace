@@ -2382,6 +2382,11 @@
   <message key="xmlui.ChoiceLookupTransformer.field.dc_contributor_author.title">LC Name Authority author lookup</message>
   <message key="xmlui.ChoiceLookupTransformer.field.dc_contributor_author.nonauthority">Local value "@1@" (not in Naming Authority)</message>
 
+<!-- Choice Lookup - config for dc.coverage.spatial field -->
+  <message key="xmlui.ChoiceLookupTransformer.field.dc_coverage_spatial.help">Spatial Term, suggestions provided by the Getty TGN vocabulary</message>
+  <message key="xmlui.ChoiceLookupTransformer.field.dc_coverage_spatial.title">dc.coverage.spatial - Spatial Term</message>
+  <message key="xmlui.ChoiceLookupTransformer.field.dc_coverage_spatial.nonauthority">Local value "@1@" (not in Naming Authority)</message>
+
   <!-- mobile theme -->
   <message key="xmlui.mobile.home_mobile">VSim Mobile</message>
   <message key="xmlui.mobile.search_all">Search ALL</message>
