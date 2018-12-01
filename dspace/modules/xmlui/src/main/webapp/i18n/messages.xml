@@ -212,7 +212,7 @@
 	<message key="xmlui.ArtifactBrowser.Contact.title">Contact us</message>
 	<message key="xmlui.ArtifactBrowser.Contact.trail">Contact us</message>
 	<message key="xmlui.ArtifactBrowser.Contact.head">Contact us</message>
-	<message key="xmlui.ArtifactBrowser.Contact.para1">{0} administrators may be contacted at:</message>
+	<message key="xmlui.ArtifactBrowser.Contact.para1">{0} administrators are located in the Technology Sandbox, room 4328A of the Math Sciences Building at UCLA. We welcome your questions and feedback. Please contact us using the form or email below.</message>
 	<message key="xmlui.ArtifactBrowser.Contact.feedback_label">On-line form</message>
 	<message key="xmlui.ArtifactBrowser.Contact.feedback_link">Feedback</message>
 	<message key="xmlui.ArtifactBrowser.Contact.email">Email</message>
