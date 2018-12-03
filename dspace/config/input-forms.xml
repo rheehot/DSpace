@@ -599,7 +599,7 @@ it, please enter the types and the actual numbers or codes.</hint>
          <repeatable>false</repeatable>
          <label>Peer review agency</label>
          <input-type>textarea</input-type>
-         <hint>For VSim files only. If the model has passed peer reivew, please list the journal/publisher/community that conducted the peer review and are conferring their imprimatur on the model.</hint>
+         <hint>For VSim files only. If the model has passed peer review, please list the journal/publisher/community that conducted the peer review and are conferring their imprimatur on the model.</hint>
          <required></required>
        </field>
      </page>
