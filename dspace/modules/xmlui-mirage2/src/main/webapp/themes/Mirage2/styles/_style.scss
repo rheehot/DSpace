@@ -42,9 +42,18 @@
     padding: 0 0 0 20px;
 }
 
+.vsim-featured-project-title {
+  margin-bottom: 2px;
+}
+
+.vsim-featured-project-height {
+    height: 295px
+}
+
 .vsim-featured-project-text {
     background-color: $brand-primary;
     color: #fff;
+    min-width: 284px;
 }
 
 .vsim-featured-project-text a {
