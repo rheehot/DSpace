@@ -119,14 +119,14 @@
                                             <h1 class="text-center vsim-tagline">Welcome to the VSim Repository and Archive!</h1>
                                             <div class="container vsim-featured-project-container">
                                                 <div class="row-fluid">
-                                                    <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail nopadding" data-mh="featured-project">
-                                                        <img data-mh="featured-project" class="img-responsive" src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg"/>
+                                                    <div class="col-md-5 col-sm-5 col-lg-5 vsim-featured-project-thumbnail vsim-featured-project-height nopadding">
+                                                        <img class="img-responsive vsim-featured-project-height" src="/xmlui/themes/Mirage2/images/DigitalKarnakHeroImage_Sept2017.jpg" height="295"/>
                                                         <div class="vsim-featured-project">
                                                             <h3 class="vsim-featured-project-caption">Featured Project</h3>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 col-sm-4 col-lg-4 vsim-featured-project-text" data-mh="featured-project">
-                                                            <h3>Digital Karnak</h3>
+                                                    <div class="col-md-4 col-sm-4 col-lg-4 vsim-featured-project-text vsim-featured-project-height">
+                                                            <h3 class="vsim-featured-project-title">Digital Karnak</h3>
                                                             <p>The <a href="/xmlui/handle/{$vsim_featured_project_handle}">Digital Karnak Project</a> aims to make the site of Karnak
                                                                 more accessible to students and instructors in the English-speaking world. As part of this goal, a 3-D Virtual
                                                                 Reality model of the temple was constructed, offering students a completely new way to view the temple:
