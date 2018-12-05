@@ -16,8 +16,13 @@ import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
 import org.dspace.curate.AbstractCurationTask;
+import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.dspace.curate.Distributive;
+
+import org.dspace.eperson.factory.EPersonServiceFactory;
+import org.dspace.eperson.Group;
+import org.dspace.eperson.service.GroupService;
 
 import org.apache.log4j.Logger;
 
@@ -47,6 +52,7 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
     protected CommunityService communityService = ContentServiceFactory.getInstance().getCommunityService();
     protected CollectionService collectionService = ContentServiceFactory.getInstance().getCollectionService();
     protected HandleService handleService = HandleServiceFactory.getInstance().getHandleService();
+    protected GroupService groupService = EPersonServiceFactory.getInstance().getGroupService();
     protected int status = Curator.CURATE_UNSET;
     protected String result = null;
 
@@ -71,37 +77,38 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
 
     int status = Curator.CURATE_SKIP;
 
-    // We need a DSpace group object for AuthZ purposes, for the Contributor group, to keep handy
-    Group ContributorGroupObj = groupService.findByName(Curator.curationContext(), "Contributor");
-
     // set a breakpoint
     vsimInit:
 
           try {
 
+          // We need a DSpace group object for AuthZ purposes, for the Contributor group, to keep handy
+          Group ContributorGroupObj = groupService.findByName(Curator.curationContext(), "Contributor");
+
           // *ONLY* KEEP GOING IF THIS ITEM IS A Collection, OTHERWISE *STOP*!!
-          if ( !dso.getType()==Constants.COLLECTION ) {
+          if ( dso.getType()!=Constants.COLLECTION ) {
               break vsimInit;
           }
 
-              projectCollSubmissions = (Collection)dso;
+              Collection projectCollSubmissions = (Collection) dso;
 
-              // only work if the collection's title ends with ' User Submissions'
-              if ( !projectCollSubmissions.getTitle().endsWith( ' User Submissions' ) ) {
+              // only work if the collection's name ends with ' User Submissions'
+              if ( !projectCollSubmissions.getName().endsWith( " User Submissions" ) ) {
                 break vsimInit;
               }
 
               // WARNING! DESTRUCTIVE! delete the current submitters group for this collection and replace it with a new one
-              collectionService.removeSubmitters(Curator.curationContext(), projectCollSubmissions)
+              collectionService.removeSubmitters(Curator.curationContext(), projectCollSubmissions);
               Group projectCollSubmissionsSubmittersGroupObj = collectionService.createSubmitters(Curator.curationContext(), projectCollSubmissions);
 
               // add the ContributorGroupObj to the submitter group we just created
               groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, ContributorGroupObj);
               groupService.update(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj);
 
-              // get the handle to this collection, so we can echo it to the logs
-              String collectionId = item.getHandle();
-              log.info("VSimProjectFixPermissionsForSubmissionsCurationTask: processing collection at handle: " + collectionId);
+              // get the ID and name to this collection, so we can echo them to the logs
+              String collectionID = projectCollSubmissions.getID().toString();
+              String collectionName = projectCollSubmissions.getName();
+              log.info("VSimProjectFixPermissionsForSubmissionsCurationTask: processing collection at handle: " + collectionID + " : " + collectionName);
 
               // Update the projectCollSubmissions collection, to save the changes we made above
               collectionService.update(Curator.curationContext(), projectCollSubmissions);
@@ -110,7 +117,7 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
               // KEEP THIS AT THE END OF THE SCRIPT
 
               status = Curator.CURATE_SUCCESS;
-              result = "VSimProjectFixPermissionsForSubmissionsCurationTask completed based on " + itemId;
+              result = "VSimProjectFixPermissionsForSubmissionsCurationTask COMPLETED SUCCESSFULLY!";
 
             // catch any exceptions
             } catch (AuthorizeException authE) {
