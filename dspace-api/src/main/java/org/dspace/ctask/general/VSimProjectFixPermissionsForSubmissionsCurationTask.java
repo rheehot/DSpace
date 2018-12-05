@@ -86,38 +86,36 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
           Group ContributorGroupObj = groupService.findByName(Curator.curationContext(), "Contributor");
 
           // *ONLY* KEEP GOING IF THIS ITEM IS A Collection, OTHERWISE *STOP*!!
-          if ( dso.getType()!=Constants.COLLECTION ) {
-              break vsimInit;
-          }
+          switch (dso.getType()) {
+              case Constants.COLLECTION:
+                Collection projectCollSubmissions = (Collection) dso;
 
-              Collection projectCollSubmissions = (Collection) dso;
+                // only work if the collection's name ends with ' User Submissions'
+                if ( !projectCollSubmissions.getName().endsWith( " User Submissions" ) ) {
+                  break vsimInit;
+                }
 
-              // only work if the collection's name ends with ' User Submissions'
-              if ( !projectCollSubmissions.getName().endsWith( " User Submissions" ) ) {
-                break vsimInit;
-              }
+                // WARNING! DESTRUCTIVE! delete the current submitters group for this collection and replace it with a new one
+                collectionService.removeSubmitters(Curator.curationContext(), projectCollSubmissions);
+                Group projectCollSubmissionsSubmittersGroupObj = collectionService.createSubmitters(Curator.curationContext(), projectCollSubmissions);
 
-              // WARNING! DESTRUCTIVE! delete the current submitters group for this collection and replace it with a new one
-              collectionService.removeSubmitters(Curator.curationContext(), projectCollSubmissions);
-              Group projectCollSubmissionsSubmittersGroupObj = collectionService.createSubmitters(Curator.curationContext(), projectCollSubmissions);
+                // add the ContributorGroupObj to the submitter group we just created
+                groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, ContributorGroupObj);
+                groupService.update(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj);
 
-              // add the ContributorGroupObj to the submitter group we just created
-              groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, ContributorGroupObj);
-              groupService.update(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj);
+                // get the ID and name to this collection, so we can echo them to the logs
+                String collectionID = projectCollSubmissions.getID().toString();
+                String collectionName = projectCollSubmissions.getName();
+                log.info("VSimProjectFixPermissionsForSubmissionsCurationTask: processing collection at handle: " + collectionID + " : " + collectionName);
 
-              // get the ID and name to this collection, so we can echo them to the logs
-              String collectionID = projectCollSubmissions.getID().toString();
-              String collectionName = projectCollSubmissions.getName();
-              log.info("VSimProjectFixPermissionsForSubmissionsCurationTask: processing collection at handle: " + collectionID + " : " + collectionName);
+                // Update the projectCollSubmissions collection, to save the changes we made above
+                collectionService.update(Curator.curationContext(), projectCollSubmissions);
+                status = Curator.CURATE_SUCCESS;
+                break;
 
-              // Update the projectCollSubmissions collection, to save the changes we made above
-              collectionService.update(Curator.curationContext(), projectCollSubmissions);
-
-              // set the success flag and add a line to the result report
-              // KEEP THIS AT THE END OF THE SCRIPT
-
-              status = Curator.CURATE_SUCCESS;
-              result = "VSimProjectFixPermissionsForSubmissionsCurationTask COMPLETED SUCCESSFULLY!";
+                default: status = Curator.CURATE_SUCCESS;
+                break;
+            }
 
             // catch any exceptions
             } catch (AuthorizeException authE) {
@@ -126,6 +124,8 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
            	} catch (SQLException sqlE) {
         		log.error("caught exception: " + sqlE);
            	}
+
+            result = "VSimProjectFixPermissionsForSubmissionsCurationTask COMPLETED SUCCESSFULLY!";
 
 
               setResult(result);
