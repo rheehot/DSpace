@@ -97,6 +97,8 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
 
                 // WARNING! DESTRUCTIVE! delete the current submitters group for this collection and replace it with a new one
                 collectionService.removeSubmitters(Curator.curationContext(), projectCollSubmissions);
+                // update the collectionService so that previous group is really really gone
+                collectionService.update(Curator.curationContext(), projectCollSubmissions);
                 Group projectCollSubmissionsSubmittersGroupObj = collectionService.createSubmitters(Curator.curationContext(), projectCollSubmissions);
 
                 // add the ContributorGroupObj to the submitter group we just created
