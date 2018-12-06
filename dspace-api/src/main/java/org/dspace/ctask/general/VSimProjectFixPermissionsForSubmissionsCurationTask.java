@@ -8,12 +8,8 @@
 
 package org.dspace.ctask.general;
 
-import java.util.List;
-import org.apache.commons.lang.StringUtils;
-
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DSpaceObject;
-import org.dspace.content.Item;
 import org.dspace.content.Collection;
 import org.dspace.curate.AbstractCurationTask;
 import org.dspace.core.Constants;
@@ -26,9 +22,6 @@ import org.dspace.eperson.service.GroupService;
 
 import org.apache.log4j.Logger;
 
-import org.dspace.services.factory.DSpaceServicesFactory;
-
-import org.dspace.content.MetadataValue;
 import org.dspace.handle.factory.HandleServiceFactory;
 import org.dspace.handle.service.HandleService;
 import org.dspace.content.factory.ContentServiceFactory;
@@ -100,7 +93,7 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
 
                 // remove the anonymous group from it
                 groupService.removeMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, AnonymousGroupObj);
-                // then add contributor... 
+                // then add contributor...
                 groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, ContributorGroupObj);
                 // and then update to finalize these changes
                 groupService.update(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj);
