@@ -478,25 +478,6 @@ public class GroupServiceImpl extends DSpaceObjectServiceImpl<Group> implements 
             groupService.update(context, adminGroup);
         }
 
-        // Check for ContentCreators group. If not found, create it
-        Group contentCreatorsGroup = groupService.findByName(context, "ContentCreators");
-        if(contentCreatorsGroup == null)
-        {
-            contentCreatorsGroup = groupService.create(context);
-            contentCreatorsGroup.setName("ContentCreators");
-            contentCreatorsGroup.setPermanent(true);
-            groupService.update(context, contentCreatorsGroup);
-        }
-
-        // Check for Contributor group. If not found, create it
-        Group contributorGroup = groupService.findByName(context, "Contributor");
-        if(contributorGroup == null)
-        {
-            contributorGroup = groupService.create(context);
-            contributorGroup.setName("ContentCreators");
-            contributorGroup.setPermanent(true);
-            groupService.update(context, contributorGroup);
-        }
     }
 
     @Override
