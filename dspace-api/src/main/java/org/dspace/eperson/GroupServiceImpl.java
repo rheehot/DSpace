@@ -477,6 +477,7 @@ public class GroupServiceImpl extends DSpaceObjectServiceImpl<Group> implements 
             adminGroup.setPermanent(true);
             groupService.update(context, adminGroup);
         }
+
     }
 
     @Override

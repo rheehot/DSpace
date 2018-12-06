@@ -216,7 +216,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
 
               // We need a DSpace group object for AuthZ purposes, for ContentCreators, to keep handy
               Group ContentCreatorsGroupObj = groupService.findByName(Curator.curationContext(), "Content Creators");
-              Group AnonymousGroupObj = groupService.findByName(Curator.curationContext(), "Anonymous");
+              Group ContributorGroupObj = groupService.findByName(Curator.curationContext(), "Contributor");
 
               log.info("VSimProjectCurationTask: creating Administrators group for projectCommunity: " + projectCommunityHandle);
               // create the Administrators group we need
@@ -313,9 +313,9 @@ public class VSimProjectCurationTask extends AbstractCurationTask
               Group projectCollSubmissionsAdminGroupObj = collectionService.createAdministrators(Curator.curationContext(), projectCollSubmissions);
               Group projectCollSubmissionsSubmittersGroupObj = collectionService.createSubmitters(Curator.curationContext(), projectCollSubmissions);
 
-              // add the ContentCreatorsGroupObj to the admin group we just created, and the AnonymousGroupObj to the submitters group we just created
+              // add the ContentCreatorsGroupObj to the admin group we just created, and the ContributorGroupObj to the submitters group we just created
               groupService.addMember(Curator.curationContext(), projectCollSubmissionsAdminGroupObj, ContentCreatorsGroupObj);
-              groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, AnonymousGroupObj);
+              groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, ContributorGroupObj);
               groupService.update(Curator.curationContext(), projectCollSubmissionsAdminGroupObj);
               groupService.update(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj);
 
