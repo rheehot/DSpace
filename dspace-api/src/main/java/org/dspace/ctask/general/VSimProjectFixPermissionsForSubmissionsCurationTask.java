@@ -82,9 +82,9 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
 
           try {
 
-          // We need a DSpace group object for AuthZ purposes, for the Contributor group, to keep handy
+          // We need some DSpace group objects for AuthZ purposes, for the Contributor group, to keep handy
           Group ContributorGroupObj = groupService.findByName(Curator.curationContext(), "Contributor");
-
+          Group AnonymousGroupObj = groupService.findByName(Curator.curationContext(), "Anonymous");
           // *ONLY* KEEP GOING IF THIS ITEM IS A Collection, OTHERWISE *STOP*!!
           switch (dso.getType()) {
               case Constants.COLLECTION:
@@ -95,14 +95,14 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
                   break vsimInit;
                 }
 
-                // WARNING! DESTRUCTIVE! delete the current submitters group for this collection and replace it with a new one
-                collectionService.removeSubmitters(Curator.curationContext(), projectCollSubmissions);
-                // update the collectionService so that previous group is really really gone
-                collectionService.update(Curator.curationContext(), projectCollSubmissions);
-                Group projectCollSubmissionsSubmittersGroupObj = collectionService.createSubmitters(Curator.curationContext(), projectCollSubmissions);
+                // grab the current submitters group with the getSubmitters() on the collection object
+                Group projectCollSubmissionsSubmittersGroupObj = projectCollSubmissions.getSubmitters();
 
-                // add the ContributorGroupObj to the submitter group we just created
+                // remove the anonymous group from it
+                groupService.removeMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, AnonymousGroupObj);
+                // then add contributor... 
                 groupService.addMember(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj, ContributorGroupObj);
+                // and then update to finalize these changes
                 groupService.update(Curator.curationContext(), projectCollSubmissionsSubmittersGroupObj);
 
                 // get the ID and name to this collection, so we can echo them to the logs
