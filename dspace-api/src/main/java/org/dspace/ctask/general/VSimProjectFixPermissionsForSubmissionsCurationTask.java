@@ -112,6 +112,9 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
                 break;
             }
 
+            status = Curator.CURATE_SUCCESS;
+            result = "VSimProjectFixPermissionsForSubmissionsCurationTask COMPLETED SUCCESSFULLY!";
+
             // catch any exceptions
             } catch (AuthorizeException authE) {
         		log.error("caught exception: " + authE);
@@ -119,10 +122,6 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
            	} catch (SQLException sqlE) {
         		log.error("caught exception: " + sqlE);
            	}
-
-            status = Curator.CURATE_SUCCESS;
-            result = "VSimProjectFixPermissionsForSubmissionsCurationTask COMPLETED SUCCESSFULLY!";
-
 
               setResult(result);
               report(result);
