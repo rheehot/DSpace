@@ -120,6 +120,7 @@ public class VSimProjectFixPermissionsForSubmissionsCurationTask extends Abstrac
         		log.error("caught exception: " + sqlE);
            	}
 
+            status = Curator.CURATE_SUCCESS;
             result = "VSimProjectFixPermissionsForSubmissionsCurationTask COMPLETED SUCCESSFULLY!";
 
 
