@@ -28,7 +28,7 @@ import org.dspace.handle.service.HandleService;
 
 /**
  * Simple utility class for extracting handles.
- * 
+ *
  * @author Scott Phillips
  */
 
@@ -46,7 +46,7 @@ public class HandleUtil
 
     /**
      * Obtain the current DSpace handle for the specified request.
-     * 
+     *
      * @param objectModel
      *            The cocoon model.
      * @return A DSpace handle, or null if none found.
@@ -59,7 +59,7 @@ public class HandleUtil
 
         DSpaceObject dso = (DSpaceObject) request.getAttribute(DSPACE_OBJECT);
         Context context = ContextUtil.obtainContext(objectModel);
-        
+
         if (dso == null)
         {
             String uri = request.getSitemapURI();
@@ -99,7 +99,7 @@ public class HandleUtil
 
     /**
      * Determine if the given DSO is an ancestor of the the parent handle.
-     * 
+     *
      * @param dso
      *            The child DSO object.
      * @param parent
@@ -225,10 +225,34 @@ public class HandleUtil
             aDso = communities.get(0);
         }
 
+        // VSIM-84, check to see if this community has a vsim.relation.projectmasteruri metadata field, and if so
+        // use vsim.releation.projectmasteruri for the link, from line 192 above, the stack is a stak of DSOs, so
+        // we will need a DSO for the ProjectMaster Item at the handle which is in the projectmasteruri field
         if (aDso instanceof Community)
         {
             Community community = (Community) aDso;
-            stack.push(community);
+
+            // get the project master for this community (if it is there)
+            String projectMasterURI = communityService.getMetadata(community, "vsim.relation.projectMaster");
+
+            // if the projectmasterURI is null/empty, this isn't a project community, so push the community to the stack as normal
+            if (projectMasterURI == null || projectMasterURI.length() == 0)
+              {
+                  stack.push(community);
+              }
+            else
+              {
+                  //this is a project community, see VSIM-84, use the project master item for this instead
+
+                  //make a DSO for the projectMaster using the projectmasterURI
+                  Item projectMasterDSO = (Item) handleService.resolveToObject(context, projectMasterURI);;
+
+                  //push this DSO into the Stack
+                  stack.push(projectMasterDSO);
+              }
+
+
+
 
             for (Community parent : communityService.getAllParents(context, community))
             {
