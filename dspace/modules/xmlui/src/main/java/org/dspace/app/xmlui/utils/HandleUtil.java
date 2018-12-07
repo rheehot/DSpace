@@ -28,7 +28,7 @@ import org.dspace.handle.service.HandleService;
 
 /**
  * Simple utility class for extracting handles.
- * 
+ *
  * @author Scott Phillips
  */
 
@@ -46,7 +46,7 @@ public class HandleUtil
 
     /**
      * Obtain the current DSpace handle for the specified request.
-     * 
+     *
      * @param objectModel
      *            The cocoon model.
      * @return A DSpace handle, or null if none found.
@@ -59,7 +59,7 @@ public class HandleUtil
 
         DSpaceObject dso = (DSpaceObject) request.getAttribute(DSPACE_OBJECT);
         Context context = ContextUtil.obtainContext(objectModel);
-        
+
         if (dso == null)
         {
             String uri = request.getSitemapURI();
@@ -99,7 +99,7 @@ public class HandleUtil
 
     /**
      * Determine if the given DSO is an ancestor of the the parent handle.
-     * 
+     *
      * @param dso
      *            The child DSO object.
      * @param parent
@@ -186,7 +186,7 @@ public class HandleUtil
      * @throws org.dspace.app.xmlui.wing.WingException passed through.
      */
     public static void buildHandleTrail(Context context, DSpaceObject dso, PageMeta pageMeta,
-            String contextPath, boolean linkOriginalObject) throws SQLException, WingException
+            String contextPath, boolean linkOriginalObject ) throws SQLException, WingException
     {
         // Add the trail back to the repository root.
         Stack<DSpaceObject> stack = new Stack<DSpaceObject>();
@@ -260,8 +260,27 @@ public class HandleUtil
                 }
             }
             else if (pop instanceof Community) {
-            	Community community = (Community) pop;
+
+              // TODO: VSIM-84, if this community has a projectmasterURI, use that for our trailLink
+
+              Community community = (Community) pop;
             	String name = community.getName();
+
+              // get the project master for this community (if it is there)
+              String projectMasterURI = communityService.getMetadata(community, "vsim.relation.projectMaster");
+
+              // if the projectmasterURI is null/empty, this isn't a project community, so proceed normally
+              if (projectMasterURI == null || projectMasterURI.length() == 0)
+                {
+                  // do nothing, all is well
+                }
+              else
+                {
+                    //this is a project community, see VSIM-84, use the project master item for this instead
+                    // set the target to equal the projectmasterURI
+                    target = contextPath + "/handle/" + projectMasterURI;
+                }
+
             	if (name == null || name.length() == 0)
                 {
                     pageMeta.addTrailLink(target, new Message("default", "xmlui.general.untitled"));
