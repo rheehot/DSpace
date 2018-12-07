@@ -33,6 +33,8 @@
     xmlns:encoder="xalan://java.net.URLEncoder"
     exclude-result-prefixes="xalan encoder i18n dri mets dim  xlink xsl">
 
+    <!-- TODO: VSIM-84 if this community is a project community, redirect to the project master item -->
+
     <xsl:output indent="yes"/>
 
 
@@ -77,6 +79,6 @@
             </div>
         </xsl:if>
     </xsl:template>
- 
+
 
 </xsl:stylesheet>
