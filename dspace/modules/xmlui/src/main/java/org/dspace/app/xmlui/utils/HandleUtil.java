@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.collections.CollectionUtils;
@@ -269,19 +271,15 @@ public class HandleUtil
               // get the project master for this community (if it is there)
               String projectMasterURI = communityService.getMetadata(community, "vsim.relation.projectMaster");
 
-              // if the projectmasterURI is null/empty, this isn't a project community, so proceed normally
-              if (projectMasterURI == null || projectMasterURI.length() == 0)
+              // if the projectmasterURI is not null/empty, this is a project community, see VSIM-84, use the project master item for this instead
+              if (StringUtils.isNotEmpty(projectMasterURI))
                 {
-                  // do nothing, all is well
-                }
-              else
-                {
-                    //this is a project community, see VSIM-84, use the project master item for this instead
+                    //this is a project community,
                     // set the target to equal the projectmasterURI
                     target = contextPath + "/handle/" + projectMasterURI;
                 }
 
-            	if (name == null || name.length() == 0)
+            	if (StringUtils.isEmpty(name))
                 {
                     pageMeta.addTrailLink(target, new Message("default", "xmlui.general.untitled"));
                 }
