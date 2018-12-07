@@ -307,7 +307,7 @@ public class ContainerAdapter extends AbstractAdapter
                 createField("dc","rights",null,null,rights);
                 createField("dc","rights","license",null,rights_license);
                 createField("dc","title",null,null,title);
-                createField("vsim", "relation.projectMaster",null,null,projectMasterURI);
+                createField("vsim", "relation","projectMaster",null,projectMasterURI);
 
                 boolean showCount = DSpaceServicesFactory.getInstance().getConfigurationService().getBooleanProperty("webui.strengths.show");
 
