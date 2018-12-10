@@ -145,6 +145,7 @@ public class HandleUtil
     }
 
     /**
+     * UNTOUCHED, leave this one alone!
      * Build a list of trail metadata starting with the owning collection and
      * ending with the root level parent. If the Object is an item, a bundle,
      * or a bitstream, then the object is not included, but its collection and
@@ -163,6 +164,141 @@ public class HandleUtil
      * @throws org.dspace.app.xmlui.wing.WingException passed through.
      */
     public static void buildHandleTrail(Context context, DSpaceObject dso, PageMeta pageMeta,
+                                        String contextPath) throws SQLException, WingException
+    {
+        buildHandleTrail(context, dso, pageMeta, contextPath, false);
+    }
+
+    /** UNTOUCHED, leave this alone!
+     * Build a list of trail metadata starting with the owning collection and
+     * ending with the root level parent. If the Object is an item, a bundle,
+     * or a bitstream, then the object is not included, but its collection and
+     * community parents are. However, if the item is a community or collection
+     * then it is included along with all parents.
+     *
+     * <p>
+     * If the terminal object in the trail is the passed object, do not link to
+     * it, because that is (presumably) the page at which the user has arrived.
+     *
+     * @param context session context.
+     * @param dso the DSpace who's parents we will add to the pageMeta
+     * @param pageMeta the object to which we link our trial
+     * @param contextPath The context path
+     * @param linkOriginalObject whether or not to make a link of the original object
+     * @throws java.sql.SQLException passed through.
+     * @throws org.dspace.app.xmlui.wing.WingException passed through.
+     */
+    public static void buildHandleTrail(Context context, DSpaceObject dso, PageMeta pageMeta,
+            String contextPath, boolean linkOriginalObject) throws SQLException, WingException
+    {
+        // Add the trail back to the repository root.
+        Stack<DSpaceObject> stack = new Stack<DSpaceObject>();
+        DSpaceObject aDso = dso;
+
+        if (aDso instanceof Bitstream)
+        {
+        	Bitstream bitstream = (Bitstream) aDso;
+        	List<Bundle> bundles = bitstream.getBundles();
+
+        	aDso = bundles.get(0);
+        }
+
+        if (aDso instanceof Bundle)
+        {
+        	Bundle bundle = (Bundle) aDso;
+        	List<Item> items = bundle.getItems();
+
+        	aDso = items.get(0);
+        }
+
+        if (aDso instanceof Item)
+        {
+            Item item = (Item) aDso;
+            Collection collection = item.getOwningCollection();
+
+            aDso = collection;
+        }
+
+        if (aDso instanceof Collection)
+        {
+            Collection collection = (Collection) aDso;
+            stack.push(collection);
+            List<Community> communities = collection.getCommunities();
+
+            aDso = communities.get(0);
+        }
+
+        if (aDso instanceof Community)
+        {
+            Community community = (Community) aDso;
+            stack.push(community);
+
+            for (Community parent : communityService.getAllParents(context, community))
+            {
+                stack.push(parent);
+            }
+        }
+
+        while (!stack.empty())
+        {
+            DSpaceObject pop = stack.pop();
+
+            String target;
+            if (pop == dso && !linkOriginalObject)
+                target = null; // Do not link "back" to the terminal object
+            else
+                target = contextPath + "/handle/" + pop.getHandle();
+
+            if (pop instanceof Collection)
+            {
+            	Collection collection = (Collection) pop;
+            	String name = collection.getName();
+            	if (name == null || name.length() == 0)
+                {
+                    pageMeta.addTrailLink(target, new Message("default", "xmlui.general.untitled"));
+                }
+            	else
+                {
+                    pageMeta.addTrailLink(target, name);
+                }
+            }
+            else if (pop instanceof Community) {
+            	Community community = (Community) pop;
+            	String name = community.getName();
+            	if (name == null || name.length() == 0)
+                {
+                    pageMeta.addTrailLink(target, new Message("default", "xmlui.general.untitled"));
+                }
+            	else
+                {
+                    pageMeta.addTrailLink(target, name);
+                }
+            }
+
+        }
+    }
+
+
+
+    /**
+     * Build a list of trail metadata starting with the owning collection and
+     * ending with the root level parent. If the Object is an item, a bundle,
+     * or a bitstream, then the object is not included, but its collection and
+     * community parents are. However, if the item is a community or collection
+     * then it is included along with all parents.
+     *
+     * <p>
+     * If the terminal object in the trail is the passed object, do not link to
+     * it, because that is (presumably) the page at which the user has arrived.
+     *
+     * @param context session context.
+     * @param dso the DSpace who's parents we will add to the pageMeta
+     * @param pageMeta the object to which we link our trial
+     * @param contextPath The context path
+     * @throws java.sql.SQLException passed through.
+     * @throws org.dspace.app.xmlui.wing.WingException passed through.
+     */
+    public static void buildVsimHandleTrail(Context context, DSpaceObject dso, PageMeta pageMeta,
                                         String contextPath) throws SQLException, WingException
     {
         buildHandleTrail(context, dso, pageMeta, contextPath, false);
@@ -187,7 +323,7 @@ public class HandleUtil
      * @throws java.sql.SQLException passed through.
      * @throws org.dspace.app.xmlui.wing.WingException passed through.
      */
-    public static void buildHandleTrail(Context context, DSpaceObject dso, PageMeta pageMeta,
+    public static void buildVsimHandleTrail(Context context, DSpaceObject dso, PageMeta pageMeta,
             String contextPath, boolean linkOriginalObject ) throws SQLException, WingException
     {
         // Add the trail back to the repository root.
