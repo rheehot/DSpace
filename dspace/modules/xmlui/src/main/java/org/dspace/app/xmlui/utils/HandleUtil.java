@@ -301,7 +301,7 @@ public class HandleUtil
     public static void buildVsimHandleTrail(Context context, DSpaceObject dso, PageMeta pageMeta,
                                         String contextPath) throws SQLException, WingException
     {
-        buildHandleTrail(context, dso, pageMeta, contextPath, false);
+        buildVsimHandleTrail(context, dso, pageMeta, contextPath, false);
     }
 
     /**
