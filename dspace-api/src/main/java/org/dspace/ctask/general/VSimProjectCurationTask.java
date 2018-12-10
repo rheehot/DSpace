@@ -208,6 +208,9 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                 communityService.addMetadata(Curator.curationContext(), projectCommunity, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
               }
 
+              // ADD A LINK TO BACK TO THE PROJECT MASTER ITEM
+              communityService.addMetadata(Curator.curationContext(), projectCommunity, "vsim", "relation", "projectMaster", null, itemId);
+
               // finish the update of the projectCommunity metadata (AKA: write!)
               communityService.update(Curator.curationContext(), projectCommunity);
 
@@ -238,6 +241,7 @@ public class VSimProjectCurationTask extends AbstractCurationTask
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "abstract", null, "Files specific to VSim, including 3D models, narratives, and embedded resources (e.g., .vsim, .nar, .ere). For the " + mvDcTitle.get(0).getValue() + " project.");
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "description", "tableofcontents", null, "Collection sidebar for Models: " + mvDcTitle.get(0).getValue());
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, MetadataSchema.DC_SCHEMA, "rights", null, null, mvDcRights.get(0).getValue());
+
                 // ADD A LINK TO BACK TO THE PROJECT MASTER ITEM
                 collectionService.addMetadata(Curator.curationContext(), projectCollModels, "vsim", "relation", "projectMaster", null, itemId);
 
