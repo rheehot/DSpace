@@ -406,7 +406,7 @@ public class HandleUtil
 
               // get the project master for this community (if it is there)
               List<MetadataValue> mvProjectMasterURI = communityService.getMetadata(community, "vsim", "relation", "projectMaster", Item.ANY);
-              String ProjectMasterURI = mvProjectMasterURI.get(0).getValue();
+              String projectMasterURI = mvProjectMasterURI.get(0).getValue();
 
               // if the projectmasterURI is not null/empty, this is a project community, see VSIM-84, use the project master item for this instead
               if (StringUtils.isNotEmpty(projectMasterURI))
