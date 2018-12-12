@@ -21,6 +21,7 @@ import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
 import org.dspace.curate.AbstractCurationTask;
+import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.dspace.curate.Distributive;
 
@@ -70,7 +71,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
     }
 
     @Override
-    protected void performItem(Item item) throws IOException
+    protected void performObject(DSpaceObject dso) throws IOException
     {
 
     int status = Curator.CURATE_SKIP;
@@ -88,72 +89,82 @@ public class VSimItemCurationTask extends AbstractCurationTask
     vsimItem:
           try {
 
-          DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
-          Collection projectMastersCollection = (Collection) projectMastersDSO;
+            switch (dso.getType()) {
+              case Constants.ITEM:
+                Item item = (Item) dso;
 
-          // grab the handle for this item, we'll need it later
-          String itemId = item.getHandle();
+                DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
+                Collection projectMastersCollection = (Collection) projectMastersDSO;
 
-          // IF THIS ITEM IS A PROJECT MASTER, *STOP*!! OTHERWISE, CONTINUE...
-          if (itemService.isIn(item, projectMastersCollection)) {
-              break vsimItem;
-          }
+                // grab the handle for this item, we'll need it later
+                String itemId = item.getHandle();
 
-              log.info("VSimItemCurationTask: processing item at handle: " + itemId);
+                // IF THIS ITEM IS A PROJECT MASTER, *STOP*!! OTHERWISE, CONTINUE...
+                if (itemService.isIn(item, projectMastersCollection)) {
+                    break vsimItem;
+                }
 
-              // TODO: find the corresponding project master item for all items in this collection
-              // first, grab the collection object for this item
-              List<Collection> thisItemCollection = itemService.getCollectionsNotLinked(Curator.curationContext(), item);
+                    log.info("VSimItemCurationTask: processing item at handle: " + itemId);
 
-              // then grab the vsim.relation.projectMaster metadata
+                    // TODO: find the corresponding project master item for all items in this collection
+                    // first, grab the collection object for this item
+                    List<Collection> thisItemCollection = itemService.getCollectionsNotLinked(Curator.curationContext(), item);
 
-              // assume that the first collection returned above is the one we want (there should only be one)
-              // then copy the collection links from the projectMaster item to this item
-              List<MetadataValue> mvProjectMaster = collectionService.getMetadata(thisItemCollection.get(0), "vsim", "relation", "projectMaster", Item.ANY);
+                    // then grab the vsim.relation.projectMaster metadata
 
-              String projectMasterHandle = mvProjectMaster.get(0).getValue();
+                    // assume that the first collection returned above is the one we want (there should only be one)
+                    // then copy the collection links from the projectMaster item to this item
+                    List<MetadataValue> mvProjectMaster = collectionService.getMetadata(thisItemCollection.get(0), "vsim", "relation", "projectMaster", Item.ANY);
 
-              log.info("VSimItemCurationTask: found the corresponding projectMaster handle: " + projectMasterHandle);
+                    String projectMasterHandle = mvProjectMaster.get(0).getValue();
 
-              // get the collection links from the project master item
-              DSpaceObject projectMasterDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterHandle);
-              Item projectMasterItem = (Item) projectMasterDSO;
+                    log.info("VSimItemCurationTask: found the corresponding projectMaster handle: " + projectMasterHandle);
 
-              List<MetadataValue> mvVsimMasterRelationModels = itemService.getMetadata(projectMasterItem, "vsim", "relation", "models", Item.ANY);
-              List<MetadataValue> mvVsimMasterRelationArchives = itemService.getMetadata(projectMasterItem, "vsim", "relation", "archives", Item.ANY);
-              List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
+                    // get the collection links from the project master item
+                    DSpaceObject projectMasterDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterHandle);
+                    Item projectMasterItem = (Item) projectMasterDSO;
+
+                    List<MetadataValue> mvVsimMasterRelationModels = itemService.getMetadata(projectMasterItem, "vsim", "relation", "models", Item.ANY);
+                    List<MetadataValue> mvVsimMasterRelationArchives = itemService.getMetadata(projectMasterItem, "vsim", "relation", "archives", Item.ANY);
+                    List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
 
 
-              // set the relation values to the projectMaster values gathered above
-              log.info("VSimItemCurationTask:  - adding vsim.relation.models: " + mvVsimMasterRelationModels.get(0).getValue());
-              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY, mvVsimMasterRelationModels.get(0).getValue());
+                    // set the relation values to the projectMaster values gathered above
+                    log.info("VSimItemCurationTask:  - adding vsim.relation.models: " + mvVsimMasterRelationModels.get(0).getValue());
+                    itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY, mvVsimMasterRelationModels.get(0).getValue());
 
-              log.info("VSimItemCurationTask:  - adding vsim.relation.archives: " + mvVsimMasterRelationArchives.get(0).getValue());
-              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY, mvVsimMasterRelationArchives.get(0).getValue());
+                    log.info("VSimItemCurationTask:  - adding vsim.relation.archives: " + mvVsimMasterRelationArchives.get(0).getValue());
+                    itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY, mvVsimMasterRelationArchives.get(0).getValue());
 
-              log.info("VSimItemCurationTask:  - adding vsim.relation.submissions: " + mvVsimMasterRelationSubmissions.get(0).getValue());
-              itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY, mvVsimMasterRelationSubmissions.get(0).getValue());
+                    log.info("VSimItemCurationTask:  - adding vsim.relation.submissions: " + mvVsimMasterRelationSubmissions.get(0).getValue());
+                    itemService.addMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY, mvVsimMasterRelationSubmissions.get(0).getValue());
 
-              // update the itemService to write the values we just set
-              log.info("VSimItemCurationTask: writing changes to item at handle: " + itemId);
-              itemService.update(Curator.curationContext(), item);
+                    // update the itemService to write the values we just set
+                    log.info("VSimItemCurationTask: writing changes to item at handle: " + itemId);
+                    itemService.update(Curator.curationContext(), item);
 
-              // set the success flag and add a line to the result report
-              // KEEP THIS AT THE END OF THE SCRIPT
+                    // set the success flag and add a line to the result report
+                    // KEEP THIS AT THE END OF THE SCRIPT
 
-              status = Curator.CURATE_SUCCESS;
-              result = "VSim standard item " + itemId + " updated with metatdata from project master " + projectMasterHandle;
+                    status = Curator.CURATE_SUCCESS;
+                    result = "VSim standard item " + itemId + " updated with metatdata from project master " + projectMasterHandle;
+                    break;
 
-            // catch any exceptions
-            } catch (AuthorizeException authE) {
-        		log.error("caught exception: " + authE);
-        		status = Curator.CURATE_FAIL;
-           	} catch (SQLException sqlE) {
-        		log.error("caught exception: " + sqlE);
-           	}
+              default: status = Curator.CURATE_SUCCESS;
+              break;
 
-              setResult(result);
-              report(result);
+            }
+
+          // catch any exceptions
+          } catch (AuthorizeException authE) {
+      		log.error("caught exception: " + authE);
+      		status = Curator.CURATE_FAIL;
+         	} catch (SQLException sqlE) {
+      		log.error("caught exception: " + sqlE);
+         	}
+
+            setResult(result);
+            report(result);
 
     }
 
