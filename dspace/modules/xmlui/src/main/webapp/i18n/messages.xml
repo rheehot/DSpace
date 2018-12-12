@@ -2483,11 +2483,11 @@
     <message key="xmlui.mirage2.discovery.hideAdvancedFilters">Hide Advanced Filters</message>
 
 
-    <message key="xmlui.mirage2.forms.instancedCompositeFields.add">Add</message>
+    <message key="xmlui.mirage2.forms.instancedCompositeFields.add">add all pending</message>
     <message key="xmlui.mirage2.forms.instancedCompositeFields.remove">Remove</message>
     <message key="xmlui.mirage2.forms.instancedCompositeFields.noSuggestionError">ERROR: Input field with "suggest" (autocomplete) choice behavior is not implemented for Composite (e.g. "name") fields.</message>
     <message key="xmlui.mirage2.forms.nonInstancedCompositeFields.noSuggestionError">ERROR: Input field with "suggest" (autocomplete) choice behavior is not implemented for Composite (e.g. "name") fields.</message>
-    <message key="xmlui.mirage2.forms.nonCompositeFieldSet.add">Add</message>
+    <message key="xmlui.mirage2.forms.nonCompositeFieldSet.add">add all pending</message>
     <message key="xmlui.mirage2.forms.nonCompositeFieldSet.remove">Remove</message>
 
     <message key="xmlui.mirage2.page-structure.aboutThisRepository">About This Repository</message>
