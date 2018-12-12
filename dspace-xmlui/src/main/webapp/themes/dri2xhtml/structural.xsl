@@ -11,7 +11,7 @@
 <!--
     TODO: Describe this XSL file
     Author: Alexey Maslov
-    
+
 -->
 
 <xsl:stylesheet xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
@@ -26,18 +26,18 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:confman="org.dspace.core.ConfigurationManager"
         exclude-result-prefixes="mets xlink xsl dim xhtml mods dc confman">
-    
+
     <xsl:output indent="yes"/>
-    
+
     <!-- Global variables -->
-    
+
     <!--
         Context path provides easy access to the context-path parameter. This is
         used when building urls back to the site, they all must include the
         context-path paramater.
     -->
     <xsl:variable name="context-path" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath'][not(@qualifier)]"/>
-    
+
     <!--
         Theme path represents the full path back to theme. This is useful for
         accessing static resources such as images or javascript files. Simply
@@ -66,30 +66,30 @@
         Specifically, adding a static page will need to override the DRI, to directly add content.
     -->
     <xsl:variable name="request-uri" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='request'][@qualifier='URI']"/>
-    
+
     <!--
     This stylesheet will be written in several stages:
         1. Establish all the templates that catch all the elements
         2. Finish implementing the XHTML output within the templates
         3. Figure out the special case stuff as well as the small details
         4. Clean up the code
-    
+
     Currently in stage 3...
-        
+
     Last modified on: 3/15/2006
     -->
-    
+
     <!-- This stylesheet's purpose is to translate a DRI document to an HTML one, a task which it accomplishes
         through interative application of templates to select elements. While effort has been made to
         annotate all templates to make this stylesheet self-documenting, not all elements are used (and
         therefore described) here, and those that are may not be used to their full capacity. For this reason,
         you should consult the DRI Schema Reference manual if you intend to customize this file for your needs.
     -->
-        
+
     <!--
         The starting point of any XSL processing is matching the root element. In DRI the root element is document,
         which contains a version attribute and three top level elements: body, options, meta (in that order).
-        
+
         This template creates the html document, giving it a head and body. A title and the CSS style reference
         are placed in the html head, while the body is further split into several divs. The top-level div
         directly under html body is called "ds-main". It is further subdivided into:
@@ -97,7 +97,7 @@
             "ds-body"    - the div containing all the content of the page; built from the contents of dri:body
             "ds-options" - the div with all the navigation and actions; built from the contents of dri:options
             "ds-footer"  - optional footer div, containing misc information
-        
+
         The order in which the top level divisions appear may have some impact on the design of CSS and the
         final appearance of the DSpace page. While the layout of the DRI schema does favor the above div
         arrangement, nothing is preventing the designer from changing them around or adding new ones by
@@ -118,13 +118,13 @@
               </xsl:when>
               <xsl:otherwise>
             <body>
-                
+
                 <div id="ds-main">
                     <!--
                         The header div, complete with title, subtitle, trail and other junk. The trail is
                         built by applying a template over pageMeta's trail children. -->
                     <xsl:call-template name="buildHeader"/>
-                    
+
                     <!--
                         Goes over the document tag's children elements: body, options, meta. The body template
                         generates the ds-body div that contains all the content. The options template generates
@@ -137,15 +137,15 @@
                         The footer div, dropping whatever extra information is needed on the page. It will
                         most likely be something similar in structure to the currently given example. -->
                     <xsl:call-template name="buildFooter"/>
-                    
+
                 </div>
             </body>
               </xsl:otherwise>
             </xsl:choose>
         </html>
     </xsl:template>
-    
-    
+
+
     <!-- The HTML head element contains references to CSS as well as embedded JavaScript code. Most of this
         information is either user-provided bits of post-processing (as in the case of the JavaScript), or
         references to stylesheets pulled directly from the pageMeta element. -->
@@ -176,7 +176,7 @@
                     </xsl:attribute>
                 </link>
             </xsl:for-each>
-            
+
             <!-- Add syndication feeds -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='feed']">
                 <link rel="alternate" type="application">
@@ -189,7 +189,7 @@
                     </xsl:attribute>
                 </link>
             </xsl:for-each>
-            
+
             <!--  Add OpenSearch auto-discovery link -->
             <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='opensearch'][@qualifier='shortName']">
                 <link rel="search" type="application/opensearchdescription+xml">
@@ -208,7 +208,7 @@
                     </xsl:attribute>
                 </link>
             </xsl:if>
-            
+
             <!-- The following javascript removes the default text of empty text areas when they are focused on or submitted -->
             <!-- There is also javascript to disable submitting a form when the 'enter' key is pressed. -->
                         <script type="text/javascript">
@@ -229,12 +229,12 @@
                                 function disableEnterKey(e)
                                 {
                                      var key;
-                                
+
                                      if(window.event)
                                           key = window.event.keyCode;     //Internet Explorer
                                      else
                                           key = e.which;     //Firefox and Netscape
-                                
+
                                      if(key == 13)  //if "Enter" pressed, then disable!
                                           return false;
                                      else
@@ -271,9 +271,9 @@
                         <xsl:value-of select="."/>
                     </xsl:attribute>&#160;</script>
             </xsl:for-each>
-            
+
             <xsl:call-template name="buildHead-google-analytics" />
-            
+
             <!-- Add the title in -->
             <xsl:variable name="page_title" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='title']" />
             <title>
@@ -300,11 +300,11 @@
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[substring(@element, 1, 9) = 'citation_']">
                 <meta name="{@element}" content="{.}"></meta>
             </xsl:for-each>
-            
+
         </head>
     </xsl:template>
-    
-    
+
+
     <xsl:template name="buildHead-google-analytics">
             <!-- Add a google analytics script if the key is present -->
             <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='google'][@qualifier='analytics']">
@@ -320,7 +320,7 @@
             </xsl:if>
     </xsl:template>
 
-    
+
     <!-- The header (distinct from the HTML head element) contains the title, subtitle, login box and various
         placeholders for header images -->
     <xsl:template name="buildHeader">
@@ -342,11 +342,11 @@
                                 <xsl:copy-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='title']/node()"/>
                         </xsl:otherwise>
                 </xsl:choose>
-                        
+
             </h1>
             <h2 class="static-pagetitle"><i18n:text>xmlui.dri2xhtml.structural.head-subtitle</i18n:text></h2>
-            
-            
+
+
             <ul id="ds-trail">
                 <xsl:choose>
                         <xsl:when test="starts-with($request-uri, 'page/about')">
@@ -360,8 +360,8 @@
                         </xsl:otherwise>
                 </xsl:choose>
             </ul>
-           
-            
+
+
             <xsl:choose>
                 <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
                     <div id="ds-user-box">
@@ -409,10 +409,10 @@
                     </div>
                 </xsl:otherwise>
             </xsl:choose>
-            
+
         </div>
     </xsl:template>
-    
+
     <xsl:template name="cc-license">
         <xsl:param name="metadataURL"/>
         <xsl:variable name="externalMetadataURL">
@@ -517,9 +517,9 @@
             </p>
         -->
     </xsl:template>
-    
-    
-    
+
+
+
     <!--
         The trail is built one link at a time. Each link is given the ds-trail-link class, with the first and
         the last links given an additional descriptor.
@@ -553,15 +553,15 @@
     </xsl:template>
 
 
-    
-    
+
+
 <!--
         The meta, body, options elements; the three top-level elements in the schema
 -->
-    
-    
-    
-    
+
+
+
+
     <!--
         The template to handle the dri:body element. It simply creates the ds-body div and applies
         templates of the body's child elements (which consists entirely of dri:div tags).
@@ -628,12 +628,12 @@
             </a>
         </xsl:if>
     </xsl:variable>
-    
+
     <!--
         The template to handle dri:options. Since it contains only dri:list tags (which carry the actual
         information), the only things than need to be done is creating the ds-options div and applying
         the templates inside it.
-        
+
         In fact, the only bit of real work this template does is add the search box, which has to be
         handled specially in that it is not actually included in the options div, and is instead built
         from metadata available under pageMeta.
@@ -694,7 +694,7 @@
                                     <xsl:otherwise>
                                             <i18n:text>xmlui.dri2xhtml.structural.search-in-collection</i18n:text>
                                     </xsl:otherwise>
-                                                                                              
+
                                 </xsl:choose>
                             </label>
                         </xsl:if>
@@ -711,7 +711,7 @@
                     </a>
                 </xsl:if>
             </div>
-            
+
             <!-- Once the search box is built, the other parts of the options are added -->
             <xsl:apply-templates />
 
@@ -729,13 +729,13 @@
 
         </div>
     </xsl:template>
-    
-    
+
+
     <!-- Currently the dri:meta element is not parsed directly. Instead, parts of it are referenced from inside
         other elements (like reference). The blank template below ends the execution of the meta branch -->
     <xsl:template match="dri:meta">
     </xsl:template>
-    
+
     <!-- Meta's children: userMeta, pageMeta, objectMeta and repositoryMeta may or may not have templates of
         their own. This depends on the meta template implementation, which currently does not go this deep.
     <xsl:template match="dri:userMeta" />
@@ -743,29 +743,29 @@
     <xsl:template match="dri:objectMeta" />
     <xsl:template match="dri:repositoryMeta" />
     -->
-    
-    
-      
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
 <!--
         Structural elements from here on out. These are the tags that contain static content under body, i.e.
         lists, tables and divs. They are also used in making forms and referencing metadata from the object
         store through the use of reference elements. The lists used by options also have templates here.
 -->
-    
-    
-    
-    
+
+
+
+
     <!-- First and foremost come the div elements, which are the only elements directly under body. Every
         document has a body and every body has at least one div, which may in turn contain other divs and
         so on. Divs can be of two types: interactive and non-interactive, as signified by the attribute of
         the same name. The two types are handled separately.
     -->
-    
+
     <!-- Non-interactive divs get turned into HTML div tags. The general process, which is found in many
         templates in this stylesheet, is to call the template for the head element (creating the HTML h tag),
         handle the attributes, and then apply the templates for the all children except the head. The id
@@ -805,11 +805,11 @@
             <xsl:with-param name="position">bottom</xsl:with-param>
         </xsl:apply-templates>
     </xsl:template>
-    
+
     <!-- Interactive divs get turned into forms. The priority attribute on the template itself
         signifies that this template should be executed if both it and the one above match the
         same element (namely, the div element).
-        
+
         Strictly speaking, XSL should be smart enough to realize that since one template is general
         and other more specific (matching for a tag and an attribute), it should apply the more
         specific once is it encounters a div with the matching attribute. However, the way this
@@ -836,7 +836,7 @@
                 <xsl:attribute name="onkeydown">javascript:return disableEnterKey(event);</xsl:attribute>
             </xsl:if>
             <xsl:apply-templates select="*[not(name()='head')]"/>
-          
+
         </form>
         <!-- JS to scroll form to DIV parent of "Add" button if jump-to -->
         <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='page'][@qualifier='jumpTo']">
@@ -863,8 +863,8 @@
             <xsl:with-param name="position">bottom</xsl:with-param>
         </xsl:apply-templates>
     </xsl:template>
-    
-    
+
+
     <!-- Special case for divs tagged as "notice" -->
     <xsl:template match="dri:div[@n='general-message']" priority="3">
         <div>
@@ -874,14 +874,14 @@
             <xsl:apply-templates />
         </div>
     </xsl:template>
-    
-    
+
+
     <!-- Next come the three structural elements that divs that contain: table, p, and list. These are
         responsible for display of static content, forms, and option lists. The fourth element under
         body, referenceSet, is used to reference blocks of metadata and will be discussed further down.
     -->
-    
-    
+
+
     <!-- First, the table element, used for rendering data in tabular format. In DRI tables consist of
         an optional head element followed by a set of row tags. Each row in turn contains a set of cells.
         Rows and cells can have different roles, the most common ones being header and data (with the
@@ -908,7 +908,7 @@
             <xsl:apply-templates select="dri:row"/>
         </table>
     </xsl:template>
-    
+
     <!-- Header row, most likely filled with header cells -->
     <xsl:template match="dri:row[@role='header']" priority="2">
         <tr>
@@ -918,7 +918,7 @@
             <xsl:apply-templates />
         </tr>
     </xsl:template>
-    
+
     <!-- Header cell, assumed to be one since it is contained in a header row -->
     <xsl:template match="dri:row[@role='header']/dri:cell | dri:cell[@role='header']" priority="2">
         <th>
@@ -941,8 +941,8 @@
             <xsl:apply-templates />
         </th>
     </xsl:template>
-    
-    
+
+
     <!-- Normal row, most likely filled with data cells -->
     <xsl:template match="dri:row" priority="1">
         <tr>
@@ -955,7 +955,7 @@
             <xsl:apply-templates />
         </tr>
     </xsl:template>
-    
+
     <!-- Just a plain old table cell -->
     <xsl:template match="dri:cell" priority="1">
         <td>
@@ -978,12 +978,12 @@
             <xsl:apply-templates />
         </td>
     </xsl:template>
-    
-    
-    
-      
-    
-    
+
+
+
+
+
+
     <!-- Second, the p element, used for display of text. The p element is a rich text container, meaning it
         can contain text mixed with inline elements like hi, xref, figure and field. The cell element above
         and the item element under list are also rich text containers.
@@ -1003,15 +1003,15 @@
                                 &#160;
                         </xsl:otherwise>
             </xsl:choose>
-            
+
         </p>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- Finally, we have the list element, which is used to display set of data. There are several different
         types of lists, as signified by the type attribute, and several different templates to handle them. -->
-    
+
     <!-- First list type is the bulleted list, a list with no real labels and no ordering between elements. -->
     <xsl:template match="dri:list[@type='bulleted']" priority="2">
         <xsl:apply-templates select="dri:head"/>
@@ -1473,7 +1473,7 @@
                 <xsl:apply-templates />
         </legend>
     </xsl:template>
-    
+
     <!-- NON-instance composite fields (i.e. not repeatable) -->
     <xsl:template match="dri:field[@type='composite']" mode="formComposite">
         <div class="ds-form-content">
@@ -1511,14 +1511,14 @@
             <xsl:apply-templates select="dri:help" mode="compositeComponent"/>
         </div>
     </xsl:template>
-    
-    
-        
-        
-        
+
+
+
+
+
     <!-- Next, special handling is performed for lists under the options tag, making them into option sets to
         reflect groups of similar options (like browsing, for example). -->
-    
+
     <!-- The template that applies to lists directly under the options tag that have other lists underneath
         them. Each list underneath the matched one becomes an option-set and is handled by the appropriate
         list templates. -->
@@ -1533,7 +1533,7 @@
             </ul>
         </div>
     </xsl:template>
-    
+
     <!-- Special case for nested options lists -->
     <xsl:template match="dri:options/dri:list/dri:list" priority="3" mode="nested">
         <li>
@@ -1543,7 +1543,7 @@
             </ul>
         </li>
     </xsl:template>
-    
+
     <xsl:template match="dri:options/dri:list" priority="3">
         <xsl:apply-templates select="dri:head"/>
         <div>
@@ -1555,14 +1555,14 @@
             </ul>
         </div>
     </xsl:template>
-    
+
     <!-- Quick patch to remove empty lists from options -->
     <xsl:template match="dri:options//dri:list[count(child::*)=0]" priority="5" mode="nested">
     </xsl:template>
     <xsl:template match="dri:options//dri:list[count(child::*)=0]" priority="5">
     </xsl:template>
-    
-    
+
+
     <xsl:template match="dri:options/dri:list/dri:head" priority="3">
         <h3>
             <xsl:call-template name="standardAttributes">
@@ -1571,16 +1571,16 @@
             <xsl:apply-templates />
         </h3>
     </xsl:template>
-    
+
     <!-- Items inside option lists are excluded from the "orphan roundup" mechanism -->
     <xsl:template match="dri:options//dri:item" mode="nested" priority="3">
         <li>
             <xsl:apply-templates />
         </li>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- Finally, the following templates match list types not mentioned above. They work for lists of type
         'simple' as well as any unknown list types. -->
     <xsl:template match="dri:list" priority="1">
@@ -1616,11 +1616,11 @@
     </xsl:template>
 
 
-    
+
     <!-- From here on out come the templates for supporting elements that are contained within structural
         ones. These include head (in all its myriad forms), rich text container elements (like hi and figure),
         as well as the field tag and its related elements. The head elements are done first. -->
-    
+
     <!-- The first (and most complex) case of the header tag is the one used for divisions. Since divisions can
         nest freely, their headers should reflect that. Thus, the type of HTML h tag produced depends on how
         many divisions the header tag is nested inside of. -->
@@ -1653,7 +1653,7 @@
             </xsl:choose>
         </xsl:element>
     </xsl:template>
-    
+
     <!-- The second case is the header on tables, which always creates an HTML h3 element -->
     <xsl:template match="dri:table/dri:head" priority="2">
         <h3>
@@ -1663,7 +1663,7 @@
             <xsl:apply-templates />
         </h3>
     </xsl:template>
-    
+
     <!-- The third case is the header on lists, which creates an HTML h3 element for top level lists and
         and h4 elements for all sublists. -->
     <xsl:template match="dri:list/dri:head" priority="2" mode="nested">
@@ -1674,7 +1674,7 @@
             <xsl:apply-templates />
         </h3>
     </xsl:template>
-    
+
     <xsl:template match="dri:list/dri:list/dri:head" priority="3" mode="nested">
         <h4>
             <xsl:call-template name="standardAttributes">
@@ -1683,7 +1683,7 @@
             <xsl:apply-templates />
         </h4>
     </xsl:template>
-    
+
     <!-- The fourth case is the header on referenceSets, to be discussed below, which creates an HTML h2 element
         for all cases. The reason for this simplistic approach has to do with referenceSets being handled
         differently in many cases, making it difficult to treat them as either divs (with scaling headers) or
@@ -1697,7 +1697,7 @@
             <xsl:apply-templates />
         </h3>
     </xsl:template>
-    
+
     <!-- Finally, the generic header element template, given the lowest priority, is there for cases not
         covered above. It assumes nothing about the parent element and simply generates an HTML h3 tag -->
     <xsl:template match="dri:head" priority="1">
@@ -1708,15 +1708,15 @@
             <xsl:apply-templates />
         </h3>
     </xsl:template>
-    
-    
-    
-    
+
+
+
+
     <!-- Next come the components of rich text containers, namely: hi, xref, figure and, in case of interactive
         divs, field. All these can mix freely with text as well as contain text of their own. The templates for
         the first three elements are fairly straightforward, as they simply create HTML span, a, and img tags,
         respectively. -->
-    
+
     <xsl:template match="dri:hi">
         <span>
             <xsl:attribute name="class">emphasis</xsl:attribute>
@@ -1726,17 +1726,17 @@
             <xsl:apply-templates />
         </span>
     </xsl:template>
-    
+
     <xsl:template match="dri:xref">
         <a>
             <xsl:if test="@target">
                 <xsl:attribute name="href"><xsl:value-of select="@target"/></xsl:attribute>
             </xsl:if>
-            
+
             <xsl:if test="@rend">
                 <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
             </xsl:if>
-            
+
             <xsl:if test="@n">
                 <xsl:attribute name="name"><xsl:value-of select="@n"/></xsl:attribute>
             </xsl:if>
@@ -1748,7 +1748,7 @@
             <xsl:apply-templates />
         </a>
     </xsl:template>
-    
+
     <xsl:template match="dri:figure">
         <xsl:if test="@target">
             <a>
@@ -1773,15 +1773,15 @@
             </img>
         </xsl:if>
     </xsl:template>
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
     <!-- The handling of the special case of instanced composite fields under "form" lists -->
     <xsl:template match="dri:field[@type='composite'][dri:field/dri:instance | dri:params/@operations]" mode="formComposite" priority="2">
         <xsl:variable name="confidenceIndicatorID" select="concat(translate(@id,'.','_'),'_confidence_indicator')"/>
@@ -1789,7 +1789,7 @@
             <xsl:apply-templates select="dri:field" mode="compositeComponent"/>
             <xsl:if test="contains(dri:params/@operations,'add')">
                 <!-- Add buttons should be named "submit_[field]_add" so that we can ignore errors from required fields when simply adding new values-->
-               <input type="submit" value="Add" name="{concat('submit_',@n,'_add')}" class="ds-button-field ds-add-button">
+               <input type="submit" value="add all pending" name="{concat('submit_',@n,'_add')}" class="ds-button-field ds-add-button">
                   <!-- Make invisible if we have choice-lookup operation that provides its own Add. -->
                   <xsl:if test="dri:params/@choicesPresentation = 'lookup'">
                     <xsl:attribute name="style">
@@ -1845,21 +1845,21 @@
             </xsl:if>
         </div>
     </xsl:template>
-    
-    
-    
-    
+
+
+
+
     <!-- TODO: The field section works but needs a lot of scrubbing. I would say a third of the
         templates involved are either bloated or superfluous. -->
-           
-    
+
+
     <!-- Things I know:
         1. I can tell a field is multivalued if it has instances in it
         2. I can't really do that for composites, although I can check its
             component fields for condition 1 above.
         3. Fields can also be inside "form" lists, which is its own unique condition
     -->
-        
+
     <!-- Fieldset (instanced) field stuff, in the case of non-composites -->
     <xsl:template match="dri:field[dri:field/dri:instance | dri:params/@operations]" priority="2">
         <!-- Create the first field normally -->
@@ -1868,7 +1868,7 @@
             entering more than one value for this field. -->
         <xsl:if test="contains(dri:params/@operations,'add')">
             <!-- Add buttons should be named "submit_[field]_add" so that we can ignore errors from required fields when simply adding new values-->
-            <input type="submit" value="Add" name="{concat('submit_',@n,'_add')}" class="ds-button-field ds-add-button">
+            <input type="submit" value="add all pending" name="{concat('submit_',@n,'_add')}" class="ds-button-field ds-add-button">
               <!-- Make invisible if we have choice-lookup popup that provides its own Add. -->
               <xsl:if test="dri:params/@choicesPresentation = 'lookup'">
                 <xsl:attribute name="style">
@@ -1901,7 +1901,7 @@
             </div>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- The iterator is a recursive function that creates a checkbox (to be used in deletion) for
         each value instance and interprets the value inside. It also creates a hidden field from the
         raw value contained in the instance. -->
@@ -1923,7 +1923,7 @@
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Authority: added fields for auth values as well. -->
     <!-- Common case: use the raw value of the instance to create the hidden field -->
     <xsl:template match="dri:instance" mode="hiddenInterpreter">
@@ -1943,7 +1943,7 @@
           </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Select box case: use the selected options contained in the instance to create the hidden fields -->
     <xsl:template match="dri:field[@type='select']/dri:instance" mode="hiddenInterpreter">
         <xsl:variable name="position" select="position()"/>
@@ -1962,9 +1962,9 @@
             </input>
         </xsl:for-each>
     </xsl:template>
-      
-    
-    
+
+
+
     <!-- Composite instanced field stuff -->
     <!-- It is also the one that receives the special error and help handling -->
     <xsl:template match="dri:field[@type='composite'][dri:field/dri:instance | dri:params/@operations]" priority="3">
@@ -1982,7 +1982,7 @@
 
         <xsl:if test="contains(dri:params/@operations,'add')">
             <!-- Add buttons should be named "submit_[field]_add" so that we can ignore errors from required fields when simply adding new values-->
-           <input type="submit" value="Add" name="{concat('submit_',@n,'_add')}" class="ds-button-field ds-add-button">
+           <input type="submit" value="add all pending" name="{concat('submit_',@n,'_add')}" class="ds-button-field ds-add-button">
               <!-- Make invisible if we have choice-lookup popup that provides its own Add. -->
               <xsl:if test="dri:params/@choicesPresentation = 'lookup'">
                 <xsl:attribute name="style">
@@ -2041,11 +2041,11 @@
             </div>
         </xsl:if>
     </xsl:template>
-        
+
     <!-- The iterator is a recursive function that creates a checkbox (to be used in deletion) for
         each value instance and interprets the value inside. It also creates a hidden field from the
         raw value contained in the instance.
-        
+
          What makes it different from the simpleFieldIterator is that it works with a composite field's
         components rather than a single field, which requires it to consider several sets of instances. -->
     <xsl:template name="fieldIterator">
@@ -2086,7 +2086,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template match="dri:field[@type='text' or @type='textarea']" mode="compositeField">
         <xsl:param name="position">1</xsl:param>
         <xsl:if test="not(position()=1)">
@@ -2108,8 +2108,8 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-    
+
+
     <xsl:template match="dri:field[@type='select']" mode="compositeField">
         <xsl:param name="position">1</xsl:param>
         <xsl:if test="not(position()=1)">
@@ -2143,7 +2143,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <!-- TODO: make this work? Maybe checkboxes and radio buttons should not be instantiated... -->
     <xsl:template match="dri:field[@type='checkbox' or @type='radio']" mode="compositeField">
         <xsl:param name="position">1</xsl:param>
@@ -2152,16 +2152,16 @@
         </xsl:if>
         <span class="ds-interpreted-field">Checkbox</span>
     </xsl:template>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
     <xsl:template match="dri:field[@type='select']/dri:instance" mode="interpreted">
         <span class="ds-interpreted-field">
             <xsl:for-each select="dri:value[@type='option']">
@@ -2179,8 +2179,8 @@
             </xsl:for-each>
         </span>
     </xsl:template>
-    
-    
+
+
     <xsl:template match="dri:instance" mode="interpreted">
         <!--<input type="hidden" name="{concat(../@n,'_',position())}" value="dri:value[@type='raw']"/>-->
         <xsl:choose>
@@ -2198,21 +2198,21 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-        
-    
-    
-    
+
+
+
+
+
     <xsl:template match="dri:value" mode="interpreted">
         <xsl:apply-templates />
     </xsl:template>
-    
+
     <!--
     <xsl:template match="dri:field">
-    
+
         Possible child elements:
         params(one), help(zero or one), error(zero or one), value(any), field(one or more – only with the composite type)
-        
+
         Possible attributes:
         @n, @id, @rend
         @disabled
@@ -2230,9 +2230,9 @@
             composite: A composite input control combines several input controls into a single field. The only fields that may be combined together are: checkbox, password, select, text, and textarea. When fields are combined together they can possess multiple combined values.
     </xsl:template>
         -->
-    
-    
-    
+
+
+
     <!-- The handling of component fields, that is fields that are part of a composite field type -->
     <xsl:template match="dri:field" mode="compositeComponent">
         <xsl:choose>
@@ -2257,17 +2257,17 @@
                 </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template match="dri:error" mode="compositeComponent">
         <xsl:apply-templates select="." mode="error"/>
     </xsl:template>
-    
+
     <xsl:template match="dri:help" mode="compositeComponent">
         <span class="composite-help"><xsl:apply-templates /></span>
     </xsl:template>
-    
-    
-        
+
+
+
     <!-- The handling of the field element is more complex. At the moment, the handling of input fields in the
         DRI schema is very similar to HTML, utilizing the same controlled vocabulary in most cases. This makes
         converting DRI fields to HTML inputs a straightforward, if a bit verbose, task. We are currently
@@ -2285,7 +2285,7 @@
             <xsl:apply-templates select="dri:error" mode="error"/>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="dri:field" mode="normalField">
         <xsl:variable name="confidenceIndicatorID" select="concat(translate(@id,'.','_'),'_confidence_indicator')"/>
         <xsl:choose>
@@ -2299,7 +2299,7 @@
             <xsl:when test="@type= 'textarea'">
                                 <textarea>
                                     <xsl:call-template name="fieldAttributes"/>
-                                    
+
                                     <!--
                                         if the cols and rows attributes are not defined we need to call
                                         the templates for them since they are required attributes in strict xhtml
@@ -2314,7 +2314,7 @@
                                                 <xsl:call-template name="textAreaRows"/>
                                         </xsl:when>
                                     </xsl:choose>
-                                    
+
                                     <xsl:apply-templates />
                                     <xsl:choose>
                                         <xsl:when test="./dri:value[@type='raw']">
@@ -2328,7 +2328,7 @@
                                        <i18n:text>xmlui.dri2xhtml.default.textarea.value</i18n:text>
                                     </xsl:if>
                                 </textarea>
-                                    
+
 
               <!-- add place to store authority value -->
               <xsl:if test="dri:params/@authorityControlled">
@@ -2472,7 +2472,7 @@
                     </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <!-- A set of standard attributes common to all fields -->
     <xsl:template name="fieldAttributes">
         <xsl:call-template name="standardAttributes">
@@ -2496,7 +2496,7 @@
                 <xsl:attribute name="onfocus">javascript:tFocus(this);</xsl:attribute>
         </xsl:if>
     </xsl:template>
-        
+
     <!-- Since the field element contains only the type attribute, all other attributes commonly associated
         with input fields are stored on the params element. Rather than parse the attributes directly, this
         template generates a call to attribute templates, something that is not done in XSL by default. The
@@ -2504,8 +2504,8 @@
     <xsl:template match="dri:params">
         <xsl:apply-templates select="@*"/>
     </xsl:template>
-    
-    
+
+
     <xsl:template match="dri:field[@type='select']/dri:option">
         <option>
             <xsl:attribute name="value"><xsl:value-of select="@returnValue"/></xsl:attribute>
@@ -2515,7 +2515,7 @@
             <xsl:apply-templates />
         </option>
     </xsl:template>
-    
+
     <xsl:template match="dri:field[@type='checkbox' or @type='radio']/dri:option">
         <label>
             <input>
@@ -2532,9 +2532,9 @@
             <xsl:apply-templates />
         </label>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- A special case for the value element under field of type 'select'. Instead of being used to create
         the value attribute of an HTML input tag, these are used to create selection options.
     <xsl:template match="dri:field[@type='select']/dri:value" priority="2">
@@ -2546,19 +2546,19 @@
             <xsl:apply-templates />
         </option>
     </xsl:template>-->
-    
+
     <!-- In general cases the value of this element is used directly, so the template does nothing. -->
     <xsl:template match="dri:value" priority="1">
     </xsl:template>
-    
+
     <!-- The field label is usually invoked directly by a higher level tag, so this template does nothing. -->
     <xsl:template match="dri:field/dri:label" priority="2">
     </xsl:template>
-    
+
     <xsl:template match="dri:field/dri:label" mode="compositeComponent">
         <xsl:apply-templates />
     </xsl:template>
-    
+
     <!-- The error field handling -->
     <xsl:template match="dri:error">
         <xsl:attribute name="title"><xsl:value-of select="."/></xsl:attribute>
@@ -2566,13 +2566,13 @@
             <xsl:attribute name="i18n:attr">title</xsl:attribute>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="dri:error" mode="error">
         <span class="error">* <xsl:apply-templates/></span>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- Help elements are turning into tooltips. There might be a better way to do this -->
     <xsl:template match="dri:help">
         <xsl:attribute name="title"><xsl:value-of select="."/></xsl:attribute>
@@ -2580,7 +2580,7 @@
             <xsl:attribute name="i18n:attr">title</xsl:attribute>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="dri:help" mode="help">
         <!-- Only create the <span> if there is content in the <dri:help> node -->
         <xsl:if test="./text() or ./node()">
@@ -2589,15 +2589,15 @@
             </span>
         </xsl:if>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- The last thing in the structural elements section are the templates to cover the attribute calls.
         Although, by default, XSL only parses elements and text, an explicit call to apply the attributes
         of children tags can still be made. This, in turn, requires templates that handle specific attributes,
         like the kind you see below. The chief amongst them is the pagination attribute contained by divs,
         which creates a new div element to display pagination information. -->
-    
+
     <xsl:template match="@pagination">
         <xsl:param name="position"/>
         <xsl:choose>
@@ -2777,18 +2777,18 @@
             </li>
         </xsl:if>
     </xsl:template>
-    
-    
+
+
     <!-- checkbox and radio fields type uses this attribute -->
     <xsl:template match="@returnValue">
         <xsl:attribute name="value"><xsl:value-of select="."/></xsl:attribute>
     </xsl:template>
-    
+
     <!-- used for image buttons -->
     <xsl:template match="@source">
         <xsl:attribute name="src"><xsl:value-of select="."/></xsl:attribute>
     </xsl:template>
-    
+
     <!-- size and maxlength used by text, password, and textarea inputs -->
     <xsl:template match="@size">
         <xsl:attribute name="size"><xsl:value-of select="."/></xsl:attribute>
@@ -2805,17 +2805,17 @@
     <xsl:template match="@maxlength">
         <xsl:attribute name="maxlength"><xsl:value-of select="."/></xsl:attribute>
     </xsl:template>
-    
+
     <!-- "multiple" attribute is used by the <select> input method -->
     <xsl:template match="@multiple[.='yes']">
         <xsl:attribute name="multiple">multiple</xsl:attribute>
     </xsl:template>
-    
+
     <!-- rows and cols attributes are used by textarea input -->
     <xsl:template match="@rows">
         <xsl:attribute name="rows"><xsl:value-of select="."/></xsl:attribute>
     </xsl:template>
-    
+
     <xsl:template match="@cols">
         <xsl:attribute name="cols"><xsl:value-of select="."/></xsl:attribute>
     </xsl:template>
@@ -2827,39 +2827,39 @@
 
     <!-- The general "catch-all" template for attributes matched, but not handled above -->
     <xsl:template match="@*"></xsl:template>
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 <!-- This is the end of the structural elements section. From here to the end of the document come
     templates devoted to handling the referenceSet and reference elements. Although they are considered
     structural elements, neither of the two contains actual content. Instead, references contain references
     to object metadata under objectMeta, while referenceSets group references together.
 -->
-    
-          
+
+
     <!-- Starting off easy here, with a summaryList -->
-    
+
     <!-- Current issues:
-        
+
         1. There is no check for the repository identifier. Need to fix that by concatenating it with the
             object identifier and using the resulting string as the key on items and reps.
         2. The use of a key index across the object store is cryptic and counterintuitive and most likely
             could benefit from better documentation.
     -->
-    
+
     <!-- When you come to an referenceSet you have to make a decision. Since it contains objects, and each
         object is its own entity (and handled in its own template) the decision of the overall structure
         would logically (and traditionally) lie with this template. However, to accomplish this we would
         have to look ahead and check what objects are included in the set, which involves resolving the
         references ahead of time and getting the information from their METS profiles directly.
-    
+
         Since this approach creates strong coupling between the set and the objects it contains, and we
         have tried to avoid that, we use the "pioneer" method. -->
-    
+
     <!-- Summarylist case. This template used to apply templates to the "pioneer" object (the first object
         in the set) and let it figure out what to do. This is no longer the case, as everything has been
         moved to the list model. A special theme, called TableTheme, has beeen created for the purpose of
@@ -2904,48 +2904,48 @@
         <xsl:apply-templates select="dri:head"/>
         <xsl:apply-templates select="*[not(name()='head')]" mode="detailView"/>
     </xsl:template>
-    
-    
-    
-    
-    
+
+
+
+
+
     <!-- The following options can be appended to the external metadata URL to request specific
         sections of the METS document:
-        
+
         sections:
-        
+
         A comma-separated list of METS sections to included. The possible values are: "metsHdr", "dmdSec",
         "amdSec", "fileSec", "structMap", "structLink", "behaviorSec", and "extraSec". If no list is provided then *ALL*
         sections are rendered.
-        
-        
+
+
         dmdTypes:
-        
+
         A comma-separated list of metadata formats to provide as descriptive metadata. The list of avaialable metadata
         types is defined in the dspace.cfg, disseminationcrosswalks. If no formats are provided them DIM - DSpace
         Intermediate Format - is used.
-        
-        
+
+
         amdTypes:
-        
+
         A comma-separated list of metadata formats to provide administative metadata. DSpace does not currently
         support this type of metadata.
-        
-        
+
+
         fileGrpTypes:
-        
+
         A comma-separated list of file groups to render. For DSpace a bundle is translated into a METS fileGrp, so
         possible values are "THUMBNAIL","CONTENT", "METADATA", etc... If no list is provided then all groups are
         rendered.
-        
-        
+
+
         structTypes:
-        
+
         A comma-separated list of structure types to render. For DSpace there is only one structType: LOGICAL. If this
         is provided then the logical structType will be rendered, otherwise none will. The default operation is to
         render all structure types.
     -->
-    
+
     <!-- Then we resolve the reference tag to an external mets object -->
     <xsl:template match="dri:reference" mode="summaryList">
         <xsl:variable name="externalMetadataURL">
@@ -2971,7 +2971,7 @@
             <xsl:apply-templates />
         </li>
     </xsl:template>
-    
+
     <xsl:template match="dri:reference" mode="detailList">
         <xsl:variable name="externalMetadataURL">
             <xsl:text>cocoon:/</xsl:text>
@@ -2984,7 +2984,7 @@
             <xsl:apply-templates />
         </li>
     </xsl:template>
-    
+
     <xsl:template match="dri:reference" mode="summaryView">
         <xsl:variable name='METSRIGHTS-enabled' select="contains(confman:getProperty('plugin.named.org.dspace.content.crosswalk.DisseminationCrosswalk'), 'METSRIGHTS')" />
         <xsl:variable name="externalMetadataURL">
@@ -3001,7 +3001,7 @@
         <xsl:apply-templates select="document($externalMetadataURL)" mode="summaryView"/>
         <xsl:apply-templates />
     </xsl:template>
-    
+
     <xsl:template match="dri:reference" mode="detailView">
         <xsl:variable name="externalMetadataURL">
             <xsl:text>cocoon:/</xsl:text>
@@ -3012,11 +3012,11 @@
         <xsl:apply-templates select="document($externalMetadataURL)" mode="detailView"/>
         <xsl:apply-templates />
     </xsl:template>
-    
-    
-    
-    
-    
+
+
+
+
+
     <!-- The standard attributes template -->
     <!-- TODO: should probably be moved up some, since it is commonly called -->
     <xsl:template name="standardAttributes">
@@ -3033,21 +3033,21 @@
         </xsl:attribute>
 
     </xsl:template>
-    
+
     <!-- templates for required textarea attributes used if not found in DRI document -->
     <xsl:template name="textAreaCols">
       <xsl:attribute name="cols">20</xsl:attribute>
     </xsl:template>
-    
+
     <xsl:template name="textAreaRows">
       <xsl:attribute name="rows">5</xsl:attribute>
     </xsl:template>
-    
-    
-    
+
+
+
     <!-- This does it for all the DRI elements. The only thing left to do is to handle Cocoon's i18n
         transformer tags that are used for text translation. The templates below simply push through
-        the i18n elements so that they can translated after the XSL step. -->   
+        the i18n elements so that they can translated after the XSL step. -->
     <xsl:template match="i18n:text">
        <xsl:param name="text" select="."/>
        <xsl:choose>
@@ -3083,21 +3083,21 @@
          </xsl:otherwise>
        </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template match="i18n:translate">
         <xsl:copy-of select="."/>
     </xsl:template>
-    
+
     <xsl:template match="i18n:param">
         <xsl:copy-of select="."/>
     </xsl:template>
-    
+
     <!-- =============================================================== -->
     <!-- - - - - - New templates for Choice/Authority control - - - - -  -->
-    
+
     <!-- choose 'hidden' for invisible auth, 'text' lets CSS control it. -->
     <xsl:variable name="authorityInputType" select="'text'"/>
-    
+
     <!-- add button to invoke Choices lookup popup.. assume
       -  that the context is a dri:field, where dri:params/@choices is true.
      -->
@@ -3382,7 +3382,7 @@
         </xsl:attribute>
       </input>
     </xsl:template>
-    
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
     <!-- Special Transformations for Choice Authority lookup popup page -->
 
@@ -3394,7 +3394,7 @@
         </xsl:attribute>
       </img>
     </xsl:template>
-    
+
     <!-- This inline JS must be added to the popup page for choice lookups -->
     <xsl:template name="choiceLookupPopUpSetup">
       <script type="text/javascript">
@@ -3824,7 +3824,7 @@
         <xsl:apply-templates select="$metsDoc/mets:METS/mets:fileSec" mode="artifact-preview"/>
 
     </xsl:template>
-    
+
     <!-- Display language selection if more than 1 language is supported -->
     <xsl:template name="languageSelection">
         <xsl:if test="count(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='page'][@qualifier='supportedLocale']) &gt; 1">

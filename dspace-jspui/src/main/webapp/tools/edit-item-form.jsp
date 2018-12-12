@@ -56,7 +56,7 @@
 
     // Is anyone logged in?
     EPerson user = (EPerson) request.getAttribute("dspace.current.user");
-    
+
     // Is the logged in user an admin of the item
     Boolean itemAdmin = (Boolean)request.getAttribute("admin_button");
     boolean isItemAdmin = (itemAdmin == null ? false : itemAdmin.booleanValue());
@@ -64,25 +64,25 @@
     // Is the logged in user an admin or community admin or collection admin
     Boolean admin = (Boolean)request.getAttribute("is.admin");
     boolean isAdmin = (admin == null ? false : admin.booleanValue());
-    
+
     Boolean communityAdmin = (Boolean)request.getAttribute("is.communityAdmin");
     boolean isCommunityAdmin = (communityAdmin == null ? false : communityAdmin.booleanValue());
-    
+
     Boolean collectionAdmin = (Boolean)request.getAttribute("is.collectionAdmin");
     boolean isCollectionAdmin = (collectionAdmin == null ? false : collectionAdmin.booleanValue());
-    
+
     String naviAdmin = "admin";
     String link = "/dspace-admin";
-    
+
     if(!isAdmin && (isCommunityAdmin || isCollectionAdmin))
     {
         naviAdmin = "community-or-collection-admin";
         link = "/tools";
     }
-    
+
     Boolean policy = (Boolean)request.getAttribute("policy_button");
     boolean bPolicy = (policy == null ? false : policy.booleanValue());
-    
+
     Boolean delete = (Boolean)request.getAttribute("delete_button");
     boolean bDelete = (delete == null ? false : delete.booleanValue());
 
@@ -94,16 +94,16 @@
 
     Boolean ccLicense = (Boolean)request.getAttribute("cclicense_button");
     boolean bccLicense = (ccLicense == null ? false : ccLicense.booleanValue());
-    
+
     Boolean withdraw = (Boolean)request.getAttribute("withdraw_button");
     boolean bWithdraw = (withdraw == null ? false : withdraw.booleanValue());
-    
+
     Boolean reinstate = (Boolean)request.getAttribute("reinstate_button");
     boolean bReinstate = (reinstate == null ? false : reinstate.booleanValue());
 
     Boolean privating = (Boolean)request.getAttribute("privating_button");
     boolean bPrivating = (privating == null ? false : privating.booleanValue());
-    
+
     Boolean publicize = (Boolean)request.getAttribute("publicize_button");
     boolean bPublicize = (publicize == null ? false : publicize.booleanValue());
 
@@ -126,7 +126,7 @@
         {
             boolean authority = mam.isAuthorityControlled(fieldName);
             boolean required = authority && mam.isAuthorityRequired(fieldName);
-           
+
             String fieldNameIdx = "value_" + fieldName + "_" + idx;
             String authorityName = "choice_" + fieldName + "_authority_" + idx;
             String confidenceName = "choice_" + fieldName + "_confidence_" + idx;
@@ -186,7 +186,7 @@
                       .append("\" class=\"ds-authority-confidence-input\"/>")
                       .append("</span>");
                 }
-                 
+
                sb.append("<span class=\"col-md-1\">")
                	 .append("<button class=\"form-control\" name=\"").append(fieldNameIdx).append("_lookup\" ")
                  .append("onclick=\"javascript: return DSpaceChoiceLookup('")
@@ -209,7 +209,7 @@
 	<script type="text/javascript" src="<%= request.getContextPath() %>/static/js/scriptaculous/prototype.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/static/js/scriptaculous/builder.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/static/js/scriptaculous/effects.js"></script>
-	<script type="text/javascript" src="<%= request.getContextPath() %>/static/js/scriptaculous/controls.js"></script>		
+	<script type="text/javascript" src="<%= request.getContextPath() %>/static/js/scriptaculous/controls.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/dspace-admin/js/bitstream-ordering.js"></script>
 </c:set>
 
@@ -225,7 +225,7 @@
         <h1><fmt:message key="jsp.tools.edit-item-form.title"/>
         <dspace:popup page="<%= LocaleSupport.getLocalizedMessage(pageContext, \"help.collection-admin\") + \"#editmetadata\"%>"><fmt:message key="jsp.morehelp"/></dspace:popup>
         </h1>
-    
+
     <%-- <p><strong>PLEASE NOTE: These changes are not validated in any way.
     You are responsible for entering the data in the correct format.
     If you are not sure what the format is, please do NOT make changes.</strong></p> --%>
@@ -330,7 +330,7 @@
 <%
   if (isItemAdmin)
   {
-%>                     
+%>
 					<form method="post" action="<%= request.getContextPath() %>/tools/edit-item">
                         <input type="hidden" name="item_id" value="<%= item.getID() %>" />
                         <input type="hidden" name="action" value="<%= EditItemServlet.START_MOVE_ITEM %>" />
@@ -405,7 +405,7 @@
     </div>
 
 
-	
+
 <%
 
     if (item.isWithdrawn())
@@ -424,7 +424,7 @@
                 <th id="t1" class="oddRowEvenCol"><strong>Qualifier</strong></th>
                 <th id="t2" class="oddRowOddCol"><strong>Value</strong></th>
                 <th id="t3" class="oddRowEvenCol"><strong>Language</strong></th> --%>
-                
+
                 <th id="t0" class="oddRowOddCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem0"/></strong></th>
                 <th id="t1" class="oddRowEvenCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem1"/></strong></th>
                 <th id="t2" class="oddRowOddCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem2"/></strong></th>
@@ -437,12 +437,12 @@
     ChoiceAuthorityService cam = ContentAuthorityServiceFactory.getInstance().getChoiceAuthorityService();
     List<MetadataValue> dcv = ContentServiceFactory.getInstance().getItemService().getMetadata(item, Item.ANY, Item.ANY, Item.ANY, Item.ANY);
     String row = "even";
-    
+
     // Keep a count of the number of values of each element+qualifier
     // key is "element" or "element_qualifier" (String)
     // values are Integers - number of values that element/qualifier so far
     Map<String, Integer> dcCounter = new HashMap<String, Integer>();
-    
+
     for (int i = 0; i < dcv.size(); i++)
     {
         // Find out how many values with this element/qualifier we've found
@@ -454,7 +454,7 @@
         {
             count = new Integer(0);
         }
-        
+
         // Increment counter in map
         dcCounter.put(key, new Integer(count.intValue() + 1));
 
@@ -463,7 +463,7 @@
         // if there are >= 10 values for a particular element/qualifier.  Increase this to
         // 3 digits if there are ever >= 100 for a single element/qualifer! :)
         String sequenceNumber = count.toString();
-        
+
         while (sequenceNumber.length() < 2)
         {
             sequenceNumber = "0" + sequenceNumber;
@@ -500,7 +500,7 @@
     } %>
 
             <tr>
-        
+
                 <td headers="t1" colspan="3" class="<%= row %>RowEvenCol">
                     <select  class="form-control" name="addfield_dctype">
 <%  for (int i = 0; i < dcTypes.size(); i++)
@@ -519,16 +519,16 @@
                     <input class="form-control" type="text" name="addfield_language" size="5"/>
                 </td>
                 <td headers="t5" class="<%= row %>RowOddCol">
-                    <%-- <input type="submit" name="submit_addfield" value="Add"> --%>
+                    <%-- <input type="submit" name="submit_addfield" value="add all pending"> --%>
 					<button class="btn btn-default" name="submit_addfield" value="<fmt:message key="jsp.tools.general.add"/>">
-						<span class="glyphicon glyphicon-plus"></span> 
+						<span class="glyphicon glyphicon-plus"></span>
 					</button>
                 </td>
             </tr>
         </table>
-        
+
 	</div>
-        
+
         <br/>
 
         <%-- <h2>Bitstreams</h2> --%>
@@ -548,7 +548,7 @@
                 <th class="oddRowEvenCol"><strong>Format</strong></th>
                 <th class="oddRowOddCol"><strong>User&nbsp;Format&nbsp;Description</strong></th> --%>
                 <th id="t10" class="oddRowEvenCol">&nbsp;</th>
-                <th id="t11" class="oddRowOddCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem5"/></strong></th>        
+                <th id="t11" class="oddRowOddCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem5"/></strong></th>
                 <th id="t12" class="oddRowEvenCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem7"/></strong></th>
                 <th id="t13" class="oddRowOddCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem8"/></strong></th>
                 <th id="t14" class="oddRowEvenCol"><strong><fmt:message key="jsp.tools.edit-item-form.elem9"/></strong></th>
@@ -676,13 +676,13 @@
 %>
         </table>
 	</div>
-        
+
 
         <%-- <p align="center"><input type="submit" name="submit_addbitstream" value="Add Bitstream"></p> --%>
 	<div class="btn-group col-md-12">
                 <%
 					if (bCreateBits) {
-                %>                
+                %>
 					<input class="btn btn-success col-md-2" type="submit" name="submit_addbitstream" value="<fmt:message key="jsp.tools.edit-item-form.addbit.button"/>"/>
                 <%  }
                     if(breOrderBitstreams){
@@ -700,16 +700,16 @@
                     <input class="btn btn-success col-md-3" type="submit" name="submit_addcc" value="<%= s %>" />
                     <input type="hidden" name="handle" value="<%= ConfigurationManager.getProperty("handle.prefix") %>"/>
                     <input type="hidden" name="item_id" value="<%= item.getID() %>"/>
-                    
+
        			<%
               		}
 				%>
-	
+
 
 
         <input type="hidden" name="item_id" value="<%= item.getID() %>"/>
         <input type="hidden" name="action" value="<%= EditItemServlet.UPDATE_ITEM %>"/>
-					
+
                         <%-- <input type="submit" name="submit" value="Update" /> --%>
                         <input class="btn btn-primary pull-right col-md-3" type="submit" name="submit" value="<fmt:message key="jsp.tools.general.update"/>" />
                         <%-- <input type="submit" name="submit_cancel" value="Cancel" /> --%>

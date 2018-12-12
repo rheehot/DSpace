@@ -19,7 +19,7 @@
   -   count_native      - how many items are in collection
   -   count_import      - how many items are 'virtual'
   --%>
-  
+
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -62,21 +62,21 @@
     <h2><fmt:message key="jsp.tools.itemmap-main.collection">
         <fmt:param><%=collection.getName()%></fmt:param>
     </fmt:message></h2>
-	 
+
     <%-- <p>There are <%=count_native%> items owned by this collection, and
     <%=count_import%> items mapped in from other collections.</p> --%>
 	<p class="alert alert-info"><fmt:message key="jsp.tools.itemmap-main.info1">
         <fmt:param><%=count_native%></fmt:param>
         <fmt:param><%=count_import%></fmt:param>
     </fmt:message></p>
-   
-<%-- 
+
+<%--
     <h3>Quick Add Item:</h3>
 
     <p>Enter the Handle or internal item ID of the item you want to add:</p>
-    
+
     <form method="post" action="">
-        <input type="hidden" name="action" value="add"/>
+        <input type="hidden" name="action" value="add all pending"/>
         <input type="hidden" name="cid" value="<%=collection.getID()%>"/>
         <center>
             <table class="miscTable">
@@ -84,7 +84,7 @@
                     <td class="submitFormLabel"><label for="thandle">Handle:</label></td>
                     <td>
                             <input type="text" name="handle" id="thandle" value="<%= ConfigurationManager.getProperty("handle.prefix") %>/" size="12"/>
-                            <input type="submit" name="submit" value="Add"/>
+                            <input type="submit" name="submit" value="add all pending"/>
                     </td>
                 </tr>
                 <tr></tr>
@@ -92,7 +92,7 @@
                     <td class="submitFormLabel"><label for="titem_id">Internal ID:</label></td>
                     <td>
                             <input type="text" name="item_id" id="titem_id" size="12"/>
-                            <input type="submit" name="submit" value="Add"/>
+                            <input type="submit" name="submit" value="add all pending"/>
                     </td>
                 </tr>
             </table>
@@ -106,7 +106,7 @@
 <%  for(int i=0; i<all_collections.length; i++)
     {
         int myID = all_collections[i].getID();
-        
+
         if( myID != collection.getID() )  // leave out this collection!
         {   %>
         <option value="<%= all_collections[i].getID()%>">
@@ -117,7 +117,7 @@
     </select>
 
     <input type="submit" name="action" value="Add Entire Collection!"/>
-    </form>        
+    </form>
     --%>
 
     <%-- <h3>Import By Author Match</h3>
@@ -130,7 +130,7 @@
     	<div class="input-group col-md-10">
         	<input type="hidden" name="cid" value="<%=collection.getID()%>"/>
         	<input type="hidden" name="action" value="search"/>
-        	<span class="col-md-4">        	
+        	<span class="col-md-4">
         	<select class="form-control" name="index" id="index">
 					<%
 						for (String index : searchIndices)
@@ -144,12 +144,12 @@
              </select></span>
              <span class="col-md-8">
     	    	<input class="form-control" id="query" name="query" size="50"/>
-    	    	
+
     	    </span>
-		    
-        </div>        
+
+        </div>
         <input class="btn btn-default" type="submit" value="<fmt:message key="jsp.tools.itemmap-main.search.button"/>" />
-		        	
+
        </div>
     </form>
     <% if (bSearchError) { %>
@@ -185,5 +185,5 @@
         String myLink = request.getContextPath()+"/tools/itemmap?action=browse";
 %>
     <p align="center"><a href="<%=myLink%>&amp;cid=<%=cid%>&amp;t=<%=myID%>"><%=myTitle%> (<%=myCount%>)</a></p>
-<%  } %>            
+<%  } %>
 </dspace:layout>
