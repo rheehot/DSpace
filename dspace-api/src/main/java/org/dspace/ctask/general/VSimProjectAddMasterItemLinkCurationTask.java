@@ -124,26 +124,26 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
                       Collection projectCollSubmissions = (Collection) projectCollSubmissionsDSO;
 
                       // first delete any existing relations before we add these
-                      List<MetadataValue> mvExistingVsimRelationModels = collectionService.getMetadata(projectCollModels, "vsim", "relation", "models", Item.ANY);
-                      while( mvExistingVsimRelationModels.size() != 0 ) {
+                      List<MetadataValue> mvExistingVsimRelationModelsProjectMaster = collectionService.getMetadata(projectCollModels, "vsim", "relation", "projectMaster", Item.ANY);
+                      while( mvExistingVsimRelationModelsProjectMaster.size() != 0 ) {
                         collectionService.clearMetadata(Curator.curationContext(), projectCollModels, "vsim", "relation", "models", Item.ANY);
                         collectionService.update(Curator.curationContext(), projectCollModels);
                         projectCollModels = Curator.curationContext().reloadEntity(projectCollModels);
-                        mvExistingVsimRelationModels = collectionService.getMetadataByMetadataString(projectCollModels, "vsim.relation.models");
+                        mvExistingVsimRelationModelsProjectMaster = collectionService.getMetadataByMetadataString(projectCollModels, "vsim.relation.projectMaster");
                       }
-                      List<MetadataValue> mvExistingVsimRelationArchives = collectionService.getMetadata(projectCollArchives, "vsim", "relation", "archives", Item.ANY);
-                      while( mvExistingVsimRelationArchives.size() != 0 ) {
+                      List<MetadataValue> mvExistingVsimRelationArchivesProjectMaster = collectionService.getMetadata(projectCollArchives, "vsim", "relation", "projectMaster", Item.ANY);
+                      while( mvExistingVsimRelationArchivesProjectMaster.size() != 0 ) {
                         collectionService.clearMetadata(Curator.curationContext(), projectCollArchives, "vsim", "relation", "archives", Item.ANY);
                         collectionService.update(Curator.curationContext(), projectCollArchives);
                         projectCollModels = Curator.curationContext().reloadEntity(projectCollArchives);
-                        mvExistingVsimRelationArchives = collectionService.getMetadataByMetadataString(projectCollArchives, "vsim.relation.archives");
+                        mvExistingVsimRelationArchivesProjectMaster = collectionService.getMetadataByMetadataString(projectCollArchives, "vsim.relation.projectMaster");
                       }
-                      List<MetadataValue> mvExistingVsimRelationSubmissions = collectionService.getMetadata(projectCollSubmissions, "vsim", "relation", "submissions", Item.ANY);
-                      while( mvExistingVsimRelationSubmissions.size() != 0 ) {
+                      List<MetadataValue> mvExistingVsimRelationSubmissionsProjectMaster = collectionService.getMetadata(projectCollSubmissions, "vsim", "relation", "projectMaster", Item.ANY);
+                      while( mvExistingVsimRelationSubmissionsProjectMaster.size() != 0 ) {
                         collectionService.clearMetadata(Curator.curationContext(), projectCollSubmissions, "vsim", "relation", "submissions", Item.ANY);
                         collectionService.update(Curator.curationContext(), projectCollSubmissions);
                         projectCollModels = Curator.curationContext().reloadEntity(projectCollSubmissions);
-                        mvExistingVsimRelationSubmissions = collectionService.getMetadataByMetadataString(projectCollSubmissions, "vsim.relation.submissions");
+                        mvExistingVsimRelationSubmissionsProjectMaster = collectionService.getMetadataByMetadataString(projectCollSubmissions, "vsim.relation.projectMaster");
                       }
 
                       // set the link back to the project master item for each container object we grabbed above
