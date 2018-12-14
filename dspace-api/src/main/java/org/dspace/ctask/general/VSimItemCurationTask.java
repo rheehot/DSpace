@@ -124,9 +124,9 @@ public class VSimItemCurationTask extends AbstractCurationTask
                     List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
 
                     //before we add the relation values for these collections to this item, first remove any existing relations from this item
-                    itemService.removeMetadataValues(Curator.curationContext(), item, mvVsimMasterRelationModels);
-                    itemService.removeMetadataValues(Curator.curationContext(), item, mvVsimMasterRelationArchives);
-                    itemService.removeMetadataValues(Curator.curationContext(), item, mvVsimMasterRelationSubmissions);
+                    itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY)
+                    itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY)
+                    itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY)
                     itemService.update(Curator.curationContext(), item);
 
                     // set the relation values to the projectMaster values gathered above
