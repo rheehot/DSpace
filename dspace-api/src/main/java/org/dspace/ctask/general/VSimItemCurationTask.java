@@ -81,7 +81,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
         projectMasterCollectionHandle = "20.500.11991/1009"; // <-- that better be a collection object on that handle
       }
 
-    vsimItem:
+    vsimInit:
           try {
 
             switch (dso.getType()) {
@@ -96,7 +96,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
 
                 // IF THIS ITEM IS A PROJECT MASTER, *STOP*!! OTHERWISE, CONTINUE...
                 if (itemService.isIn(item, projectMastersCollection)) {
-                    break vsimItem;
+                    break vsimInit;
                 }
 
                     log.info("VSimItemCurationTask: processing item at handle: " + itemId);
