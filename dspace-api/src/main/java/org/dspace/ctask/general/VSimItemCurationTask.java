@@ -124,17 +124,23 @@ public class VSimItemCurationTask extends AbstractCurationTask
                     List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
 
                     //before we add the relation values for these collections to this item, first remove all existing relations from this item
-                    while( itemService.getMetadataByMetadataString(item, "vsim.relation.models") != null ) {
+                    List<MetadataValue> mvExistingItemRelationModels = itemService.getMetadataByMetadataString(item, "vsim.relation.models");
+                    while( mvExistingItemRelationModels.size() != 0 ) {
                       itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY);
                       itemService.update(Curator.curationContext(), item);
+                      item = Curator.curationContext().reloadEntity(item);
                     }
-                    while( itemService.getMetadataByMetadataString(item, "vsim.relation.archives") != null ) {
+                    List<MetadataValue> mvExistingItemRelationArchives = itemService.getMetadataByMetadataString(item, "vsim.relation.archives");
+                    while( mvExistingItemRelationArchives.size() != 0 ) {
                       itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY);
                       itemService.update(Curator.curationContext(), item);
+                      item = Curator.curationContext().reloadEntity(item);
                     }
-                    while( itemService.getMetadataByMetadataString(item, "vsim.relation.submissions") != null ) {
+                    List<MetadataValue> mvExistingItemRelationSubmissions = itemService.getMetadataByMetadataString(item, "vsim.relation.submissions");
+                    while( mvExistingItemRelationSubmissions.size() != 0 ) {
                       itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY);
                       itemService.update(Curator.curationContext(), item);
+                      item = Curator.curationContext().reloadEntity(item);
                     }
 
 
