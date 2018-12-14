@@ -123,11 +123,19 @@ public class VSimItemCurationTask extends AbstractCurationTask
                     List<MetadataValue> mvVsimMasterRelationArchives = itemService.getMetadata(projectMasterItem, "vsim", "relation", "archives", Item.ANY);
                     List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
 
-                    //before we add the relation values for these collections to this item, first remove any existing relations from this item
-                    itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY);
-                    itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY);
-                    itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY);
-                    itemService.update(Curator.curationContext(), item);
+                    //before we add the relation values for these collections to this item, first remove all existing relations from this item
+                    while( itemService.getMetadata(projectMasterItem, "vsim", "relation", "models", Item.ANY) !=null ) {
+                      itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY);
+                    }
+                    while( itemService.getMetadata(projectMasterItem, "vsim", "relation", "archives", Item.ANY) !=null ) {
+                      itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY);
+                    }
+                    while( itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY) !=null ) {
+                      itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY);
+                    }
+
+                      itemService.update(Curator.curationContext(), item);
+
 
                     // set the relation values to the projectMaster values gathered above
                     log.info("VSimItemCurationTask:  - adding vsim.relation.models: " + mvVsimMasterRelationModels.get(0).getValue());
