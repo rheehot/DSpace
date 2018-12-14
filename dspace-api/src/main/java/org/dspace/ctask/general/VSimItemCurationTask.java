@@ -129,18 +129,21 @@ public class VSimItemCurationTask extends AbstractCurationTask
                       itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY);
                       itemService.update(Curator.curationContext(), item);
                       item = Curator.curationContext().reloadEntity(item);
+                      mvExistingItemRelationModels = itemService.getMetadataByMetadataString(item, "vsim.relation.models");
                     }
                     List<MetadataValue> mvExistingItemRelationArchives = itemService.getMetadataByMetadataString(item, "vsim.relation.archives");
                     while( mvExistingItemRelationArchives.size() != 0 ) {
                       itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY);
                       itemService.update(Curator.curationContext(), item);
                       item = Curator.curationContext().reloadEntity(item);
+                      mvExistingItemRelationArchives = itemService.getMetadataByMetadataString(item, "vsim.relation.archives");
                     }
                     List<MetadataValue> mvExistingItemRelationSubmissions = itemService.getMetadataByMetadataString(item, "vsim.relation.submissions");
                     while( mvExistingItemRelationSubmissions.size() != 0 ) {
                       itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY);
                       itemService.update(Curator.curationContext(), item);
                       item = Curator.curationContext().reloadEntity(item);
+                      mvExistingItemRelationSubmissions = itemService.getMetadataByMetadataString(item, "vsim.relation.submissions");
                     }
 
 
