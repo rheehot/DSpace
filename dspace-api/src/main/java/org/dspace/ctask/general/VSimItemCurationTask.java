@@ -6,11 +6,6 @@
  * http://www.dspace.org/license/
  */
 
- /*
-TODO: refactor this script to follow this example:
-https://github.com/DSpace/DSpace/blob/ea642d6c9289d96b37b5de3bb7a4863ec48eaa9c/dspace-api/src/main/java/org/dspace/ctask/general/ProfileFormats.java
-*/
-
 package org.dspace.ctask.general;
 
 import java.util.List;
@@ -86,7 +81,7 @@ public class VSimItemCurationTask extends AbstractCurationTask
         projectMasterCollectionHandle = "20.500.11991/1009"; // <-- that better be a collection object on that handle
       }
 
-    vsimItem:
+    vsimInit:
           try {
 
             switch (dso.getType()) {
@@ -101,12 +96,12 @@ public class VSimItemCurationTask extends AbstractCurationTask
 
                 // IF THIS ITEM IS A PROJECT MASTER, *STOP*!! OTHERWISE, CONTINUE...
                 if (itemService.isIn(item, projectMastersCollection)) {
-                    break vsimItem;
+                    break vsimInit;
                 }
 
                     log.info("VSimItemCurationTask: processing item at handle: " + itemId);
 
-                    // TODO: find the corresponding project master item for all items in this collection
+                    // find the corresponding project master item for all items in this collection
                     // first, grab the collection object for this item
                     List<Collection> thisItemCollection = itemService.getCollectionsNotLinked(Curator.curationContext(), item);
 
@@ -127,6 +122,29 @@ public class VSimItemCurationTask extends AbstractCurationTask
                     List<MetadataValue> mvVsimMasterRelationModels = itemService.getMetadata(projectMasterItem, "vsim", "relation", "models", Item.ANY);
                     List<MetadataValue> mvVsimMasterRelationArchives = itemService.getMetadata(projectMasterItem, "vsim", "relation", "archives", Item.ANY);
                     List<MetadataValue> mvVsimMasterRelationSubmissions = itemService.getMetadata(projectMasterItem, "vsim", "relation", "submissions", Item.ANY);
+
+                    //before we add the relation values for these collections to this item, first remove all existing relations from this item
+                    List<MetadataValue> mvExistingItemRelationModels = itemService.getMetadataByMetadataString(item, "vsim.relation.models");
+                    while( mvExistingItemRelationModels.size() != 0 ) {
+                      itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "models", Item.ANY);
+                      itemService.update(Curator.curationContext(), item);
+                      item = Curator.curationContext().reloadEntity(item);
+                      mvExistingItemRelationModels = itemService.getMetadataByMetadataString(item, "vsim.relation.models");
+                    }
+                    List<MetadataValue> mvExistingItemRelationArchives = itemService.getMetadataByMetadataString(item, "vsim.relation.archives");
+                    while( mvExistingItemRelationArchives.size() != 0 ) {
+                      itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "archives", Item.ANY);
+                      itemService.update(Curator.curationContext(), item);
+                      item = Curator.curationContext().reloadEntity(item);
+                      mvExistingItemRelationArchives = itemService.getMetadataByMetadataString(item, "vsim.relation.archives");
+                    }
+                    List<MetadataValue> mvExistingItemRelationSubmissions = itemService.getMetadataByMetadataString(item, "vsim.relation.submissions");
+                    while( mvExistingItemRelationSubmissions.size() != 0 ) {
+                      itemService.clearMetadata(Curator.curationContext(), item, "vsim", "relation", "submissions", Item.ANY);
+                      itemService.update(Curator.curationContext(), item);
+                      item = Curator.curationContext().reloadEntity(item);
+                      mvExistingItemRelationSubmissions = itemService.getMetadataByMetadataString(item, "vsim.relation.submissions");
+                    }
 
 
                     // set the relation values to the projectMaster values gathered above

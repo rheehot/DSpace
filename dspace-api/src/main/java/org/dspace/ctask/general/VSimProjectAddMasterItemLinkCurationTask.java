@@ -16,6 +16,7 @@ import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.content.Collection;
 import org.dspace.curate.AbstractCurationTask;
+import org.dspace.core.Constants;
 import org.dspace.curate.Curator;
 import org.dspace.curate.Distributive;
 
@@ -65,7 +66,7 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
      }
 
      @Override
-     protected void performItem(Item item) throws IOException
+     protected void performObject(DSpaceObject dso) throws IOException
      {
 
     int status = Curator.CURATE_SKIP;
@@ -86,57 +87,90 @@ public class VSimProjectAddMasterItemLinkCurationTask extends AbstractCurationTa
 
           try {
 
-          DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
-          Collection projectMastersCollection = (Collection) projectMastersDSO;
+              switch (dso.getType()) {
+                case Constants.ITEM:
+                  Item item = (Item) dso;
 
-          // *ONLY* KEEP GOING IF THIS ITEM IS A PROJECT MASTER, OTHERWISE *STOP*!!
-          if (!itemService.isIn(item, projectMastersCollection)) {
-              break vsimInit;
-          }
+                  DSpaceObject projectMastersDSO = handleService.resolveToObject(Curator.curationContext(), projectMasterCollectionHandle);
+                  Collection projectMastersCollection = (Collection) projectMastersDSO;
 
-              // Get All requried MetadataValues, all are returned as lists, use .get(0).getValue() to return the first value, like strings,
-              // use the usual list stuff to manage multiple values
+                  // *ONLY* KEEP GOING IF THIS ITEM IS A PROJECT MASTER, OTHERWISE *STOP*!!
+                  if (!itemService.isIn(item, projectMastersCollection)) {
+                      break vsimInit;
+                  }
 
-              // get the handle to this master item, we'll need it
-              String itemId = item.getHandle();
-              log.info("VSimProjectAddMasterItemLinkCurationTask: processing master item at handle: " + itemId);
+                      // Get All requried MetadataValues, all are returned as lists, use .get(0).getValue() to return the first value, like strings,
+                      // use the usual list stuff to manage multiple values
+
+                      // get the handle to this master item, we'll need it
+                      String itemId = item.getHandle();
+                      log.info("VSimProjectAddMasterItemLinkCurationTask: processing master item at handle: " + itemId);
 
 
-              // the following are used to find the containers to which we need to add the itemId
-              List<MetadataValue> mvVsimRelationModels = itemService.getMetadata(item, "vsim", "relation", "models", Item.ANY);
-              List<MetadataValue> mvVsimRelationArchives = itemService.getMetadata(item, "vsim", "relation", "archives", Item.ANY);
-              List<MetadataValue> mvVsimRelationSubmissions = itemService.getMetadata(item, "vsim", "relation", "submissions", Item.ANY);
+                      // the following are used to find the containers to which we need to add the itemId
+                      List<MetadataValue> mvVsimRelationModels = itemService.getMetadata(item, "vsim", "relation", "models", Item.ANY);
+                      List<MetadataValue> mvVsimRelationArchives = itemService.getMetadata(item, "vsim", "relation", "archives", Item.ANY);
+                      List<MetadataValue> mvVsimRelationSubmissions = itemService.getMetadata(item, "vsim", "relation", "submissions", Item.ANY);
 
-              // grab each container object using the handles above
-              // -- the HandleService has resolveToObject(Context context, String handle) which goes from handle to dso
-              // -- NOTE: this is a generic dso, not a typed dso (i.e. not a community or collection object)
-              // -- just look at the code starting around line 103, there's an example there
-              DSpaceObject projectCollModelsDSO = handleService.resolveToObject(Curator.curationContext(), mvVsimRelationModels.get(0).getValue());
-              Collection projectCollModels = (Collection) projectCollModelsDSO;
-              DSpaceObject projectCollArchivesDSO = handleService.resolveToObject(Curator.curationContext(), mvVsimRelationArchives.get(0).getValue());
-              Collection projectCollArchives = (Collection) projectCollArchivesDSO;
-              DSpaceObject projectCollSubmissionsDSO = handleService.resolveToObject(Curator.curationContext(), mvVsimRelationSubmissions.get(0).getValue());
-              Collection projectCollSubmissions = (Collection) projectCollSubmissionsDSO;
+                      // grab each container object using the handles above
+                      // -- the HandleService has resolveToObject(Context context, String handle) which goes from handle to dso
+                      // -- NOTE: this is a generic dso, not a typed dso (i.e. not a community or collection object)
+                      // -- just look at the code starting around line 103, there's an example there
+                      DSpaceObject projectCollModelsDSO = handleService.resolveToObject(Curator.curationContext(), mvVsimRelationModels.get(0).getValue());
+                      Collection projectCollModels = (Collection) projectCollModelsDSO;
+                      DSpaceObject projectCollArchivesDSO = handleService.resolveToObject(Curator.curationContext(), mvVsimRelationArchives.get(0).getValue());
+                      Collection projectCollArchives = (Collection) projectCollArchivesDSO;
+                      DSpaceObject projectCollSubmissionsDSO = handleService.resolveToObject(Curator.curationContext(), mvVsimRelationSubmissions.get(0).getValue());
+                      Collection projectCollSubmissions = (Collection) projectCollSubmissionsDSO;
 
-              // set the link back to the project master item for each container object we grabbed above
-              log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollModels at handle: " + projectCollModels.getHandle());
-              collectionService.addMetadata(Curator.curationContext(), projectCollModels, "vsim", "relation", "projectMaster", null, itemId);
-              log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollArchives at handle: " + projectCollArchives.getHandle());
-              collectionService.addMetadata(Curator.curationContext(), projectCollArchives, "vsim", "relation", "projectMaster", null, itemId);
-              log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollSubmissions at handle: " + projectCollSubmissions.getHandle());
-              collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, "vsim", "relation", "projectMaster", null, itemId);
+                      // first delete any existing relations before we add these
+                      List<MetadataValue> mvExistingVsimRelationModelsProjectMaster = collectionService.getMetadata(projectCollModels, "vsim", "relation", "projectMaster", Item.ANY);
+                      while( mvExistingVsimRelationModelsProjectMaster.size() != 0 ) {
+                        collectionService.clearMetadata(Curator.curationContext(), projectCollModels, "vsim", "relation", "models", Item.ANY);
+                        collectionService.update(Curator.curationContext(), projectCollModels);
+                        projectCollModels = Curator.curationContext().reloadEntity(projectCollModels);
+                        mvExistingVsimRelationModelsProjectMaster = collectionService.getMetadataByMetadataString(projectCollModels, "vsim.relation.projectMaster");
+                      }
+                      List<MetadataValue> mvExistingVsimRelationArchivesProjectMaster = collectionService.getMetadata(projectCollArchives, "vsim", "relation", "projectMaster", Item.ANY);
+                      while( mvExistingVsimRelationArchivesProjectMaster.size() != 0 ) {
+                        collectionService.clearMetadata(Curator.curationContext(), projectCollArchives, "vsim", "relation", "archives", Item.ANY);
+                        collectionService.update(Curator.curationContext(), projectCollArchives);
+                        projectCollModels = Curator.curationContext().reloadEntity(projectCollArchives);
+                        mvExistingVsimRelationArchivesProjectMaster = collectionService.getMetadataByMetadataString(projectCollArchives, "vsim.relation.projectMaster");
+                      }
+                      List<MetadataValue> mvExistingVsimRelationSubmissionsProjectMaster = collectionService.getMetadata(projectCollSubmissions, "vsim", "relation", "projectMaster", Item.ANY);
+                      while( mvExistingVsimRelationSubmissionsProjectMaster.size() != 0 ) {
+                        collectionService.clearMetadata(Curator.curationContext(), projectCollSubmissions, "vsim", "relation", "submissions", Item.ANY);
+                        collectionService.update(Curator.curationContext(), projectCollSubmissions);
+                        projectCollModels = Curator.curationContext().reloadEntity(projectCollSubmissions);
+                        mvExistingVsimRelationSubmissionsProjectMaster = collectionService.getMetadataByMetadataString(projectCollSubmissions, "vsim.relation.projectMaster");
+                      }
 
-              // now write all that metadata with a set of updates
-              log.info("VSimProjectAddMasterItemLinkCurationTask: Writing changes to all three project collections for master item at handle: " + itemId);
-              collectionService.update(Curator.curationContext(), projectCollModels);
-              collectionService.update(Curator.curationContext(), projectCollArchives);
-              collectionService.update(Curator.curationContext(), projectCollSubmissions);
+                      // set the link back to the project master item for each container object we grabbed above
+                      log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollModels at handle: " + projectCollModels.getHandle());
+                      collectionService.addMetadata(Curator.curationContext(), projectCollModels, "vsim", "relation", "projectMaster", null, itemId);
+                      log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollArchives at handle: " + projectCollArchives.getHandle());
+                      collectionService.addMetadata(Curator.curationContext(), projectCollArchives, "vsim", "relation", "projectMaster", null, itemId);
+                      log.info("VSimProjectAddMasterItemLinkCurationTask:  - adding vsim.relation.projectMaster to projectCollSubmissions at handle: " + projectCollSubmissions.getHandle());
+                      collectionService.addMetadata(Curator.curationContext(), projectCollSubmissions, "vsim", "relation", "projectMaster", null, itemId);
 
-              // set the success flag and add a line to the result report
-              // KEEP THIS AT THE END OF THE SCRIPT
+                      // now write all that metadata with a set of updates
+                      log.info("VSimProjectAddMasterItemLinkCurationTask: Writing changes to all three project collections for master item at handle: " + itemId);
+                      collectionService.update(Curator.curationContext(), projectCollModels);
+                      collectionService.update(Curator.curationContext(), projectCollArchives);
+                      collectionService.update(Curator.curationContext(), projectCollSubmissions);
 
-              status = Curator.CURATE_SUCCESS;
-              result = "VSim Project Master item links intialized based on " + itemId;
+                      // set the success flag and add a line to the result report
+                      // KEEP THIS AT THE END OF THE SCRIPT
+
+                      status = Curator.CURATE_SUCCESS;
+                      result = "VSim Project Master item links intialized based on " + itemId;
+                      break;
+
+                default: status = Curator.CURATE_SUCCESS;
+                break;
+
+              }
 
             // catch any exceptions
             } catch (AuthorizeException authE) {
