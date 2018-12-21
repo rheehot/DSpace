@@ -28,7 +28,7 @@
             <item>Play the ‘PLAY ME!’ narrative for basic information about VSim 2.0 and read through the users guide.</item>
             <item>If you downloaded the sample model, click File -> Open … and browse for the Pantheon model.</item>
             <item>Use the Pantheon model to master navigation in the first person (WASD), flight, and object rotation modes.</item>
-            <item>Try VSim 2.0 with your own models, files downloaded from the <xref target="https://vsim.library.ucla.edu/xmlui/discover?filtertype_1=type&filter_relational_operator_1=equals&filter_1=VSimProjectMaster&submit_apply_filter=&query=&rpp=10&sort_by=dc.title_sort&order=asc">VSim Repository and Archive</xref>, or other content downloaded from online 3D warehouses.</item>
+            <item>Try VSim 2.0 with your own models, files downloaded from the <xref target="https://vsim.library.ucla.edu/xmlui/">VSim Repository and Archive</xref>, or other content downloaded from online 3D warehouses.</item>
           </list>
             
                </div>
