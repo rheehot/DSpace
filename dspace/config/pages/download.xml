@@ -5,37 +5,30 @@
         <div id="file.about.div.download" n="about" rend="primary">
             <head>VSim Downloads</head>
 
-            <hi rend="bold">The NEH-funded VSim Prototype Version 1</hi>
+            <hi rend="bold">VSim 2.0 BETA Version Now Available!</hi>
 
-            <p>VSim was designed so that it could be used as a platform to peer review, publish, and broadly disseminate academically generated 3D content. The NEH-funded VSim prototype was first released in 2013. The most recent is VSim 1.2.1 for Windows. This version can also be used on a dual-boot Mac or through Windows emulating software (e.g., Parallels). The prototype was built as a proof-of-concept to allow the VSim team to assess the educational possibilities of three-dimensional content and the software's functionality. Development is underway on an enhanced version of the software, which will be available on this page as soon as it is fully tested.</p>
+            <p>VSim 2.0 BETA is now available for downloading and testing in both Windows and Mac versions! VSim 2.0 offers significant improvements over the prototype, and includes advanced font and text controls, scroll bars for both the Narrative and Embedded Resources Bars, more file import options, and improved filtering and editing capabilities for the embedded resources, among many new and improved features. The software is also responsive, so narrative overlays will adapt to changes in the size of the simulation window.  VSim was funded by the NEH, and the beta files were posted in December 2018. Please report any reproducible problems to <xref target="mailto:lms@idre.ucla.edu">Lisa M. Snyder</xref>.</p>
             
 
             <list>
-            <item><xref target="https://idre.ucla.edu/?wpdmdl=5349">Click to download VSim (v 1.2.1)</xref> (20MB).
+            <item><xref target="https://idre.ucla.edu/?wpdmdl=11938">The Windows BETA version of VSim 2.0.</xref> (20MB).
             (This version is Windows-compatible and opens .dae, .flt., .ive, and .vsim model files)</item>
-            </list>
-            
-            <hi rend="bold">User guides, tutorials, and presentations</hi>
-
-            <list>
-              <item><xref target="https://idre.ucla.edu/wp-content/uploads/2015/09/vsim-v1-userguide-june2013.pdf?x83242">Users’ guide</xref> (last updated June 13, 2013).</item>
-              <item><xref target="https://idre.ucla.edu/sites/default/files/vsim-v1-graphicguide-july2013.pdf?x83242">Short graphic guide</xref> (last updated July 9, 2013).</item>
-              <item>A brief introduction to the main features of VSim posted on <xref target="https://www.youtube.com/watch?v=MYYtDTucKL8">YouTube</xref>.</item>
-              <item><xref target="http://www.youtube.com/watch?v=TUz086WMGNU">VSim Tutorial on YouTube</xref> captured at the Humanities Heritage NEH
-              Summer Institute (NEH Advanced Topics in the Digital Humanites
-                    Summer Institute, The Center for Digital Initiatives, Arkansas
-                    State University)</item>
+            <item><xref target="https://idre.ucla.edu/?wpdmdl=11944">The Mac BETA version of VSim 2.0.</item>
+            <item><xref target="https://idre.ucla.edu/wp-content/uploads/2018/12/VSim_AbridgedUsersGuide_Dec20_2018.pdf?x83242">VSim 2.0 Abridged Users Guide.</item>
+              <item><xref target="https://idre.ucla.edu/?wpdmdl=11945">The Pantheon test model for use with VSim 2.0.</xref>.</item>
             </list>
 
-            <hi rend="bold">Directions for installing the VSim prototype on Windows systems</hi>
+            <hi rend="bold">Directions for installing VSim 2.0 for Windows</hi>
 
             <list rend="numeric" type="ordered">
-            <item>Create a VSim folder on your hard drive</item>
-            <item>Right click on the links and ‘save link as ...’ the software, sample model, and other files as desired</item>
-            <item>Unzip the VSim .zip file (typically a right click, choose WinZip from the menu, and ‘extract to here’)</item>
-            <item>Navigate into the release folder and double click the VSim.exe file to launch the software</item>
-            <item>To begin using VSim, click File -> Open Model and browse for your downloaded 3D content</item>
-            <item>Read the user guide for help loading models and creating narratives of your own!</item>
+            <item>Create a VSim folder on your hard drive.</item>
+            <item>Download the .zip file into that folder (and download the sample model and users guide as desired).</item>
+            <item>Unzip the VSim .zip file (typically a right click, choose WinZip from the menu, and ‘extract to here’).</item>
+            <item>Navigate into the release folder and double click the VSim.exe file to launch the software.</item>
+            <item>Play the ‘PLAY ME!’ narrative for basic information about VSim 2.0 and read through the users guide.</item>
+            <item>If you downloaded the sample model, click File -> Open … and browse for the Pantheon model.</item>
+            <item>Use the Pantheon model to master navigation in the first person (WASD), flight, and object rotation modes.</item>
+            <item>Try VSim 2.0 with your own models, files downloaded from the <xref target="https://vsim.library.ucla.edu/xmlui/discover?filtertype_1=type&filter_relational_operator_1=equals&filter_1=VSimProjectMaster&submit_apply_filter=&query=&rpp=10&sort_by=dc.title_sort&order=asc">VSim Repository and Archive</xref>, or other content downloaded from online 3D warehouses.</item>
           </list>
             
                </div>
