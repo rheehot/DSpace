@@ -8,12 +8,12 @@
             <hi rend="bold">VSim 2.0 BETA Version Now Available!</hi>
 
             <p>VSim 2.0 BETA is now available for downloading and testing in both Windows and Mac versions! VSim 2.0 offers significant improvements over the prototype, and includes advanced font and text controls, scroll bars for both the Narrative and Embedded Resources Bars, more file import options, and improved filtering and editing capabilities for the embedded resources, among many new and improved features. The software is also responsive, so narrative overlays will adapt to changes in the size of the simulation window.  VSim was funded by the NEH, and the beta files were posted in December 2018. Please report any reproducible problems to <xref target="mailto:lms@idre.ucla.edu">Lisa M. Snyder</xref>.</p>
-            
+
 
             <list>
             <item><xref target="https://idre.ucla.edu/?wpdmdl=11938">The Windows BETA version of VSim 2.0.</xref> (20MB).
             (This version is Windows-compatible and opens .dae, .flt., .ive, and .vsim model files)</item>
-            <item><xref target="https://idre.ucla.edu/?wpdmdl=11944">The Mac BETA version of VSim 2.0.</item>
+            <item><xref target="https://idre.ucla.edu/?wpdmdl=11944">The Mac BETA version of VSim 2.0.</xref></item>
             <item><xref target="https://idre.ucla.edu/wp-content/uploads/2018/12/VSim_AbridgedUsersGuide_Dec20_2018.pdf?x83242">VSim 2.0 Abridged Users Guide.</item>
               <item><xref target="https://idre.ucla.edu/?wpdmdl=11945">The Pantheon test model for use with VSim 2.0.</xref>.</item>
             </list>
@@ -30,7 +30,7 @@
             <item>Use the Pantheon model to master navigation in the first person (WASD), flight, and object rotation modes.</item>
             <item>Try VSim 2.0 with your own models, files downloaded from the <xref target="https://vsim.library.ucla.edu/xmlui/">VSim Repository and Archive</xref>, or other content downloaded from online 3D warehouses.</item>
           </list>
-            
+
                </div>
     </body>
 
