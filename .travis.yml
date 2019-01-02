@@ -23,7 +23,7 @@ before_install:
   # Print ruby version info (should be installed)
   - ruby -v
   # Install Sass & print version info
-  - gem install sass -v 3.3.14
+  - gem install sass -v 3.4.25
   - sass -v
   # Install Compass & print version info
   - gem install compass -v 1.0.1
@@ -49,4 +49,4 @@ script:
   #        -Dmirage2.on=true => Build Mirage2
   #        -Dmirage2.deps.included=false => Don't include Mirage2 build dependencies (We installed them in before_install)
   #        -P !assembly => SKIP the actual building of [src]/dspace/dspace-installer (as it can be memory intensive)
-  - "cd dspace && mvn package -Dmirage2.on=true -Dmirage2.deps.included=true -P !assembly -B -V -Dsurefire.rerunFailingTestsCount=2"
+  - "cd dspace && mvn package -Dmirage2.on=true -Dmirage2.deps.included=false -P !assembly -B -V -Dsurefire.rerunFailingTestsCount=2"
