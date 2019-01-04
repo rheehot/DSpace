@@ -817,6 +817,7 @@
        <str name="qf">dc.type^50 title^25 search_text</str>
        <!-- suggestion from Parinita (see VSIM-91)  q=VSimProjectMaster&qf=dc.type^2 -->
        <str name="bq">dc.type:VSimProjectMaster^100</str>
+       <str name="bq">dc.type:Model^80</str>
      </lst>
       <arr name="last-components">
           <str>spellcheck</str>
